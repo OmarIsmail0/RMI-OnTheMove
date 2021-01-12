@@ -1,5 +1,15 @@
+<<<<<<< Updated upstream
 package rmi;
 
+=======
+
+package rmi;
+
+/**
+ *
+ * @author Mai146607
+ */
+>>>>>>> Stashed changes
 public class Payment {
     
     private int pID;

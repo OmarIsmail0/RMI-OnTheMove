@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
+=======
+/*
+ * @author Mai146607
+ */
+>>>>>>> Stashed changes
 package rmi;
 
 import java.util.Date;
