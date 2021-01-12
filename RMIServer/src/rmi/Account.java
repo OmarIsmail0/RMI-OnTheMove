@@ -1,12 +1,13 @@
 package rmi;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Account extends UnicastRemoteObject implements AccountInterface {
+public class Account extends UnicastRemoteObject implements AccountInterface, Serializable {
     int accID;
     String username, password, email, mobile;
     AccType type;
@@ -16,6 +17,16 @@ public class Account extends UnicastRemoteObject implements AccountInterface {
 
     public Account() throws RemoteException{
 
+    }
+
+    public Account(int accID, String username, String password, String email, String mobile, AccType type, ArrayList<Account> acc) throws RemoteException {
+        this.accID = accID;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.mobile = mobile;
+        this.type = type;
+        this.acc = acc;
     }
 
     public int getAccID() {
