@@ -5,10 +5,8 @@
  */
 package rmi;
 
-/**
- *
- * @author Laptop Shop
- */
+import java.util.Date;
+
 public class BankAccount {
     private String mail;
     private double balance;

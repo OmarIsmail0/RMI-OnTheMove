@@ -32,10 +32,10 @@ import java.util.ArrayList;
 public class Account extends UnicastRemoteObject implements AccountInterface {
     int accID;
     String username, password, email, mobile;
-//    AccType type;
+    AccType type;
     public ArrayList<Account> acc;
     public static int verificationCode;
-//    public static AccType accessType;
+    public static AccType accessType;
 
     public Account() throws RemoteException{
 
@@ -81,13 +81,13 @@ public class Account extends UnicastRemoteObject implements AccountInterface {
         this.mobile = mobile;
     }
 
-//    public AccType getType() {
-//        return type;
-//    }
+    public AccType getType() {
+        return type;
+    }
 
-//    public void setType(AccType type) {
-//        this.type = type;
-//    }
+    public void setType(AccType type) {
+        this.type = type;
+    }
 
     public ArrayList<Account> getAcc() {
         return acc;
@@ -105,13 +105,13 @@ public class Account extends UnicastRemoteObject implements AccountInterface {
         Account.verificationCode = verificationCode;
     }
 
-//    public static AccType getAccessType() {
-//        return accessType;
-//    }
+    public static AccType getAccessType() {
+        return accessType;
+    }
 
-//    public static void setAccessType(AccType accessType) {
-//        Account.accessType = accessType;
-//    }
+    public static void setAccessType(AccType accessType) {
+        Account.accessType = accessType;
+    }
 
     @Override
     public void createClientAccount(String username,String password,String email,String mobile/*,AccType type*/) throws RemoteException{
