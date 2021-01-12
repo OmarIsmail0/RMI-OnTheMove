@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rmi;
+import java.util.Date;
 
 import java.util.Date;
 
