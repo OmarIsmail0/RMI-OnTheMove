@@ -6,29 +6,6 @@ import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-/*
-
-- accID: int
-- username:String
-- password: String
-- email:String
-- mobile: String
-- type: AccType
-+ acc:ArrayList<Account>
-+ verificationCode: static int
-+ accessType: static AccType
-
-+ createClientAccount(String,String,String,String,AccType):void
-+ createDriverAccount(String,String,String,String,AccType):void
-+ viewAccount():void
-+ login(String,String):boolean
-+ banAccount(String):void
-+ sendVerification():void
-+ enterVerificationCode(int):boolean
-+ approveChanges(): void
-
-*/
-
 public class Account extends UnicastRemoteObject implements AccountInterface {
     int accID;
     String username, password, email, mobile;
@@ -114,13 +91,15 @@ public class Account extends UnicastRemoteObject implements AccountInterface {
     }
 
     @Override
-    public void createClientAccount(String username,String password,String email,String mobile/*,AccType type*/) throws RemoteException{
+    public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException{
 
     }
+    /*
     @Override
-    public void createDriverAccount(String username,String password,String email,String mobile/*,AccType type*/) throws RemoteException{
+    public void createDriverAccount(String username,String password,String email,String mobile, AccType type) throws RemoteException{
 
     }
+    */
     @Override
     public void viewAccount() throws RemoteException{
     }
