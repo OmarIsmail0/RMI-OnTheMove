@@ -13,11 +13,12 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     AccType type;
     public ArrayList<Account> acc;
     public static int verificationCode;
-    public static AccType accessType;
 
     public Account() throws RemoteException{
 
     }
+    
+    
 
     public Account(int accID, String username, String password, String email, String mobile, AccType type, ArrayList<Account> acc) throws RemoteException {
         this.accID = accID;
@@ -93,17 +94,9 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         Account.verificationCode = verificationCode;
     }
 
-    public static AccType getAccessType() {
-        return accessType;
-    }
-
-    public static void setAccessType(AccType accessType) {
-        Account.accessType = accessType;
-    }
-
     @Override
     public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException{
-
+        Account newAccount = new Account();
     }
     /*
     @Override
@@ -113,14 +106,16 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     */
     @Override
     public void viewAccount() throws RemoteException{
+        
     }
     @Override
-    public boolean login(String email, String password) throws RemoteException{
-        return true;
+    public boolean login(String EMAIL, String PW) throws RemoteException{
+        if(email.equals(EMAIL) && password.equals(PW)) return true;
+        else return false;
     }
     @Override
     public void banAccount(String email) throws RemoteException{
-
+        
     }
     @Override
     public void sendVerification() throws RemoteException{
