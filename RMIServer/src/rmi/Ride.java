@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 public class Ride {
    private int rideID;
-   private String pickUpLoc;
-   private String destination;
+   private CurrentArea pickUpLoc;
+   private CurrentArea destination;
    private double rideFees;
    private Complaint comment;
    private Client client;
@@ -23,19 +23,19 @@ public class Ride {
         this.rideID = rideID;
     }
 
-    public String getPickUpLoc() {
+    public CurrentArea getPickUpLoc() {
         return pickUpLoc;
     }
 
-    public void setPickUpLoc(String pickUpLoc) {
+    public void setPickUpLoc(CurrentArea pickUpLoc) {
         this.pickUpLoc = pickUpLoc;
     }
 
-    public String getDestination() {
+    public CurrentArea getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(CurrentArea destination) {
         this.destination = destination;
     }
 

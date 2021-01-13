@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Driver extends User{
     private String driverLicense;
-    private boolean availability;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;
     private Notification notification;
     
     //Constructor
-    public Driver(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
-        super(acc, notif, area, rides, creditCards, rating);
+    public Driver(Account acc, CurrentArea area, ArrayList<Ride> rides, BankAccount creditCard, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car) {
+        super(acc, area, rides, creditCard, rating);
+        this.car=car;
+        this.driverLicense=driverLicense;
+        this.workingTimes=workingTimes;
     }
     
     //Setters And Getters
@@ -20,12 +22,6 @@ public class Driver extends User{
     }
     public void setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
-    }
-    public boolean isAvailability() {
-        return availability;
-    }
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
     }
     public ArrayList<AvailableTimes> getWorkingTimes() {
         return workingTimes;

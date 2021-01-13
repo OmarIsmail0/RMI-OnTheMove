@@ -3,7 +3,6 @@ package rmi;
 import java.util.ArrayList;
 
 public class Client extends User{
-    float wallet;
     int numOfRides;
     Ride ride;
     Notification notification;
@@ -15,17 +14,12 @@ public class Client extends User{
 
     }
 
-    public Client(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
-        super(acc, notif, area, rides, creditCards, rating);
+    public Client(Account acc, CurrentArea area, ArrayList<Ride> rides, BankAccount creditCard, float rating, BankAccount bankAcc) {
+        super(acc, area, rides, creditCard, rating);
+        this.bankAcc=bankAcc;
     }
     
     //Setter And Getters
-    public float getWallet() {
-        return wallet;
-    }
-    public void setWallet(float wallet) {
-        this.wallet = wallet;
-    }
     public int getNumOfRides() {
         return numOfRides;
     }
