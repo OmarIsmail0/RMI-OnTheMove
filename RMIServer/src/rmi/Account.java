@@ -188,7 +188,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
 
     @Override
     public void createDriverAccount(String username, String password, String email, String mobile
-            , AccType type, String driverLicense, /*ArrayList<AvailableTimes> workingTimes,*/ float rating, CurrentArea currentArea) throws RemoteException{
+            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, float rating, CurrentArea currentArea) throws RemoteException{
 
         Account new_Account = new Account();
         Driver new_Driver = new Driver();
@@ -223,7 +223,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setType(type);
 
                 new_Driver.setDriverLicense(driverLicense);
-               /* new_Driver.setWorkingTimes(workingTimes);*/
+                new_Driver.setWorkingTimes(workingTimes);
                 new_Driver.setRating(rating);
                 new_Driver.setArea(currentArea);
                 new_Driver.setAcc(new_Account);

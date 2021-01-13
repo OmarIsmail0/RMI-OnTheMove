@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class RMIAdmin {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         try{
             Registry registry = LocateRegistry.getRegistry(1099);
             AccountInterface acc = (AccountInterface) registry.lookup("Account");
@@ -18,10 +18,14 @@ public class RMIAdmin {
 
             AvailableTimes v1 = new AvailableTimes("Thursday");
             AvailableTimes v2 = new AvailableTimes("Friday");
+            ArrayList<AvailableTimes> x = new ArrayList<>();
+            x.add(v1);
+            x.add(v2);
+            
 
 
             acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
-                    "ABC123",882,CurrentArea.MAADI);
+                    "ABC123", x, (float) 882.2, CurrentArea.MAADI);
 
             acc.viewAllAccounts();
         }catch (Exception ex){

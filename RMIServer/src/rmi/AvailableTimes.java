@@ -1,6 +1,8 @@
 package rmi;
 
-public class AvailableTimes {
+import java.io.Serializable;
+
+public class AvailableTimes implements Serializable{
     String day;
 
     public AvailableTimes(){
