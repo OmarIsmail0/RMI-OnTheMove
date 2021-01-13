@@ -23,7 +23,6 @@ import org.bson.Document;
 
 
 public class DB {
-
     private MongoClient db;
     private MongoDatabase database;
     private MongoCollection<Document> collection;
