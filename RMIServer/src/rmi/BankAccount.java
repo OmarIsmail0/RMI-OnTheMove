@@ -1,6 +1,7 @@
 
 package rmi;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.Date;
@@ -8,11 +9,24 @@ import java.util.Date;
 public class BankAccount {
     private String mail;
     private double balance;
-    private int id; 
+
+    private int id;
     private int userID;
-    private int CCnumber;
+
+    private String CCnumber;
     private int ccv;
     private Date expDate;
+
+    private ArrayList<BankAccount> bankAcc;
+    private Account acc;
+
+    public Account getAcc() {
+        return acc;
+    }
+
+    public void setAcc(Account acc) {
+        this.acc = acc;
+    }
 
     public String getMail() {
         return mail;
@@ -30,7 +44,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int getId() {
+   /* public int getId() {
         return id;
     }
 
@@ -45,12 +59,12 @@ public class BankAccount {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-
-    public int getCCnumber() {
+*/
+    public String getCCnumber() {
         return CCnumber;
     }
 
-    public void setCCnumber(int CCnumber) {
+    public void setCCnumber(String CCnumber) {
         this.CCnumber = CCnumber;
     }
 
@@ -78,5 +92,16 @@ public class BankAccount {
     }
     public void checkCCinfo(int x, double y, Date date){
         
+    }
+
+    @Override
+    public String toString(){
+
+        String result =
+                "\nBalance:" + getBalance()
+                + "\nCredit Card Number: " + getCCnumber()
+                + "\nCCV:" + getCcv()
+                + "\nexpiration Date:" + getExpDate();
+        return result;
     }
 }

@@ -11,6 +11,10 @@ public class User {
     private float rating;
 
     //Constructors
+
+    public User() {
+    }
+
     public User(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
         this.acc = acc;
         this.notif = notif;
