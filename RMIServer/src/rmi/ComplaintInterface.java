@@ -1,5 +1,5 @@
 
-package rmi.Interface;
+package rmi;
 import rmi.Account;
 
 import java.rmi.Remote;

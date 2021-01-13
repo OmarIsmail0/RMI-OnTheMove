@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package rmi;
-import rmi.Interface.FacadeInterface;
 
 import java.util.ArrayList;
 import java.rmi.RemoteException;

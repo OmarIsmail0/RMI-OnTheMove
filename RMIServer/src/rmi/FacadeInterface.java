@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rmi.Interface;
+package rmi;
 import rmi.AccType;
 import rmi.Account;
 

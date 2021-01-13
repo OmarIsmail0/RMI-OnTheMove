@@ -1,8 +1,6 @@
 package rmi;
 
 
-import rmi.Interface.AccountInterface;
-
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 

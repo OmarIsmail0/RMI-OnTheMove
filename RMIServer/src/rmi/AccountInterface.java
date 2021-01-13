@@ -1,4 +1,4 @@
-package rmi.Interface;
+package rmi;
 
 import rmi.AccType;
 import rmi.AvailableTimes;

@@ -1,5 +1,5 @@
 
-package rmi.Interface;
+package rmi;
 import rmi.Ride;
 
 import java.rmi.Remote;

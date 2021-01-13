@@ -1,7 +1,5 @@
 package rmi;
 
-import rmi.Interface.AdminInterface;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
