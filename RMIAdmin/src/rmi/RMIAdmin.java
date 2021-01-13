@@ -17,17 +17,16 @@ public class RMIAdmin {
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
 
             AvailableTimes v1 = new AvailableTimes("Thursday");
-            AvailableTimes v2 = new AvailableTimes("Firday");
-            ArrayList<AvailableTimes> times = new ArrayList();
-            times.add(v1);
-            times.add(v2);
+            AvailableTimes v2 = new AvailableTimes("Friday");
+
 
             acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
-                    "ABC123",times,882,CurrentArea.MAADI);
+                    "ABC123",882,CurrentArea.MAADI);
 
             acc.viewAllAccounts();
         }catch (Exception ex){
             ex.printStackTrace();
+            System.out.println(ex);
         }
     }
     

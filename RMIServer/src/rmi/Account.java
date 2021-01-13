@@ -2,8 +2,6 @@ package rmi;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.RMIClientSocketFactory;
-import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
@@ -189,8 +187,8 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
 
     @Override
-    public void createDriverAccount(String username,String password,String email,String mobile
-            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, float rating, CurrentArea currentArea) throws RemoteException{
+    public void createDriverAccount(String username, String password, String email, String mobile
+            , AccType type, String driverLicense, /*ArrayList<AvailableTimes> workingTimes,*/ float rating, CurrentArea currentArea) throws RemoteException{
 
         Account new_Account = new Account();
         Driver new_Driver = new Driver();
@@ -225,10 +223,10 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setType(type);
 
                 new_Driver.setDriverLicense(driverLicense);
-                new_Driver.setWorkingTimes(workingTimes);
+               /* new_Driver.setWorkingTimes(workingTimes);*/
                 new_Driver.setRating(rating);
                 new_Driver.setArea(currentArea);
-
+                new_Driver.setAcc(new_Account);
 
                 sendVerification();
                 System.out.print("Enter your verification code: ");
@@ -357,10 +355,10 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 + "\nEmail:\t\t\t" + getEmail()
                 + "\nMobile:\t\t\t" + getMobile()
                 + "\nType:\t\t\t" + getType()
-                + "\nBalance:\t\t" + bankAcc.get(x).getBalance()
+             /*   + "\nBalance:\t\t" + bankAcc.get(x).getBalance()
                 + "\nCCV:\t\t\t" + bankAcc.get(x).getCcv()
                 + "\nCredit Card Number : " + bankAcc.get(x).getCCnumber()
-                + "\nexpiration Date    : " + bankAcc.get(x).getExpDate()
+                + "\nexpiration Date    : " + bankAcc.get(x).getExpDate()*/
                 + "\n------------------------";
         return result;
 

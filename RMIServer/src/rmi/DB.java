@@ -119,12 +119,12 @@ public class DB {
 
     /*-----------------Driver-----------------*/
     public void insertDriver(Driver driver) {
-        collection = database.getCollection("Client");
+        collection = database.getCollection("Driver");
         collection.insertOne(Document.parse(gson.toJson(driver)));
 
     }
     public ArrayList<Driver> retrieveAllDrivers() {
-        collection = database.getCollection("Client");
+        collection = database.getCollection("Driver");
         ArrayList<Driver> result = new ArrayList();
         ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
         for (int i = 0; i < docs.size(); i++) {
@@ -133,7 +133,7 @@ public class DB {
         return result;
     }
     public void deleteDriver(String email) {
-        collection = database.getCollection("Client");
+        collection = database.getCollection("Driver");
         collection.deleteOne(Filters.eq("acc.email", email));
     }
 
