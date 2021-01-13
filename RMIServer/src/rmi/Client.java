@@ -7,8 +7,14 @@ public class Client extends User{
     int numOfRides;
     Ride ride;
     Notification notification;
-    
+    BankAccount bankAcc;
+
     //Constructor
+
+    public Client() {
+
+    }
+
     public Client(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
         super(acc, notif, area, rides, creditCards, rating);
     }
@@ -38,7 +44,14 @@ public class Client extends User{
     public void setNotification(Notification notification) {
         this.notification = notification;
     }
-    
+
+    public BankAccount getBankAcc() {
+        return bankAcc;
+    }
+
+    public void setBankAcc(BankAccount bankAcc) {
+        this.bankAcc = bankAcc;
+    }
     //Methods
     
 }

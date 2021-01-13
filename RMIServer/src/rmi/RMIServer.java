@@ -1,20 +1,9 @@
 package rmi;
 
-import com.google.gson.Gson;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoIterable;
-import com.mongodb.client.model.Filters;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bson.Document;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class RMIServer {
 
@@ -28,19 +17,34 @@ public class RMIServer {
             Account hoda = new Account(3, "Hoda", "1346", "hoda1346", "124679", AccType.CLIENT);
             Account mai = new Account(4, "Mai", "1346", "Maia1346", "124679", AccType.CLIENT);
 
-          /*  db.insertAccount(omar);
+ /*           db.insertAccount(omar);
             db.insertAccount(tahseen);
             db.insertAccount(hoda);
-            db.insertAccount(mai);*/
-
+            db.insertAccount(mai);
+*/
 
            // acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
-            for (int i = 0; i < db.retrieveAccounts().size(); i++) {
+            /*for (int i = 0; i < db.retrieveAccounts().size(); i++) {
                 System.out.println(db.retrieveAccounts().get(i).toString());
-            }
+            }*/
+            String sDate1="31/12/1998";
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+
+            String sDate2="2/5/2024";
+            Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+
+
+           acc.createClientAccount("Omar", "1346", "omar1346", "124679", AccType.CLIENT,
+                    2500,"1234 2225 6987 1025",882,date1);
+           acc.createClientAccount("Ahmed", "1346", "ahmed1346", "124679", AccType.CLIENT,
+                    2500,"1234 5555 5555 1025",882,date2);
+
+           //acc.viewAllAccounts();
+           acc.banAccount("omar1346");
+           acc.viewAllAccounts();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
     }
 

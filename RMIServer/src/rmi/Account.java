@@ -12,10 +12,16 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     int accID;
     String username, password, email, mobile;
     AccType type;
-    public ArrayList<Account> acc;
+
+    private ArrayList<Account> acc;
+    private ArrayList<BankAccount> bankAcc;
+    private ArrayList<Client> client;
+
     public static int verificationCode;
 
-
+    /*Login Info*/
+    static int Login_ID;
+    static AccType acc_type;
 
     public Account() throws RemoteException{
 
@@ -105,11 +111,19 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
 
     @Override
-    public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException {
+    public void createClientAccount(String username,String password,String email,String mobile,AccType type,
+                                    double balance, String CCnumber, int ccv,Date expDate) throws RemoteException {
+
         Account new_Account = new Account();
+        BankAccount new_bankAcc = new BankAccount();
+        Client new_Client = new Client();
+
         DB db = new DB();
 
-        acc = db.retrieveAccounts();
+        acc = db.retrieveAllAccounts();
+        acc = db.retrieveAllAccounts();
+        bankAcc = db.retrieveAllBankAccounts();
+        client = db.retrieveAllClients();
 
         Scanner input = new Scanner(System.in);
 
@@ -119,95 +133,132 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         int code = 0;
 
         try {
-            if (type == AccType.CLIENT) {
-                if (!acc.isEmpty()) {
-                    for (int i = 0; i < acc.size(); i++) {
-                        if (acc.get(i).getEmail().equals(email)) {
-                            unique = false;
-                            break;
-                        } else {
-                            unique = true;
-                        }
-                    }
-                    if (unique) {
-                        new_Account.setUsername(username);
-                        new_Account.setPassword(password);
-                        new_Account.setEmail(email);
-                        new_Account.setMobile(mobile);
-                        new_Account.setType(type);
-
-                    /*new_BanAcc.setMail(loginMail);
-                    new_BanAcc.setBalance(balance);*/
-
-                        sendVerification();
-                        System.out.print("Enter your verification code: ");
-                        while (numOfAttempts > 0) {
-                            code = input.nextInt();
-                            if (true) {
-                                acc.add(new_Account);
-                                //banAcc.add(new_BanAcc);
-                                db.insertAccount(new_Account);
-                                //db.insertNewBankAccount(acc, banAcc);
-                                break;
-                            } else {
-                                numOfAttempts--;
-                                System.out.println("please try again!");
-                            }
-                        }
-                    } else if (!unique) {
-                        System.err.println("this email is already registered");
-                    }
-                } else if (acc.isEmpty()) {
-
-                    new_Account.setUsername(username);
-                    new_Account.setPassword(password);
-                    new_Account.setEmail(email);
-                    new_Account.setMobile(mobile);
-                    new_Account.setType(type);
-
-                /*new_BanAcc.setMail(loginMail);
-                new_BanAcc.setBalance(balance);*/
-
-                    sendVerification();
-                    System.out.print("Enter your verification code: ");
-                    while (numOfAttempts > 0) {
-                        code = input.nextInt();
-                        if (true) {
-                            acc.add(new_Account);
-                            //banAcc.add(new_BanAcc);
-                            db.insertAccount(new_Account);
-                            //db.insertNewBankAccount(acc, banAcc);
-                            break;
-
-                        } else {
-                            numOfAttempts--;
-                            System.out.println("pls try again!");
-                        }
-                    }
+            for (int i = 0; i < acc.size(); i++) {
+                if (acc.get(i).getEmail().equals(email)) {
+                    unique = false;
+                    break;
+                } else {
+                    unique = true;
                 }
             }
-        }catch (Exception ex){
 
+            if (unique || acc.isEmpty()) {
+                new_Account.setUsername(username);
+                new_Account.setPassword(password);
+                new_Account.setEmail(email);
+                new_Account.setMobile(mobile);
+                new_Account.setType(type);
+
+                new_bankAcc.setMail(email);
+                new_bankAcc.setBalance(balance);
+                new_bankAcc.setCCnumber(CCnumber);
+                new_bankAcc.setCcv(ccv);
+                new_bankAcc.setExpDate(expDate);
+
+                new_Client.setNumOfRides(0);
+                new_Client.setRating(0);
+                new_Client.setAcc(new_Account);
+                new_Client.setBankAcc(new_bankAcc);
+
+                sendVerification();
+                System.out.print("Enter your verification code: ");
+                while (numOfAttempts > 0) {
+                    code = input.nextInt();
+                    if (code == verificationCode) {
+                        acc.add(new_Account);
+                        db.insertAccount(new_Account);
+                        bankAcc.add(new_bankAcc);
+                        db.insertBankAccount(new_bankAcc);
+                        client.add(new_Client);
+                        db.insertClient(new_Client);
+                        break;
+                    } else {
+                        numOfAttempts--;
+                        System.out.println("please try again!");
+                    }
+                }
+            } else if (!unique) {
+                System.err.println("this email is already registered");
+            }
+
+
+        }catch (Exception ex){
+            System.out.println(ex);
         }
     }
-    /*
+
     @Override
     public void createDriverAccount(String username,String password,String email,String mobile, AccType type) throws RemoteException{
 
     }
-    */
-    @Override
-    public void viewAccount() throws RemoteException{
 
+    @Override
+    public void viewOwnAccount(String email) throws RemoteException{
+        Account account = new Account();
+        DB db = new DB();
+        account = db.retrieveAccount(email);
+        System.out.println(account.toString());
+    }
+    @Override
+    public void viewAllAccounts() throws RemoteException{
+        DB db = new DB();
+        acc = db.retrieveAllAccounts();
+
+        if (acc.isEmpty()) {
+            System.out.println("not found");
+        } else {
+            for (int i = 0; i < acc.size(); i++){
+                System.out.println(acc.get(i).toString());
+            }
+
+        }
     }
     @Override
     public boolean login(String EMAIL, String PW) throws RemoteException{
-        if(email.equals(EMAIL) && password.equals(PW)) return true;
-        else return false;
+        DB db = new DB();
+        acc = db.retrieveAllAccounts();
+        int index = -1;
+
+        for (int i = 0; i < acc.size(); i++) {
+            if (acc.get(i).getEmail().equals(EMAIL)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            System.out.println("Incorrect Email");
+        } else {
+            if (acc.get(index).getPassword().equals(PW)) {
+                Login_ID = acc.get(index).getAccID();
+                acc_type = acc.get(index).getType();
+                return true;
+            } else {
+                System.out.println("Incorrect Password");
+                return false;
+            }
+        }
+        return false;
     }
     @Override
     public void banAccount(String email) throws RemoteException{
+        DB db = new DB();
+        acc = db.retrieveAllAccounts();
+        bankAcc = db.retrieveAllBankAccounts();
+        client = db.retrieveAllClients();
 
+        int index = -1;
+        for (int i = 0; i < acc.size(); i++) {
+            if (acc.get(i).getEmail().equals(email)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            System.out.println("account not found");
+        } else {
+            db.deleteAccount(acc.get(index).getEmail());
+            db.deleteBankAccount(bankAcc.get(index).getMail());
+            System.out.println(client.get(index).getAcc().getAccID());
+            db.deleteClient(client.get(index).getAcc().getEmail());
+        }
     }
     @Override
     public void sendVerification() throws RemoteException{
@@ -228,14 +279,25 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public void approveChanges() throws RemoteException{
 
     }
-    /*int accID, String username, String password, String email, String mobile, AccType type*/
     @Override
     public String toString() {
-        String result = "Account ID: " + accID
-                + "\nName: " + username
-                + "\nEmail: " + email
-                + "\nYear: " + mobile
-                + "\nType: " + type
+        DB db = new DB();
+        bankAcc = db.retrieveAllBankAccounts();
+        int x = -1;
+        for (int i = 0; i < bankAcc.size(); i++){
+            if(bankAcc.get(i).getMail().equals(getEmail()))
+                x = i;
+        }
+        String result =
+                  "Account ID:\t\t" + getAccID()
+                + "\nName:\t\t\t" + getUsername()
+                + "\nEmail:\t\t\t" + getEmail()
+                + "\nMobile:\t\t\t" + getMobile()
+                + "\nType:\t\t\t" + getType()
+                + "\nBalance:\t\t" + bankAcc.get(x).getBalance()
+                + "\nCCV:\t\t\t" + bankAcc.get(x).getCcv()
+                + "\nCredit Card Number : " + bankAcc.get(x).getCCnumber()
+                + "\nexpiration Date    : " + bankAcc.get(x).getExpDate()
                 + "\n------------------------";
         return result;
 
