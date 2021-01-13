@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class User {
     private Account acc;
     private Notification notif;
-    private CurrentArea area;
     private ArrayList<Ride> rides;
     private ArrayList<BankAccount> creditCards;
     private float rating;
@@ -15,10 +14,10 @@ public class User {
     public User() {
     }
 
-    public User(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
+    public User(Account acc, Notification notif, /*CurrentArea area,*/ ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
         this.acc = acc;
         this.notif = notif;
-        this.area = area;
+       /* this.area = area;*/
         this.rides = rides;
         this.creditCards = creditCards;
         this.rating = rating;
@@ -37,12 +36,12 @@ public class User {
     public void setNotif(Notification notif) {
         this.notif = notif;
     }
-    public CurrentArea getArea() {
+ /*   public CurrentArea getArea() {
         return area;
     }
     public void setArea(CurrentArea area) {
         this.area = area;
-    }
+    }*/
     public ArrayList<Ride> getRides() {
         return rides;
     }

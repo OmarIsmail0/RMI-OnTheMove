@@ -16,7 +16,7 @@ public class Client extends User{
     }
 
     public Client(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
-        super(acc, notif, area, rides, creditCards, rating);
+        super(acc, notif, /*area,*/ rides, creditCards, rating);
     }
     
     //Setter And Getters

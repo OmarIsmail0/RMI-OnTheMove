@@ -16,6 +16,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     private ArrayList<Account> acc;
     private ArrayList<BankAccount> bankAcc;
     private ArrayList<Client> client;
+    private ArrayList<Driver> driver;
 
     public static int verificationCode;
 
@@ -115,7 +116,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                                     double balance, String CCnumber, int ccv,Date expDate) throws RemoteException {
 
         Account new_Account = new Account();
-        BankAccount new_bankAcc = new BankAccount();
+        BankAccount new_BankAcc = new BankAccount();
         Client new_Client = new Client();
 
         DB db = new DB();
@@ -149,16 +150,16 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setMobile(mobile);
                 new_Account.setType(type);
 
-                new_bankAcc.setMail(email);
-                new_bankAcc.setBalance(balance);
-                new_bankAcc.setCCnumber(CCnumber);
-                new_bankAcc.setCcv(ccv);
-                new_bankAcc.setExpDate(expDate);
+                new_BankAcc.setMail(email);
+                new_BankAcc.setBalance(balance);
+                new_BankAcc.setCCnumber(CCnumber);
+                new_BankAcc.setCcv(ccv);
+                new_BankAcc.setExpDate(expDate);
 
                 new_Client.setNumOfRides(0);
                 new_Client.setRating(0);
                 new_Client.setAcc(new_Account);
-                new_Client.setBankAcc(new_bankAcc);
+                new_Client.setBankAcc(new_BankAcc);
 
                 sendVerification();
                 System.out.print("Enter your verification code: ");
@@ -167,8 +168,8 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                     if (code == verificationCode) {
                         acc.add(new_Account);
                         db.insertAccount(new_Account);
-                        bankAcc.add(new_bankAcc);
-                        db.insertBankAccount(new_bankAcc);
+                        bankAcc.add(new_BankAcc);
+                        db.insertBankAccount(new_BankAcc);
                         client.add(new_Client);
                         db.insertClient(new_Client);
                         break;
@@ -177,7 +178,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                         System.out.println("please try again!");
                     }
                 }
-            } else if (!unique) {
+            } else  {
                 System.err.println("this email is already registered");
             }
 
@@ -188,8 +189,70 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
 
     @Override
-    public void createDriverAccount(String username,String password,String email,String mobile, AccType type) throws RemoteException{
+    public void createDriverAccount(String username,String password,String email,String mobile
+            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, float rating, CurrentArea currentArea) throws RemoteException{
 
+        Account new_Account = new Account();
+        Driver new_Driver = new Driver();
+
+        DB db = new DB();
+
+        acc = db.retrieveAllAccounts();
+        driver = db.retrieveAllDrivers();
+
+        Scanner input = new Scanner(System.in);
+
+        boolean unique = false;
+
+        int numOfAttempts = 3;
+        int code = 0;
+
+        try {
+            for (int i = 0; i < acc.size(); i++) {
+                if (acc.get(i).getEmail().equals(email)) {
+                    unique = false;
+                    break;
+                } else {
+                    unique = true;
+                }
+            }
+
+            if (unique || acc.isEmpty()) {
+                new_Account.setUsername(username);
+                new_Account.setPassword(password);
+                new_Account.setEmail(email);
+                new_Account.setMobile(mobile);
+                new_Account.setType(type);
+
+                new_Driver.setDriverLicense(driverLicense);
+                new_Driver.setWorkingTimes(workingTimes);
+                new_Driver.setRating(rating);
+                new_Driver.setArea(currentArea);
+
+
+                sendVerification();
+                System.out.print("Enter your verification code: ");
+                while (numOfAttempts > 0) {
+                    code = input.nextInt();
+                    if (code == verificationCode) {
+                        acc.add(new_Account);
+                        db.insertAccount(new_Account);
+                        driver.add(new_Driver);
+                        db.insertDriver(new_Driver);
+                        break;
+                    } else {
+                        numOfAttempts--;
+                        System.out.println("please try again!");
+                    }
+                }
+            } else  {
+                System.err.println("this email is already registered");
+            }
+
+
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
     }
 
     @Override

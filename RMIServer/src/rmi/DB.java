@@ -116,14 +116,28 @@ public class DB {
         collection = database.getCollection("Client");
         collection.deleteOne(Filters.eq("acc.email", email));
     }
-    
-    public Ride retrieveRide(int id) {
-        collection = database.getCollection("Ride");
-        Document doc = collection.find(Filters.eq("id", id)).first();
-        Ride result = gson.fromJson(doc.toJson(), Ride.class);
+
+    /*-----------------Driver-----------------*/
+    public void insertDriver(Driver driver) {
+        collection = database.getCollection("Client");
+        collection.insertOne(Document.parse(gson.toJson(driver)));
+
+    }
+    public ArrayList<Driver> retrieveAllDrivers() {
+        collection = database.getCollection("Client");
+        ArrayList<Driver> result = new ArrayList();
+        ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
+        for (int i = 0; i < docs.size(); i++) {
+            result.add(gson.fromJson(docs.get(i).toJson(), Driver.class));
+        }
         return result;
     }
-    
+    public void deleteDriver(String email) {
+        collection = database.getCollection("Client");
+        collection.deleteOne(Filters.eq("acc.email", email));
+    }
+
+    /*-----------------Ride-----------------*/
     public void createRide(Ride ride) {
         collection = database.getCollection("Ride");
         collection.insertOne(Document.parse(gson.toJson(ride)));
@@ -131,5 +145,11 @@ public class DB {
         public void insertComplaint(Complaint comp) {
         collection = database.getCollection("Complaint");
         collection.insertOne(Document.parse(gson.toJson(comp)));
+    }
+    public Ride retrieveRide(int id) {
+        collection = database.getCollection("Ride");
+        Document doc = collection.find(Filters.eq("id", id)).first();
+        Ride result = gson.fromJson(doc.toJson(), Ride.class);
+        return result;
     }
 }
