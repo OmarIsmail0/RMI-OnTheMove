@@ -38,12 +38,12 @@ public class DB {
         collection = database.getCollection("Account"); // Collection name
     }
 
-    public void insertStudent(Account s) {
+    public void insertAccount(Account s) {
         collection.insertOne(Document.parse(gson.toJson(s)));
         System.out.println("Account inserted.");
     }
 
-    public ArrayList<Account> getAllStudents() {
+    public ArrayList<Account> retrieveAccounts() {
         ArrayList<Account> result = new ArrayList();
         ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
         for (int i = 0; i < docs.size(); i++) {

@@ -5,7 +5,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
+import java.util.*;
+
 
 public class Account extends UnicastRemoteObject implements AccountInterface, Serializable {
     int accID;
@@ -14,11 +15,20 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public ArrayList<Account> acc;
     public static int verificationCode;
 
+
+
     public Account() throws RemoteException{
 
     }
-    
-    
+
+    public Account(int accID, String username, String password, String email, String mobile, AccType type) throws RemoteException {
+        this.accID = accID;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.mobile = mobile;
+        this.type = type;
+    }
 
     public Account(int accID, String username, String password, String email, String mobile, AccType type, ArrayList<Account> acc) throws RemoteException {
         this.accID = accID;
@@ -95,8 +105,88 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
 
     @Override
-    public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException{
-        Account newAccount = new Account();
+    public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException {
+        Account new_Account = new Account();
+        DB db = new DB();
+
+        acc = db.retrieveAccounts();
+
+        Scanner input = new Scanner(System.in);
+
+        boolean unique = false;
+
+        int numOfAttempts = 3;
+        int code = 0;
+
+        try {
+            if (!acc.isEmpty()) {
+                for (int i = 0; i < acc.size(); i++) {
+                    if (acc.get(i).getEmail().equals(email)) {
+                        unique = false;
+                        break;
+                    } else {
+                        unique = true;
+                    }
+                }
+                if (unique) {
+                    new_Account.setUsername(username);
+                    new_Account.setPassword(password);
+                    new_Account.setEmail(email);
+                    new_Account.setMobile(mobile);
+                    new_Account.setType(type);
+
+                    /*new_BanAcc.setMail(loginMail);
+                    new_BanAcc.setBalance(balance);*/
+
+                    sendVerification();
+                    System.out.print("Enter your verification code: ");
+                    while (numOfAttempts > 0) {
+                        code = input.nextInt();
+                        if (true) {
+                            acc.add(new_Account);
+                            //banAcc.add(new_BanAcc);
+                            db.insertAccount(new_Account);
+                            //db.insertNewBankAccount(acc, banAcc);
+                            break;
+                        } else {
+                            numOfAttempts--;
+                            System.out.println("please try again!");
+                        }
+                    }
+                } else if (!unique) {
+                    System.err.println("this email is already registered");
+                }
+            } else if (acc.isEmpty()) {
+
+                new_Account.setUsername(username);
+                new_Account.setPassword(password);
+                new_Account.setEmail(email);
+                new_Account.setMobile(mobile);
+                new_Account.setType(type);
+
+                /*new_BanAcc.setMail(loginMail);
+                new_BanAcc.setBalance(balance);*/
+
+                sendVerification();
+                System.out.print("Enter your verification code: ");
+                while (numOfAttempts > 0) {
+                    code = input.nextInt();
+                    if (true) {
+                        acc.add(new_Account);
+                        //banAcc.add(new_BanAcc);
+                        db.insertAccount(new_Account);
+                        //db.insertNewBankAccount(acc, banAcc);
+                        break;
+
+                    } else {
+                        numOfAttempts--;
+                        System.out.println("pls try again!");
+                    }
+                }
+            }
+        }catch (Exception ex){
+
+        }
     }
     /*
     @Override
@@ -106,7 +196,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     */
     @Override
     public void viewAccount() throws RemoteException{
-        
+
     }
     @Override
     public boolean login(String EMAIL, String PW) throws RemoteException{
@@ -115,26 +205,36 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
     @Override
     public void banAccount(String email) throws RemoteException{
-        
-    }
-    @Override
-    public void sendVerification() throws RemoteException{
 
     }
     @Override
+    public void sendVerification() throws RemoteException{
+        Random rand = new Random();
+        String id = String.format("%04d", rand.nextInt(10000));
+        verificationCode = Integer.parseInt(id);
+        System.out.println("your verification code is: " + verificationCode);
+    }
+    @Override
     public boolean enterVerificationCode(int code) throws RemoteException{
-        return true;
+        if (verificationCode == code) {
+            return true;
+        } else {
+            return false;
+        }
     }
     @Override
     public void approveChanges() throws RemoteException{
 
     }
-    
+    /*int accID, String username, String password, String email, String mobile, AccType type*/
     @Override
     public String toString() {
-        String result = "Name: " + username
+        String result = "Account ID: " + accID
+                + "\nName: " + username
                 + "\nEmail: " + email
-                + "\nYear: " + mobile;
+                + "\nYear: " + mobile
+                + "\nType: " + type
+                + "\n------------------------";
         return result;
 
     }
