@@ -42,9 +42,11 @@ public class RMIServer {
            acc.viewAllAccounts();*/
 
             AccountInterface account = new Account();
+            CarInterface car = new Car();
             Registry registry = LocateRegistry.createRegistry(1099);
 
             registry.bind("Account", account);
+            registry.bind("Car", car);
 
         } catch (Exception ex) {
             ex.printStackTrace();
