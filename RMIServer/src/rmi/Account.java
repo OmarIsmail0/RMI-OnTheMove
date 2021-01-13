@@ -119,24 +119,54 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         int code = 0;
 
         try {
-            if (!acc.isEmpty()) {
-                for (int i = 0; i < acc.size(); i++) {
-                    if (acc.get(i).getEmail().equals(email)) {
-                        unique = false;
-                        break;
-                    } else {
-                        unique = true;
+            if (type == AccType.CLIENT) {
+                if (!acc.isEmpty()) {
+                    for (int i = 0; i < acc.size(); i++) {
+                        if (acc.get(i).getEmail().equals(email)) {
+                            unique = false;
+                            break;
+                        } else {
+                            unique = true;
+                        }
                     }
-                }
-                if (unique) {
+                    if (unique) {
+                        new_Account.setUsername(username);
+                        new_Account.setPassword(password);
+                        new_Account.setEmail(email);
+                        new_Account.setMobile(mobile);
+                        new_Account.setType(type);
+
+                    /*new_BanAcc.setMail(loginMail);
+                    new_BanAcc.setBalance(balance);*/
+
+                        sendVerification();
+                        System.out.print("Enter your verification code: ");
+                        while (numOfAttempts > 0) {
+                            code = input.nextInt();
+                            if (true) {
+                                acc.add(new_Account);
+                                //banAcc.add(new_BanAcc);
+                                db.insertAccount(new_Account);
+                                //db.insertNewBankAccount(acc, banAcc);
+                                break;
+                            } else {
+                                numOfAttempts--;
+                                System.out.println("please try again!");
+                            }
+                        }
+                    } else if (!unique) {
+                        System.err.println("this email is already registered");
+                    }
+                } else if (acc.isEmpty()) {
+
                     new_Account.setUsername(username);
                     new_Account.setPassword(password);
                     new_Account.setEmail(email);
                     new_Account.setMobile(mobile);
                     new_Account.setType(type);
 
-                    /*new_BanAcc.setMail(loginMail);
-                    new_BanAcc.setBalance(balance);*/
+                /*new_BanAcc.setMail(loginMail);
+                new_BanAcc.setBalance(balance);*/
 
                     sendVerification();
                     System.out.print("Enter your verification code: ");
@@ -148,39 +178,11 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                             db.insertAccount(new_Account);
                             //db.insertNewBankAccount(acc, banAcc);
                             break;
+
                         } else {
                             numOfAttempts--;
-                            System.out.println("please try again!");
+                            System.out.println("pls try again!");
                         }
-                    }
-                } else if (!unique) {
-                    System.err.println("this email is already registered");
-                }
-            } else if (acc.isEmpty()) {
-
-                new_Account.setUsername(username);
-                new_Account.setPassword(password);
-                new_Account.setEmail(email);
-                new_Account.setMobile(mobile);
-                new_Account.setType(type);
-
-                /*new_BanAcc.setMail(loginMail);
-                new_BanAcc.setBalance(balance);*/
-
-                sendVerification();
-                System.out.print("Enter your verification code: ");
-                while (numOfAttempts > 0) {
-                    code = input.nextInt();
-                    if (true) {
-                        acc.add(new_Account);
-                        //banAcc.add(new_BanAcc);
-                        db.insertAccount(new_Account);
-                        //db.insertNewBankAccount(acc, banAcc);
-                        break;
-
-                    } else {
-                        numOfAttempts--;
-                        System.out.println("pls try again!");
                     }
                 }
             }

@@ -2,8 +2,11 @@ package rmi;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -25,19 +28,19 @@ public class RMIServer {
             Account hoda = new Account(3, "Hoda", "1346", "hoda1346", "124679", AccType.CLIENT);
             Account mai = new Account(4, "Mai", "1346", "Maia1346", "124679", AccType.CLIENT);
 
-/*
-            db.insertStudent(omar);
-            db.insertStudent(tahseen);
-            db.insertStudent(hoda);
-            db.insertStudent(mai);
-*/
-            acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
-            for (int i = 0; i < db.getAllStudents().size(); i++) {
-                System.out.println(db.getAllStudents().get(i).toString());
+          /*  db.insertAccount(omar);
+            db.insertAccount(tahseen);
+            db.insertAccount(hoda);
+            db.insertAccount(mai);*/
+
+
+           // acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
+            for (int i = 0; i < db.retrieveAccounts().size(); i++) {
+                System.out.println(db.retrieveAccounts().get(i).toString());
             }
 
         } catch (Exception ex) {
-            System.out.println("Exception occurred");
+            System.out.println(ex);
         }
     }
 
