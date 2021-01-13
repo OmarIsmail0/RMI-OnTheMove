@@ -129,5 +129,13 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public void approveChanges() throws RemoteException{
 
     }
+    
+    @Override
+    public String toString() {
+        String result = "Name: " + username
+                + "\nEmail: " + email
+                + "\nYear: " + mobile;
+        return result;
 
+    }
 }

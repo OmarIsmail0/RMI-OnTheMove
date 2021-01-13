@@ -1,21 +1,12 @@
-<<<<<<< Updated upstream
-package rmi;
-
-=======
 
 package rmi;
 
-/**
- *
- * @author Mai146607
- */
->>>>>>> Stashed changes
 public class Payment {
     
     private int pID;
     private Client client;
     private int amount;
-    private PayMethod method;
+    //private PayMethod method;
 
     public int getpID() {
         return pID;
@@ -41,13 +32,13 @@ public class Payment {
         this.amount = amount;
     }
 
-    public PayMethod getMethod() {
-        return method;
-    }
-
-    public void setMethod(PayMethod method) {
-        this.method = method;
-    }
+//    public PayMethod getMethod() {
+//        return method;
+//    }
+//
+//    public void setMethod(PayMethod method) {
+//        this.method = method;
+//    }
 
     
     
