@@ -1,5 +1,7 @@
 package rmi;
 
+import rmi.Interface.AccountInterface;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -337,10 +339,14 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             return false;
         }
     }
+    public void editAccount(){
+
+    }
     @Override
     public void approveChanges() throws RemoteException{
 
     }
+
     @Override
     public String toString() {
         DB db = new DB();

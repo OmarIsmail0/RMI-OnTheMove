@@ -1,4 +1,8 @@
-package rmi;
+package rmi.Interface;
+
+import rmi.AccType;
+import rmi.AvailableTimes;
+import rmi.CurrentArea;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

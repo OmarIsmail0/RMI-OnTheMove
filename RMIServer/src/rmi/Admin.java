@@ -1,5 +1,7 @@
 package rmi;
 
+import rmi.Interface.AdminInterface;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -29,8 +31,4 @@ public class Admin extends UnicastRemoteObject implements AdminInterface {
         return null;
     }
 
-    @Override
-    public void editAccount() throws RemoteException{
-
-    }
 }

@@ -41,7 +41,6 @@ public class Client extends User{
     public BankAccount getBankAcc() {
         return bankAcc;
     }
-
     public void setBankAcc(BankAccount bankAcc) {
         this.bankAcc = bankAcc;
     }

@@ -1,11 +1,10 @@
 package rmi;
 
 
+import rmi.Interface.AccountInterface;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class RMIServer {
 

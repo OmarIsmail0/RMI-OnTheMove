@@ -96,7 +96,6 @@ public class BankAccount {
 
     @Override
     public String toString(){
-
         String result =
                 "\nBalance:" + getBalance()
                 + "\nCredit Card Number: " + getCCnumber()

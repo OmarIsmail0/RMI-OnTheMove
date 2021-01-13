@@ -1,12 +1,11 @@
 
-package rmi;
+package rmi.Interface;
+import rmi.Ride;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-/**
- *
- * @author Mai146607
- */
+
 public interface RideInterface extends Remote {
     public void viewRideDetails(int x) throws RemoteException;
     public void cancelRide(int x) throws RemoteException;
