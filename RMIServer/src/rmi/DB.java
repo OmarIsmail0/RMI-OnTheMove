@@ -8,19 +8,17 @@ package rmi;
 import java.rmi.RemoteException;
 import java.util.*;
 
-
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
-
-
 
 public class DB {
 
@@ -36,9 +34,8 @@ public class DB {
 
         // Initialize
         String connectionString = "mongodb+srv://AOOPSE:123@cluster0.g6utq.mongodb.net/<dbname>?retryWrites=true&w=majority";
-        db  = new MongoClient(new MongoClientURI(connectionString));
+        db = new MongoClient(new MongoClientURI(connectionString));
         database = db.getDatabase("OnTheMove"); // Database name
-
     }
     /*-----------------Account-----------------*/
     public void insertAccount(Account acc) {
@@ -49,11 +46,11 @@ public class DB {
         for (int i = 0; i < result.size(); i++) {
             index = result.get(i).getAccID();
         }
+
         acc.setAccID(index+1);
         collection.insertOne(Document.parse(gson.toJson(acc)));
         System.out.println("Account inserted.");
     }
-
     public ArrayList<Account> retrieveAllAccounts() {
         collection = database.getCollection("Account");
         ArrayList<Account> result = new ArrayList();
@@ -83,7 +80,6 @@ public class DB {
     public void insertBankAccount(BankAccount bankAcc) {
         collection = database.getCollection("BankAccount");
         collection.insertOne(Document.parse(gson.toJson(bankAcc)));
-
     }
     public ArrayList<BankAccount> retrieveAllBankAccounts() {
         collection = database.getCollection("BankAccount");
@@ -113,8 +109,10 @@ public class DB {
         }
         return result;
     }
+
     public void deleteClient(String email) {
         collection = database.getCollection("Client");
         collection.deleteOne(Filters.eq("acc.email", email));
     }
+
 }

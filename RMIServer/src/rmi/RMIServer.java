@@ -17,11 +17,11 @@ public class RMIServer {
             Account hoda = new Account(3, "Hoda", "1346", "hoda1346", "124679", AccType.CLIENT);
             Account mai = new Account(4, "Mai", "1346", "Maia1346", "124679", AccType.CLIENT);
 
- /*           db.insertAccount(omar);
+            db.insertAccount(omar);
             db.insertAccount(tahseen);
             db.insertAccount(hoda);
             db.insertAccount(mai);
-*/
+
 
            // acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
             /*for (int i = 0; i < db.retrieveAccounts().size(); i++) {
@@ -37,10 +37,10 @@ public class RMIServer {
            acc.createClientAccount("Omar", "1346", "omar1346", "124679", AccType.CLIENT,
                     2500,"1234 2225 6987 1025",882,date1);
            acc.createClientAccount("Ahmed", "1346", "ahmed1346", "124679", AccType.CLIENT,
-                    2500,"1234 5555 5555 1025",882,date2);
-
-           //acc.viewAllAccounts();
-           acc.banAccount("omar1346");
+                   2500,"1234 5555 5555 1025",882,date2);
+//
+//           //acc.viewAllAccounts();
+//           acc.banAccount("omar1346");
            acc.viewAllAccounts();
 
         } catch (Exception ex) {
