@@ -13,6 +13,7 @@ public class RMIAdmin {
             Registry registry = LocateRegistry.getRegistry(1099);
             AccountInterface acc = (AccountInterface) registry.lookup("Account");
 
+
             String sDate1="12/1998";
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
 
@@ -21,13 +22,13 @@ public class RMIAdmin {
             ArrayList<AvailableTimes> x = new ArrayList<>();
             x.add(v1);
             x.add(v2);
-            
-
 
             acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
                     "ABC123", x, (float) 882.2, CurrentArea.MAADI);
 
-            acc.viewAllAccounts();
+            System.out.println(acc.viewAllAccounts());
+
+
         }catch (Exception ex){
             ex.printStackTrace();
             System.out.println(ex);

@@ -67,9 +67,9 @@ public class DB {
         }
         return result;
     }
-    public Account retrieveAccount(String email) {
+    public Account retrieveAccount(int id) {
         collection = database.getCollection("Account");
-        Document doc = collection.find(Filters.eq("email", email)).first();
+        Document doc = collection.find(Filters.eq("accID", id)).first();
         Account result = gson.fromJson(doc.toJson(), Account.class);
         return result;
     }

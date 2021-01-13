@@ -254,25 +254,26 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     }
 
     @Override
-    public void viewOwnAccount(String email) throws RemoteException{
+    public String viewOwnAccount() throws RemoteException{
         Account account = new Account();
         DB db = new DB();
-        account = db.retrieveAccount(email);
-        System.out.println(account.toString());
+        account = db.retrieveAccount(Login_ID);
+        String text = account.toString();
+        return text;
     }
     @Override
-    public void viewAllAccounts() throws RemoteException{
+    public String viewAllAccounts() throws RemoteException{
         DB db = new DB();
         acc = db.retrieveAllAccounts();
-
+        String text = " ";
         if (acc.isEmpty()) {
-            System.out.println("not found");
+            text ="not found";
         } else {
             for (int i = 0; i < acc.size(); i++){
-                System.out.println(acc.get(i).toString());
+                text = acc.get(i).toString();
             }
-
         }
+        return text;
     }
     @Override
     public boolean login(String EMAIL, String PW) throws RemoteException{

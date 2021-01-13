@@ -13,13 +13,16 @@ public class RMIClient {
             Registry registry = LocateRegistry.getRegistry(1099);
             AccountInterface acc = (AccountInterface) registry.lookup("Account");
 
-            String sDate1="12/1998";
+         /*   String sDate1="12/1998";
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
 
             acc.createClientAccount("Omar", "1346", "omar1346", "124679", AccType.CLIENT,
                     2500,"1234 2225 6987 1025",882,date1);
 
-            acc.viewAllAccounts();
+            System.out.println(acc.viewAllAccounts());*/
+            acc.login("omar1346","1346");
+            System.out.println(acc.viewOwnAccount());
+
         }catch (Exception ex){
             ex.printStackTrace();
         }
