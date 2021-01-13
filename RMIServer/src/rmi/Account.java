@@ -214,7 +214,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         Random rand = new Random();
         String id = String.format("%04d", rand.nextInt(10000));
         verificationCode = Integer.parseInt(id);
-        System.out.println("your verification code is: " + verificationCode);
+        System.out.println("Your verification code is: " + verificationCode);
     }
     @Override
     public boolean enterVerificationCode(int code) throws RemoteException{

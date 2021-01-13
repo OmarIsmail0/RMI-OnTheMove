@@ -1,6 +1,22 @@
 package rmi;
 
 public class AvailableTimes {
-    String time;
     String day;
+
+    public AvailableTimes(String day) {
+        this.day = day;
+    }
+
+    public AvailableTimes() {
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+    
+    
 }

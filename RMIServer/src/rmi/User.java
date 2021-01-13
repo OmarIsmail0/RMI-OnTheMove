@@ -7,16 +7,15 @@ public class User {
     private Notification notif;
     private CurrentArea area;
     private ArrayList<Ride> rides;
-    private ArrayList<BankAccount> creditCards;
+    private BankAccount creditCard;
     private float rating;
 
     //Constructors
-    public User(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
+    public User(Account acc, CurrentArea area, ArrayList<Ride> rides, BankAccount creditCard, float rating) {
         this.acc = acc;
-        this.notif = notif;
         this.area = area;
         this.rides = rides;
-        this.creditCards = creditCards;
+        this.creditCard = creditCard;
         this.rating = rating;
     }
 
@@ -45,11 +44,11 @@ public class User {
     public void setRides(ArrayList<Ride> rides) {
         this.rides = rides;
     }
-    public ArrayList<BankAccount> getCreditCards() {
-        return creditCards;
+    public BankAccount getCreditCard() {
+        return creditCard;
     }
-    public void setCreditCards(ArrayList<BankAccount> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCards(BankAccount creditCard) {
+        this.creditCard = creditCard;
     }
     public float getRating() {
         return rating;

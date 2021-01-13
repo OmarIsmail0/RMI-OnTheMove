@@ -1,25 +1,23 @@
 package rmi;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import rmi.ReadOnlyInterfaces.ClientReadOnly;
 
-public class Client extends User{
-    float wallet;
+public class Client extends User implements ClientReadOnly{
+    //float wallet;
     int numOfRides;
     Ride ride;
     Notification notification;
     
     //Constructor
-    public Client(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
-        super(acc, notif, area, rides, creditCards, rating);
+    public Client(Account acc, CurrentArea area, ArrayList<Ride> rides,BankAccount creditCard, float rating) {
+        super(acc, area, rides, creditCard, rating);
+        this.numOfRides = 0;
     }
     
     //Setter And Getters
-    public float getWallet() {
-        return wallet;
-    }
-    public void setWallet(float wallet) {
-        this.wallet = wallet;
-    }
+    
     public int getNumOfRides() {
         return numOfRides;
     }
@@ -40,5 +38,45 @@ public class Client extends User{
     }
     
     //Methods
+
+    @Override
+    public void createClientAccount(String username, String password, String email, String mobile, AccType type) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void requestRide(CurrentArea pickUpLoc, CurrentArea destination) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void cancelRide(int Rid) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean enterVerificationCode(int code) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void viewRideDetails(int Rid) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean login(String EMAIL, String PW) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void giveComplaint(Account acc, String str) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

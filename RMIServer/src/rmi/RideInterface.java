@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public interface RideInterface extends Remote {
     public void viewRideDetails(int x) throws RemoteException;
     public void cancelRide(int x) throws RemoteException;
-    public void requestRide(String x, String y) throws RemoteException;
+    public void requestRide(CurrentArea pickUpLoc, CurrentArea destination) throws RemoteException;
     public ArrayList<Ride> viewRideHistory() throws RemoteException;
-    public void acceptRide(int x) throws RemoteException;
-    public void declineRide(int x) throws RemoteException;
+    public void acceptRide(Ride r) throws RemoteException;
+    public void declineRide(Ride r) throws RemoteException;
    
 }
