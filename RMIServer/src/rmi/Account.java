@@ -15,7 +15,9 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public ArrayList<Account> acc;
     public static int verificationCode;
 
-
+    /*Login Info*/
+    static int Login_ID;
+    static AccType acc_type;
 
     public Account() throws RemoteException{
 
@@ -107,6 +109,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     @Override
     public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException {
         Account new_Account = new Account();
+
         DB db = new DB();
 
         acc = db.retrieveAccounts();
@@ -119,7 +122,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         int code = 0;
 
         try {
-            if (type == AccType.CLIENT) {
+            if (true/*type == AccType.CLIENT*/) {
                 if (!acc.isEmpty()) {
                     for (int i = 0; i < acc.size(); i++) {
                         if (acc.get(i).getEmail().equals(email)) {
@@ -136,9 +139,9 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                         new_Account.setMobile(mobile);
                         new_Account.setType(type);
 
-                    /*new_BanAcc.setMail(loginMail);
-                    new_BanAcc.setBalance(balance);*/
-
+                        /*new_BanAcc.setMail(loginMail);
+                        new_BanAcc.setBalance(balance);
+*/
                         sendVerification();
                         System.out.print("Enter your verification code: ");
                         while (numOfAttempts > 0) {
@@ -186,28 +189,64 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                     }
                 }
             }
+
         }catch (Exception ex){
 
         }
     }
-    /*
+
     @Override
     public void createDriverAccount(String username,String password,String email,String mobile, AccType type) throws RemoteException{
 
     }
-    */
-    @Override
-    public void viewAccount() throws RemoteException{
 
+    @Override
+    public void viewAccount(String email) throws RemoteException{
+        Account account = new Account();
+        DB db = new DB();
+        account = db.retrieveAccount(email);
+        System.out.println(account.toString());
     }
     @Override
     public boolean login(String EMAIL, String PW) throws RemoteException{
-        if(email.equals(EMAIL) && password.equals(PW)) return true;
-        else return false;
+        DB db = new DB();
+        acc = db.retrieveAccounts();
+        int index = -1;
+
+        for (int i = 0; i < acc.size(); i++) {
+            if (acc.get(i).getEmail().equals(EMAIL)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            System.out.println("Incorrect Email");
+        } else {
+            if (acc.get(index).getPassword().equals(PW)) {
+                Login_ID = acc.get(index).getAccID();
+                acc_type = acc.get(index).getType();
+                return true;
+            } else {
+                System.out.println("Incorrect Password");
+                return false;
+            }
+        }
+        return false;
     }
     @Override
     public void banAccount(String email) throws RemoteException{
-
+        DB db = new DB();
+        acc = db.retrieveAccounts();
+        int index = -1;
+        for (int i = 0; i < acc.size(); i++) {
+            if (acc.get(i).getEmail().equals(email)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            System.out.println("account not found");
+        } else {
+            db.deleteAccount(acc.get(index).getEmail());
+        }
     }
     @Override
     public void sendVerification() throws RemoteException{

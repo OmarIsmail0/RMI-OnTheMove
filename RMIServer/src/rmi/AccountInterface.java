@@ -6,8 +6,8 @@ import java.rmi.RemoteException;
 public interface AccountInterface extends Remote {
 
     public void createClientAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException;
-    //public void createDriverAccount(String username,String password,String email,String mobile/*,AccType type*/) throws RemoteException;
-    public void viewAccount() throws RemoteException;
+    public void createDriverAccount(String username,String password,String email,String mobile,AccType type) throws RemoteException;
+    public void viewAccount(String email) throws RemoteException;
     public boolean login(String email, String password) throws RemoteException;
     public void banAccount(String email) throws RemoteException;
     public void sendVerification() throws RemoteException;

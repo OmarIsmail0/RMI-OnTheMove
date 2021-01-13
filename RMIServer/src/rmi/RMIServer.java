@@ -28,17 +28,17 @@ public class RMIServer {
             Account hoda = new Account(3, "Hoda", "1346", "hoda1346", "124679", AccType.CLIENT);
             Account mai = new Account(4, "Mai", "1346", "Maia1346", "124679", AccType.CLIENT);
 
-          /*  db.insertAccount(omar);
+          /*db.insertAccount(omar);
             db.insertAccount(tahseen);
             db.insertAccount(hoda);
             db.insertAccount(mai);*/
 
 
            // acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
-            for (int i = 0; i < db.retrieveAccounts().size(); i++) {
+            /*for (int i = 0; i < db.retrieveAccounts().size(); i++) {
                 System.out.println(db.retrieveAccounts().get(i).toString());
-            }
-
+            }*/
+            acc.viewAccount("omar1346");
         } catch (Exception ex) {
             System.out.println(ex);
         }
