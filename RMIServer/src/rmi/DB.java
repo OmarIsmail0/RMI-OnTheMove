@@ -10,6 +10,7 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -33,17 +34,25 @@ public class DB {
         mongoLogger.setLevel(Level.SEVERE);
 
         // Initialize
-        db = new MongoClient();
+        String connectionString = "mongodb+srv://AOOPSE:123@cluster0.g6utq.mongodb.net/<dbname>?retryWrites=true&w=majority";
+        db  = new MongoClient(new MongoClientURI(connectionString));
         database = db.getDatabase("OnTheMove"); // Database name
         collection = database.getCollection("Account"); // Collection name
     }
 
-    public void insertStudent(Account s) {
+    public void insertAccount(Account s) {
+        ArrayList<Account> result = new ArrayList();
+        result = retrieveAccounts();
+        int index = 0;
+        for (int i = 0; i < result.size(); i++) {
+            index = result.get(i).getAccID();
+        }
+        s.setAccID(index+1);
         collection.insertOne(Document.parse(gson.toJson(s)));
         System.out.println("Account inserted.");
     }
 
-    public ArrayList<Account> getAllStudents() {
+    public ArrayList<Account> retrieveAccounts() {
         ArrayList<Account> result = new ArrayList();
         ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
         for (int i = 0; i < docs.size(); i++) {

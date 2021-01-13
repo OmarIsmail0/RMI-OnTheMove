@@ -5,3 +5,7 @@
 /RMIDatabase/nbproject/private/
 /RMIDatabase/build/
 /RMIServer/build/
+RMIAdmin/RMIAdmin.iml
+RMIClient/RMIClient.iml
+RMIDriver/RMIDriver.iml
+RMIServer/RMIServer.iml
