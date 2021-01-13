@@ -14,8 +14,12 @@ public class Driver extends User{
 
     }
 
-    public Driver(Account acc, Notification notif, CurrentArea area, ArrayList<Ride> rides, ArrayList<BankAccount> creditCards, float rating) {
-        super(acc, notif,/* area,*/ rides, creditCards, rating);
+    public Driver(Account acc, ArrayList<Ride> rides, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car, CurrentArea area) {
+        super(acc, rides, rating);
+        this.area=area;
+        this.car=car;
+        this.driverLicense=driverLicense;
+        this.workingTimes=workingTimes;
     }
     
     //Setters And Getters
