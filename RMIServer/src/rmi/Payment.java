@@ -1,12 +1,18 @@
 
 package rmi;
 
+import rmi.Interface.PayMethod;
+
 public class Payment {
-    
+
     private int pID;
     private Client client;
     private int amount;
-    //private PayMethod method;
+    private PayMethod method;
+
+    public Payment(PayMethod method){
+        this.method = method;
+    }
 
     public int getpID() {
         return pID;
@@ -32,14 +38,9 @@ public class Payment {
         this.amount = amount;
     }
 
-//    public PayMethod getMethod() {
-//        return method;
-//    }
-//
-//    public void setMethod(PayMethod method) {
-//        this.method = method;
-//    }
+    public void executeStrategy(double amount){
+        method.Pay(amount);
+    }
 
-    
-    
+
 }

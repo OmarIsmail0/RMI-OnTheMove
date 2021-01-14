@@ -1,20 +1,34 @@
 package rmi;
 
-import java.util.ArrayList;
+import rmi.Interface.ClientInterface;
+import rmi.ReadOnly.ClientReadOnly;
+import rmi.ReadOnly.DriverReadOnly;
 
-public class Client extends User{
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
+public class Client extends User  implements Serializable, ClientInterface {
     int numOfRides;
     Ride ride;
     Notification notification;
     BankAccount bankAcc;
 
+    private ClientReadOnly CRO;
+
+    public Client(ClientReadOnly CRO) throws RemoteException{
+        this.CRO = CRO;
+    }
+
     //Constructor
 
-    public Client() {
+    public Client() throws RemoteException{
 
     }
 
-    public Client(Account acc, ArrayList<Ride> rides, float rating) {
+    public Client(Account acc, ArrayList<Ride> rides, float rating) throws RemoteException{
         super(acc, rides, rating);
         this.numOfRides=0;
     }
@@ -44,5 +58,80 @@ public class Client extends User{
     public void setBankAcc(BankAccount bankAcc) {
         this.bankAcc = bankAcc;
     }
-    
+
+
+    /*Account*/
+    public void editAccount() throws RemoteException {
+        Scanner input = new Scanner(System.in);
+        DB db = new DB();
+        ArrayList<Account> acc = db.retrieveAllAccounts();
+
+        int choose = -1;
+        int index = -1;
+        String newRecord = "";
+        for (int i = 0; i < acc.size(); i++) {
+            if (acc.get(i).getEmail().equals(Account.Login_Mail)) {
+                index = i;
+            }
+        }
+        int choice = 0;
+
+        if (index == -1) {
+            System.out.println("not found");
+        } else {
+            System.out.println("enter 1 to change name or 2 to change password");
+            System.out.println("Name: " + acc.get(index).getUsername());
+            System.out.println("Password: " + acc.get(index).getPassword());
+
+            choose = input.nextInt();
+            if (choose == 1) {
+                input.nextLine();
+                System.out.println("Enter new name");
+                newRecord = input.nextLine();
+                choice = choose;
+                acc.get(index).setUsername(newRecord);
+            } else if (choose == 2) {
+                input.nextLine();
+                System.out.println("Enter new password");
+                newRecord = input.nextLine();
+                choice = choose;
+                acc.get(index).setPassword(newRecord);
+            }
+            db.updateClient(acc.get(index));
+        }
+
+    }
+
+    public void createClientAccount(String username, String password, String email, String mobile, AccType type, double balance, String CCnumber, int ccv, Date expDate) throws RemoteException {
+        CRO.createClientAccount(username,password,email,mobile,type,balance,CCnumber,ccv,expDate);
+    }
+
+    public String viewOwnAccount() throws RemoteException {
+        return CRO.viewOwnAccount();
+    }
+
+    public boolean login(String email, String password) throws RemoteException {
+        return CRO.login(email, password);
+    }
+
+    /*Ride*/
+    public void requestRide(String x, String y) throws RemoteException {
+        CRO.requestRide(x,y);
+    }
+
+    public void cancelRide(int x) throws RemoteException {
+        CRO.cancelRide(x);
+    }
+
+    public void viewRideDetails(int x) throws RemoteException {
+        CRO.viewRideDetails(x);
+    }
+
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return CRO.viewRideHistory();
+    }
+
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
+        CRO.giveComplaint(msg,rideID);
+    }
 }

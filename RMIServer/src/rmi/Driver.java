@@ -1,20 +1,29 @@
 package rmi;
 
+import rmi.ReadOnly.DriverReadOnly;
+
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Driver extends User{
+public class Driver extends User {
     private String driverLicense;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;
     private Notification notification;
     private CurrentArea area;
 
+
+    private DriverReadOnly DRO;
+
+    public Driver(DriverReadOnly DRO) throws RemoteException{
+        this.DRO = DRO;
+    }
     //Constructor
-    public Driver(){
+    public Driver() throws RemoteException  {
 
     }
 
-    public Driver(Account acc, ArrayList<Ride> rides, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car, CurrentArea area) {
+    public Driver(Account acc, ArrayList<Ride> rides, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car, CurrentArea area) throws RemoteException {
         super(acc, rides, rating);
         this.area=area;
         this.car=car;
@@ -55,6 +64,41 @@ public class Driver extends User{
     public void setArea(CurrentArea area) {
         this.area = area;
     }
+
     //Methods
-    
+
+    /*Account*/
+
+    public String viewOwnAccount() throws RemoteException {
+        return DRO.viewOwnAccount();
+    }
+
+    public boolean login(String email, String password) throws RemoteException {
+        return DRO.login(email, password);
+    }
+
+    /*Ride*/
+
+    public void acceptRide(int x) throws RemoteException {
+        DRO.acceptRide(x);
+    }
+
+    public void declineRide(int x) throws RemoteException {
+        DRO.declineRide(x);
+    }
+
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return DRO.viewRideHistory();
+    }
+
+    /*Complaint*/
+
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
+        DRO.giveComplaint(msg, rideID);
+    }
+
+    /*Car*/
+    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+        DRO.updateCar(mail, CM, PN, CC);
+    }
 }

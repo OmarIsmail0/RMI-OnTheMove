@@ -1,19 +1,23 @@
 package rmi;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class User {
+public class User extends UnicastRemoteObject {
+
     private Account acc;
     private Notification notif;
     private ArrayList<Ride> rides;
     private float rating;
 
+
     //Constructors
 
-    public User() {
+    public User() throws RemoteException {
     }
 
-    public User(Account acc, ArrayList<Ride> rides, float rating) {
+    public User(Account acc, ArrayList<Ride> rides, float rating) throws RemoteException{
         this.acc = acc;
         this.rides = rides;
         this.rating = rating;
@@ -32,12 +36,14 @@ public class User {
     public void setNotif(Notification notif) {
         this.notif = notif;
     }
- /*   public CurrentArea getArea() {
+
+   /*public CurrentArea getArea() {
         return area;
     }
     public void setArea(CurrentArea area) {
         this.area = area;
     }*/
+
     public ArrayList<Ride> getRides() {
         return rides;
     }

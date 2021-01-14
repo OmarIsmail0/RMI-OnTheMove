@@ -1,11 +1,12 @@
 package rmi;
 
-/*
-+ pay(double):void
-*/
-public class Cash {
+import rmi.Interface.PayMethod;
 
-    public void pay(double amount){
 
+public class Cash implements PayMethod {
+
+    @Override
+    public void Pay(double amount){
+        System.out.println("Payment Over");
     }
 }
