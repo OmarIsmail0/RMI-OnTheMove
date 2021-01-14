@@ -2,6 +2,7 @@ package rmi;
 
 import rmi.Interface.ClientInterface;
 import rmi.ReadOnly.ClientReadOnly;
+import rmi.ReadOnly.DriverReadOnly;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -9,11 +10,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Client extends User implements ClientReadOnly, Serializable {
+public class Client extends User  implements Serializable, ClientInterface {
     int numOfRides;
     Ride ride;
     Notification notification;
     BankAccount bankAcc;
+
+    private ClientReadOnly CRO;
+
+    public Client(ClientReadOnly CRO) throws RemoteException{
+        this.CRO = CRO;
+    }
 
     //Constructor
 
@@ -54,7 +61,6 @@ public class Client extends User implements ClientReadOnly, Serializable {
 
 
     /*Account*/
-    @Override
     public void editAccount() throws RemoteException {
         Scanner input = new Scanner(System.in);
         DB db = new DB();
@@ -95,38 +101,37 @@ public class Client extends User implements ClientReadOnly, Serializable {
         }
 
     }
-    @Override
-    public void createClientAccount(String username, String password, String email, String mobile, AccType type, double balance, String CCnumber, int ccv, Date expDate) throws RemoteException {
 
+    public void createClientAccount(String username, String password, String email, String mobile, AccType type, double balance, String CCnumber, int ccv, Date expDate) throws RemoteException {
+        CRO.createClientAccount(username,password,email,mobile,type,balance,CCnumber,ccv,expDate);
     }
-    @Override
+
     public String viewOwnAccount() throws RemoteException {
-        return null;
+        return CRO.viewOwnAccount();
     }
-    @Override
+
     public boolean login(String email, String password) throws RemoteException {
-        return false;
+        return CRO.login(email, password);
     }
 
     /*Ride*/
-    @Override
     public void requestRide(String x, String y) throws RemoteException {
-
+        CRO.requestRide(x,y);
     }
-    @Override
+
     public void cancelRide(int x) throws RemoteException {
-
+        CRO.cancelRide(x);
     }
-    @Override
+
     public void viewRideDetails(int x) throws RemoteException {
-
+        CRO.viewRideDetails(x);
     }
-    @Override
+
     public ArrayList<Ride> viewRideHistory() throws RemoteException {
-        return null;
+        return CRO.viewRideHistory();
     }
-    @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
 
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
+        CRO.giveComplaint(msg,rideID);
     }
 }

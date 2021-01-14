@@ -8,10 +8,10 @@ import rmi.ReadOnly.DriverReadOnly;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
 import java.util.*;
 
-
-public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly,Serializable {
+public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly, AccountInterface,Serializable {
     int accID;
     String username, password, email, mobile;
     AccType type;
@@ -257,7 +257,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     public String viewOwnAccount() throws RemoteException{
         Account account = new Account();
         DB db = new DB();
-        account = db.retrieveAccount(Login_Mail);
+        account = db.retrieveAccount();
         String text = account.toString();
         return text;
     }
@@ -392,7 +392,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     /*Compliant*/
     @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
 

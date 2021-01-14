@@ -85,7 +85,7 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
 
     /*Complaint*/
     @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
 }

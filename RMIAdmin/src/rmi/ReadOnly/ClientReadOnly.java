@@ -24,7 +24,7 @@ public interface ClientReadOnly extends Remote {
     public ArrayList<Ride> viewRideHistory() throws RemoteException;
 
     /*Compliant*/
-    public void giveComplaint(String msg, int rideID) throws RemoteException;
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException;
 
     /*Client*/
     public void editAccount() throws RemoteException;

@@ -1,6 +1,5 @@
 package rmi.ReadOnly;
 
-import rmi.Account;
 import rmi.Ride;
 
 import java.rmi.Remote;

@@ -1,7 +1,6 @@
 package rmi.ReadOnly;
 
 import rmi.AccType;
-import rmi.Account;
 import rmi.Ride;
 
 import java.rmi.Remote;

@@ -5,10 +5,12 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class User extends UnicastRemoteObject {
+
     private Account acc;
     private Notification notif;
     private ArrayList<Ride> rides;
     private float rating;
+
 
     //Constructors
 
@@ -34,12 +36,14 @@ public class User extends UnicastRemoteObject {
     public void setNotif(Notification notif) {
         this.notif = notif;
     }
- /*   public CurrentArea getArea() {
+
+   /*public CurrentArea getArea() {
         return area;
     }
     public void setArea(CurrentArea area) {
         this.area = area;
     }*/
+
     public ArrayList<Ride> getRides() {
         return rides;
     }

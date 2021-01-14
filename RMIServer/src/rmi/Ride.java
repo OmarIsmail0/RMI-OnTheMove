@@ -63,6 +63,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly{
     /*Ride*/
     @Override
     public void viewRideDetails(int x){
+
     }
     @Override
     public void cancelRide(int x){
@@ -85,7 +86,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly{
        return r; 
     }
     @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
     @Override

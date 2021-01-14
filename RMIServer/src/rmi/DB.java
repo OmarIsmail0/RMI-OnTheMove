@@ -67,9 +67,9 @@ public class DB {
         return result;
     }
 
-    public Account retrieveAccount(String email) {
+    public Account retrieveAccount() {
         collection = database.getCollection("Account");
-        Document doc = collection.find(Filters.eq("email", email)).first();
+        Document doc = collection.find(Filters.eq("email", Account.Login_Mail)).first();
         Account result = gson.fromJson(doc.toJson(), Account.class);
         return result;
     }
@@ -101,23 +101,14 @@ public class DB {
         collection.deleteOne(Filters.eq("mail", email));
     }
 
-    public void updateBalance(BankAccount acc, double balance, int userID) {
+    public void updateBalance(BankAccount acc, Client c) {
         collection = database.getCollection("BankAccount");
-        collection.updateOne(Filters.eq("balance", acc.getBalance()), Updates.set("balance", balance));
-    }
+        Document doc = Document.parse(gson.toJson(acc));
+        collection.replaceOne(Filters.eq("mail", Account.Login_Mail), doc);
 
-    public double checkAccountBalance(int userID) {
-        collection = database.getCollection("BankAccount");
-        Document doc = collection.find(Filters.eq("userID", userID)).first();
-        BankAccount acc = gson.fromJson(doc.toJson(), BankAccount.class);
-        return acc.getBalance();
-    }
-
-    public BankAccount checkCCinfo(String CCNumber) {
-        collection = database.getCollection("BankAccount");
-        Document doc = collection.find(Filters.eq("CCnumber", CCNumber)).first();
-        BankAccount acc = gson.fromJson(doc.toJson(), BankAccount.class);
-        return acc;
+        collection = database.getCollection("Client");
+        doc = Document.parse(gson.toJson(c));
+        collection.replaceOne(Filters.eq("bankAcc.mail", Account.Login_Mail), doc);
     }
 
     /*-----------------Client-----------------*/
@@ -134,6 +125,14 @@ public class DB {
         for (int i = 0; i < docs.size(); i++) {
             result.add(gson.fromJson(docs.get(i).toJson(), Client.class));
         }
+        return result;
+    }
+
+
+    public Client retrieveClientByMail() {
+        collection = database.getCollection("Client");
+        Document doc = collection.find(Filters.eq("acc.email", Account.Login_Mail)).first();
+        Client result = gson.fromJson(doc.toJson(), Client.class);
         return result;
     }
 
@@ -167,22 +166,32 @@ public class DB {
         return result;
     }
 
+    public ArrayList<Driver> retrieveAllDriversByCurrArea(CurrentArea pickUp) {
+        collection = database.getCollection("Driver");
+        ArrayList<Driver> result = new ArrayList();
+        ArrayList<Document> docs = collection.find(Filters.eq("area", pickUp)).into(new ArrayList<Document>());
+        for (int i = 0; i < docs.size(); i++) {
+            result.add(gson.fromJson(docs.get(i).toJson(), Driver.class));
+        }
+        return result;
+    }
+
     public Driver retrieveDriverByMail(String mail) {
         collection = database.getCollection("Driver");
         Document doc = collection.find(Filters.eq("acc.email", mail)).first();
         Driver result = gson.fromJson(doc.toJson(), Driver.class);
         return result;
     }
-    
-    public void deleteDriver(String email) {
+
+    public void deleteDriver() {
         collection = database.getCollection("Driver");
-        collection.deleteOne(Filters.eq("acc.email", email));
+        collection.deleteOne(Filters.eq("acc.email", Account.Login_Mail));
     }
-    
+
     public void updateDriver(Driver driver) {
         collection = database.getCollection("Driver");
         Document doc = Document.parse(gson.toJson(driver));
-        collection.replaceOne(Filters.eq("acc.email", driver.getAcc().getEmail()), doc);
+        collection.replaceOne(Filters.eq("acc.email", Account.Login_Mail), doc);
     }
 
     /*-----------------Ride-----------------*/

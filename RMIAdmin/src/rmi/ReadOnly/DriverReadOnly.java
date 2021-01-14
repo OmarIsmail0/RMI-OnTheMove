@@ -18,7 +18,7 @@ public interface DriverReadOnly extends Remote {
     public ArrayList<Ride> viewRideHistory() throws RemoteException;
 
     /*Complaint*/
-    public void giveComplaint(String msg, int rideID) throws RemoteException;
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException;
 
     /*Car*/
     public void updateCar(String mail ,String CM, String PN, String CC) throws RemoteException;

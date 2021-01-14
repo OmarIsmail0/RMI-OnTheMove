@@ -50,27 +50,22 @@ public class Complaint implements ClientReadOnly, DriverReadOnly {
     }
 
     @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
         DB db = new DB();
         Complaint c = new Complaint();
+        Account acc = new Account();
+        acc = db.retrieveAccount();
         Ride ride = db.retrieveRide(rideID);
-        AccType type = acc.getType();
-        if (type == AccType.CLIENT) {
-            if (ride.getClient().getAcc().getAccID() == acc.getAccID()) {
-                c.setMsg(str);
-                c.setAcc(acc);
-                c.setRide(ride);
-                db.insertComplaint(c);
-            }
-        } else if (type == AccType.DRIVER) {
-            if (ride.getDriver().getAcc().getAccID() == acc.getAccID()) {
-                c.setMsg(str);
-                c.setAcc(acc);
-                c.setRide(ride);
-                db.insertComplaint(c);
-            }
-        }
 
+
+        if (ride.getClient().getAcc().getAccID() == acc.getAccID()) {
+            c.setMsg(msg);
+            c.setAcc(acc);
+            c.setRide(ride);
+            db.insertComplaint(c);
+        }else{
+            System.out.println("User was never in the ride!");
+        }
     }
 
     /*Account*/

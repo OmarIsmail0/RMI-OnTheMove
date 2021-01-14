@@ -1,9 +1,8 @@
 package rmi;
 
 
-import rmi.Interface.AccountInterface;
-import rmi.Interface.CarInterface;
-import rmi.Interface.ClientInterface;
+import rmi.Interface.*;
+import rmi.ReadOnly.*;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -44,15 +43,48 @@ public class RMIServer {
            //acc.viewAllAccounts();
            acc.banAccount("omar1346");
            acc.viewAllAccounts();*/
-/*
-            AccountInterface account = new Account();
+
+
+            /*AccountInterface account = new Account();
             CarInterface car = new Car();
-            ClientInterface client = new Client();
+            ClientInterface client = new Client();*/
+
             Registry registry = LocateRegistry.createRegistry(1099);
 
+            /*
             registry.bind("Account", account);
             registry.bind("Car", car);
             registry.bind("Client", client);*/
+
+
+            DB db = new DB();
+
+            Account acc = new Account();
+            Complaint comp = new Complaint();
+            Ride ride = new Ride();
+
+                    /*Client*/
+            ClientReadOnly client_acc  = new Account();
+            ClientInterface client = new Client();
+            ClientReadOnly client_comp = new Complaint();
+            ClientReadOnly client_ride = new Ride();
+
+
+            registry.bind("Client Account", client_acc);
+            registry.bind("Client", client);
+            registry.bind("Client Complaint", client_comp);
+            registry.bind("Client Ride", client_ride);
+
+                    /*Driver*/
+            DriverReadOnly driver_comp = new Complaint();
+            DriverReadOnly driver_ride = new Ride();
+            DriverReadOnly driver_car = new Car();
+
+            registry.bind("Driver Complaint", driver_comp);
+            registry.bind("Driver Ride", driver_ride);
+            registry.bind("Driver Car", driver_car);
+
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
