@@ -1,6 +1,10 @@
 package rmi;
 
 
+import rmi.Interface.AccountInterface;
+import rmi.Interface.CarInterface;
+import rmi.Interface.ClientInterface;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -20,8 +24,8 @@ public class RMIServer {
             db.insertAccount(tahseen);
             db.insertAccount(hoda);
             db.insertAccount(mai);
-            
-            
+
+
            // acc.createClientAccount("asd","asd","asd","123",AccType.CLIENT);
             for (int i = 0; i < db.retrieveAccounts().size(); i++) {
                 System.out.println(db.retrieveAccounts().get(i).toString());
@@ -40,13 +44,15 @@ public class RMIServer {
            //acc.viewAllAccounts();
            acc.banAccount("omar1346");
            acc.viewAllAccounts();*/
-
+/*
             AccountInterface account = new Account();
             CarInterface car = new Car();
+            ClientInterface client = new Client();
             Registry registry = LocateRegistry.createRegistry(1099);
 
             registry.bind("Account", account);
             registry.bind("Car", car);
+            registry.bind("Client", client);*/
 
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,12 +1,17 @@
 package rmi;
 
+import rmi.Interface.AccountInterface;
+import rmi.ReadOnly.ClientReadOnly;
+import rmi.ReadOnly.AdminReadOnly;
+import rmi.ReadOnly.DriverReadOnly;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 
-public class Account extends UnicastRemoteObject implements AccountInterface, Serializable {
+public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly,Serializable {
     int accID;
     String username, password, email, mobile;
     AccType type;
@@ -19,7 +24,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public static int verificationCode;
 
     /*Login Info*/
-    static int Login_ID;
+    static String Login_Mail;
     static AccType acc_type;
 
     public Account() throws RemoteException{
@@ -109,6 +114,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         Account.verificationCode = verificationCode;
     }
 
+    /*Account*/
     @Override
     public void createClientAccount(String username,String password,String email,String mobile,AccType type,
                                     double balance, String CCnumber, int ccv,Date expDate) throws RemoteException {
@@ -185,7 +191,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println(ex);
         }
     }
-
     @Override
     public void createDriverAccount(String username, String password, String email, String mobile
             , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, 
@@ -204,9 +209,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
 
         boolean unique = false;
 
-        int numOfAttempts = 3;
-        int code = 0;
-
         try {
             for (int i = 0; i < acc.size(); i++) {
                 if (acc.get(i).getEmail().equals(email)) {
@@ -223,7 +225,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setEmail(email);
                 new_Account.setMobile(mobile);
                 new_Account.setType(type);
-                
+
                 new_Car.setCarColor(carColor);
                 new_Car.setCarModel(carModel);
                 new_Car.setPlateNum(plateNum);
@@ -235,21 +237,13 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Driver.setAcc(new_Account);
                 new_Driver.setCar(new_Car);
 
-                sendVerification();
-                System.out.print("Enter your verification code: ");
-                while (numOfAttempts > 0) {
-                    code = input.nextInt();
-                    if (code == verificationCode) {
-                        acc.add(new_Account);
-                        db.insertAccount(new_Account);
-                        driver.add(new_Driver);
-                        db.insertDriver(new_Driver);
-                        break;
-                    } else {
-                        numOfAttempts--;
-                        System.out.println("please try again!");
-                    }
-                }
+
+                acc.add(new_Account);
+                db.insertAccount(new_Account);
+                driver.add(new_Driver);
+                db.insertDriver(new_Driver);
+
+
             } else  {
                 System.err.println("this email is already registered");
             }
@@ -259,12 +253,11 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println(ex);
         }
     }
-
     @Override
     public String viewOwnAccount() throws RemoteException{
         Account account = new Account();
         DB db = new DB();
-        account = db.retrieveAccount(Login_ID);
+        account = db.retrieveAccount(Login_Mail);
         String text = account.toString();
         return text;
     }
@@ -297,7 +290,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println("Incorrect Email");
         } else {
             if (acc.get(index).getPassword().equals(PW)) {
-                Login_ID = acc.get(index).getAccID();
+                Login_Mail = acc.get(index).getEmail();
                 acc_type = acc.get(index).getType();
                 return true;
             } else {
@@ -329,14 +322,12 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             db.deleteClient(client.get(index).getAcc().getEmail());
         }
     }
-    @Override
     public void sendVerification() throws RemoteException{
         Random rand = new Random();
         String id = String.format("%04d", rand.nextInt(10000));
         verificationCode = Integer.parseInt(id);
         System.out.println("your verification code is: " + verificationCode);
     }
-    @Override
     public boolean enterVerificationCode(int code) throws RemoteException{
         if (verificationCode == code) {
             return true;
@@ -344,10 +335,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             return false;
         }
     }
-    public void editAccount(){
-
-    }
-
     @Override
     public String toString() {
         DB db = new DB();
@@ -358,17 +345,64 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 x = i;
         }
         String result =
-                  "Account ID:\t\t" + getAccID()
-                + "\nName:\t\t\t" + getUsername()
-                + "\nEmail:\t\t\t" + getEmail()
-                + "\nMobile:\t\t\t" + getMobile()
-                + "\nType:\t\t\t" + getType()
+                "Account ID:\t\t" + getAccID()
+                        + "\nName:\t\t\t" + getUsername()
+                        + "\nEmail:\t\t\t" + getEmail()
+                        + "\nMobile:\t\t\t" + getMobile()
+                        + "\nType:\t\t\t" + getType()
              /*   + "\nBalance:\t\t" + bankAcc.get(x).getBalance()
                 + "\nCCV:\t\t\t" + bankAcc.get(x).getCcv()
                 + "\nCredit Card Number : " + bankAcc.get(x).getCCnumber()
                 + "\nexpiration Date    : " + bankAcc.get(x).getExpDate()*/
-                + "\n------------------------";
+                        + "\n------------------------";
         return result;
 
     }
+
+    @Override
+    public void editAccount() throws RemoteException {
+
+    }
+
+    /*Ride*/
+    @Override
+    public void acceptRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void declineRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void requestRide(String x, String y) throws RemoteException {
+
+    }
+    @Override
+    public void cancelRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void viewRideDetails(int x) throws RemoteException {
+
+    }
+    @Override
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return null;
+    }
+
+    /*Compliant*/
+    @Override
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+
+    }
+
+    /*Car*/
+    @Override
+    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+
+    }
+
+
+
+
 }

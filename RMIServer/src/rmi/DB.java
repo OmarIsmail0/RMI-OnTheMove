@@ -67,9 +67,9 @@ public class DB {
         return result;
     }
 
-    public Account retrieveAccount(int id) {
+    public Account retrieveAccount(String email) {
         collection = database.getCollection("Account");
-        Document doc = collection.find(Filters.eq("accID", id)).first();
+        Document doc = collection.find(Filters.eq("email", email)).first();
         Account result = gson.fromJson(doc.toJson(), Account.class);
         return result;
     }
@@ -140,6 +140,14 @@ public class DB {
     public void deleteClient(String email) {
         collection = database.getCollection("Client");
         collection.deleteOne(Filters.eq("acc.email", email));
+    }
+    public void updateClient(Account client) {
+        collection = database.getCollection("Client");
+        Document doc = Document.parse(gson.toJson(client));
+        collection.replaceOne(Filters.eq("acc.email", client.getEmail()), doc);
+
+        collection = database.getCollection("Account");
+        collection.replaceOne(Filters.eq("email", client.getEmail()), doc);
     }
 
     /*-----------------Driver-----------------*/
