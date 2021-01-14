@@ -19,7 +19,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public static int verificationCode;
 
     /*Login Info*/
-    static int Login_ID;
+    static String Login_Mail;
     static AccType acc_type;
 
     public Account() throws RemoteException{
@@ -204,9 +204,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
 
         boolean unique = false;
 
-        int numOfAttempts = 3;
-        int code = 0;
-
         try {
             for (int i = 0; i < acc.size(); i++) {
                 if (acc.get(i).getEmail().equals(email)) {
@@ -223,7 +220,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setEmail(email);
                 new_Account.setMobile(mobile);
                 new_Account.setType(type);
-                
+
                 new_Car.setCarColor(carColor);
                 new_Car.setCarModel(carModel);
                 new_Car.setPlateNum(plateNum);
@@ -235,21 +232,13 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Driver.setAcc(new_Account);
                 new_Driver.setCar(new_Car);
 
-                sendVerification();
-                System.out.print("Enter your verification code: ");
-                while (numOfAttempts > 0) {
-                    code = input.nextInt();
-                    if (code == verificationCode) {
-                        acc.add(new_Account);
-                        db.insertAccount(new_Account);
-                        driver.add(new_Driver);
-                        db.insertDriver(new_Driver);
-                        break;
-                    } else {
-                        numOfAttempts--;
-                        System.out.println("please try again!");
-                    }
-                }
+
+                acc.add(new_Account);
+                db.insertAccount(new_Account);
+                driver.add(new_Driver);
+                db.insertDriver(new_Driver);
+
+
             } else  {
                 System.err.println("this email is already registered");
             }
@@ -264,7 +253,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
     public String viewOwnAccount() throws RemoteException{
         Account account = new Account();
         DB db = new DB();
-        account = db.retrieveAccount(Login_ID);
+        account = db.retrieveAccount(Login_Mail);
         String text = account.toString();
         return text;
     }
@@ -297,7 +286,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println("Incorrect Email");
         } else {
             if (acc.get(index).getPassword().equals(PW)) {
-                Login_ID = acc.get(index).getAccID();
+                Login_Mail = acc.get(index).getEmail();
                 acc_type = acc.get(index).getType();
                 return true;
             } else {
@@ -343,9 +332,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         } else {
             return false;
         }
-    }
-    public void editAccount(){
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package rmi;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class Driver extends User{
@@ -10,11 +11,11 @@ public class Driver extends User{
     private CurrentArea area;
 
     //Constructor
-    public Driver(){
+    public Driver() throws RemoteException  {
 
     }
 
-    public Driver(Account acc, ArrayList<Ride> rides, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car, CurrentArea area) {
+    public Driver(Account acc, ArrayList<Ride> rides, float rating, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car car, CurrentArea area) throws RemoteException {
         super(acc, rides, rating);
         this.area=area;
         this.car=car;
