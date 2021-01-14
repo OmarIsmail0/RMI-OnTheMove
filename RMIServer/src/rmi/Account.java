@@ -1,12 +1,17 @@
 package rmi;
 
+import rmi.Interface.AccountInterface;
+import rmi.ReadOnly.ClientReadOnly;
+import rmi.ReadOnly.AdminReadOnly;
+import rmi.ReadOnly.DriverReadOnly;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 
-public class Account extends UnicastRemoteObject implements AccountInterface, Serializable {
+public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly,Serializable {
     int accID;
     String username, password, email, mobile;
     AccType type;
@@ -109,6 +114,7 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         Account.verificationCode = verificationCode;
     }
 
+    /*Account*/
     @Override
     public void createClientAccount(String username,String password,String email,String mobile,AccType type,
                                     double balance, String CCnumber, int ccv,Date expDate) throws RemoteException {
@@ -185,7 +191,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println(ex);
         }
     }
-
     @Override
     public void createDriverAccount(String username, String password, String email, String mobile
             , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, 
@@ -248,7 +253,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             System.out.println(ex);
         }
     }
-
     @Override
     public String viewOwnAccount() throws RemoteException{
         Account account = new Account();
@@ -318,14 +322,12 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             db.deleteClient(client.get(index).getAcc().getEmail());
         }
     }
-    @Override
     public void sendVerification() throws RemoteException{
         Random rand = new Random();
         String id = String.format("%04d", rand.nextInt(10000));
         verificationCode = Integer.parseInt(id);
         System.out.println("your verification code is: " + verificationCode);
     }
-    @Override
     public boolean enterVerificationCode(int code) throws RemoteException{
         if (verificationCode == code) {
             return true;
@@ -333,7 +335,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
             return false;
         }
     }
-
     @Override
     public String toString() {
         DB db = new DB();
@@ -344,17 +345,64 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 x = i;
         }
         String result =
-                  "Account ID:\t\t" + getAccID()
-                + "\nName:\t\t\t" + getUsername()
-                + "\nEmail:\t\t\t" + getEmail()
-                + "\nMobile:\t\t\t" + getMobile()
-                + "\nType:\t\t\t" + getType()
+                "Account ID:\t\t" + getAccID()
+                        + "\nName:\t\t\t" + getUsername()
+                        + "\nEmail:\t\t\t" + getEmail()
+                        + "\nMobile:\t\t\t" + getMobile()
+                        + "\nType:\t\t\t" + getType()
              /*   + "\nBalance:\t\t" + bankAcc.get(x).getBalance()
                 + "\nCCV:\t\t\t" + bankAcc.get(x).getCcv()
                 + "\nCredit Card Number : " + bankAcc.get(x).getCCnumber()
                 + "\nexpiration Date    : " + bankAcc.get(x).getExpDate()*/
-                + "\n------------------------";
+                        + "\n------------------------";
         return result;
 
     }
+
+    @Override
+    public void editAccount() throws RemoteException {
+
+    }
+
+    /*Ride*/
+    @Override
+    public void acceptRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void declineRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void requestRide(String x, String y) throws RemoteException {
+
+    }
+    @Override
+    public void cancelRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void viewRideDetails(int x) throws RemoteException {
+
+    }
+    @Override
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return null;
+    }
+
+    /*Compliant*/
+    @Override
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+
+    }
+
+    /*Car*/
+    @Override
+    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+
+    }
+
+
+
+
 }

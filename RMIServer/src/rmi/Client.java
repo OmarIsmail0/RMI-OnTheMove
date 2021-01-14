@@ -1,11 +1,15 @@
 package rmi;
 
+import rmi.Interface.ClientInterface;
+import rmi.ReadOnly.ClientReadOnly;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
-public class Client extends User implements ClientInterface, Serializable {
+public class Client extends User implements ClientReadOnly, Serializable {
     int numOfRides;
     Ride ride;
     Notification notification;
@@ -48,6 +52,8 @@ public class Client extends User implements ClientInterface, Serializable {
         this.bankAcc = bankAcc;
     }
 
+
+    /*Account*/
     @Override
     public void editAccount() throws RemoteException {
         Scanner input = new Scanner(System.in);
@@ -89,5 +95,38 @@ public class Client extends User implements ClientInterface, Serializable {
         }
 
     }
+    @Override
+    public void createClientAccount(String username, String password, String email, String mobile, AccType type, double balance, String CCnumber, int ccv, Date expDate) throws RemoteException {
 
+    }
+    @Override
+    public String viewOwnAccount() throws RemoteException {
+        return null;
+    }
+    @Override
+    public boolean login(String email, String password) throws RemoteException {
+        return false;
+    }
+
+    /*Ride*/
+    @Override
+    public void requestRide(String x, String y) throws RemoteException {
+
+    }
+    @Override
+    public void cancelRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void viewRideDetails(int x) throws RemoteException {
+
+    }
+    @Override
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return null;
+    }
+    @Override
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+
+    }
 }

@@ -1,6 +1,10 @@
 package rmi;
 
 
+import rmi.Interface.AccountInterface;
+import rmi.Interface.CarInterface;
+import rmi.Interface.ClientInterface;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -40,7 +44,7 @@ public class RMIServer {
            //acc.viewAllAccounts();
            acc.banAccount("omar1346");
            acc.viewAllAccounts();*/
-
+/*
             AccountInterface account = new Account();
             CarInterface car = new Car();
             ClientInterface client = new Client();
@@ -48,7 +52,7 @@ public class RMIServer {
 
             registry.bind("Account", account);
             registry.bind("Car", car);
-            registry.bind("Client", client);
+            registry.bind("Client", client);*/
 
         } catch (Exception ex) {
             ex.printStackTrace();

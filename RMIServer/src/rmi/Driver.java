@@ -1,9 +1,11 @@
 package rmi;
 
+import rmi.ReadOnly.DriverReadOnly;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Driver extends User{
+public class Driver extends User implements DriverReadOnly {
     private String driverLicense;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;
@@ -56,6 +58,42 @@ public class Driver extends User{
     public void setArea(CurrentArea area) {
         this.area = area;
     }
+
     //Methods
-    
+
+    /*Account*/
+    @Override
+    public String viewOwnAccount() throws RemoteException {
+        return null;
+    }
+    @Override
+    public boolean login(String email, String password) throws RemoteException {
+        return false;
+    }
+
+    /*Ride*/
+    @Override
+    public void acceptRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public void declineRide(int x) throws RemoteException {
+
+    }
+    @Override
+    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+        return null;
+    }
+
+    /*Complaint*/
+    @Override
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+
+    }
+
+    /*Car*/
+    @Override
+    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+    }
+
 }
