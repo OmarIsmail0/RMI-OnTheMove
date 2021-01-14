@@ -188,10 +188,12 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
 
     @Override
     public void createDriverAccount(String username, String password, String email, String mobile
-            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, Car c, float rating, CurrentArea currentArea) throws RemoteException{
+            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, 
+            String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException{
 
         Account new_Account = new Account();
         Driver new_Driver = new Driver();
+        Car new_Car = new Car();
 
         DB db = new DB();
 
@@ -221,13 +223,17 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
                 new_Account.setEmail(email);
                 new_Account.setMobile(mobile);
                 new_Account.setType(type);
+                
+                new_Car.setCarColor(carColor);
+                new_Car.setCarModel(carModel);
+                new_Car.setPlateNum(plateNum);
 
                 new_Driver.setDriverLicense(driverLicense);
                 new_Driver.setWorkingTimes(workingTimes);
                 new_Driver.setRating(rating);
                 new_Driver.setArea(currentArea);
                 new_Driver.setAcc(new_Account);
-                new_Driver.setCar(c);
+                new_Driver.setCar(new_Car);
 
                 sendVerification();
                 System.out.print("Enter your verification code: ");
@@ -339,10 +345,6 @@ public class Account extends UnicastRemoteObject implements AccountInterface, Se
         }
     }
     public void editAccount(){
-
-    }
-    @Override
-    public void approveChanges() throws RemoteException{
 
     }
 

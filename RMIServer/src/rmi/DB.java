@@ -159,9 +159,22 @@ public class DB {
         return result;
     }
 
+    public Driver retrieveDriverByMail(String mail) {
+        collection = database.getCollection("Driver");
+        Document doc = collection.find(Filters.eq("acc.email", mail)).first();
+        Driver result = gson.fromJson(doc.toJson(), Driver.class);
+        return result;
+    }
+    
     public void deleteDriver(String email) {
         collection = database.getCollection("Driver");
         collection.deleteOne(Filters.eq("acc.email", email));
+    }
+    
+    public void updateDriver(Driver driver) {
+        collection = database.getCollection("Driver");
+        Document doc = Document.parse(gson.toJson(driver));
+        collection.replaceOne(Filters.eq("acc.email", driver.getAcc().getEmail()), doc);
     }
 
     /*-----------------Ride-----------------*/

@@ -9,12 +9,11 @@ public class Car extends UnicastRemoteObject implements CarInterface, Serializab
     String plateNum;
     String carColor;
 
-    //Constructer
-    
-    public Car()throws RemoteException{
+    //Constructer  
+    public Car() throws RemoteException{
     }
 
-    public Car(String carModel, String plateNum, String carColor) throws RemoteException {
+    public Car(String carModel, String plateNum, String carColor) throws RemoteException{
         this.carColor=carColor;
         this.carModel=carModel;
         this.plateNum=plateNum;
@@ -39,9 +38,20 @@ public class Car extends UnicastRemoteObject implements CarInterface, Serializab
     public void setCarColor(String carColor) {
         this.carColor = carColor;
     }
-
+    
     @Override
-    public void updateCar(String CM, String PN, String CC) throws RemoteException{
+    public void updateCar(String mail ,String CM, String PN, String CC) throws RemoteException{
+        Driver driver = new Driver();
+        DB db = new DB();
+        driver = db.retrieveDriverByMail(mail);
         
+        Car new_Car = new Car();
+        
+        new_Car.setCarColor(CC);
+        new_Car.setCarModel(CM);
+        new_Car.setPlateNum(PN);
+        
+        driver.setCar(new_Car);
+        db.updateDriver(driver);
     }
 }

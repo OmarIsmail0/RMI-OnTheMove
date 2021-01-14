@@ -17,20 +17,26 @@ public class RMIAdmin {
 
             String sDate1="12/1998";
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
-            Car car1 = (Car) car;
-            car1.carColor = "blue";
-            car1.carModel ="Toyota";
-            car1.plateNum="123ABC";
             
-             
+            /*--------------DriverAccountCreation-------------*/
             AvailableTimes v1 = new AvailableTimes("Thursday");
             AvailableTimes v2 = new AvailableTimes("Friday");
             ArrayList<AvailableTimes> x = new ArrayList<>();
             x.add(v1);
             x.add(v2);
+            String carColor = "blue";
+            String carModel = "Toyota";
+            String plateNum = "123ABC";
 
             acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
-                    "ABC123", x,car1, (float) 0.0, CurrentArea.MAADI);
+                    "ABC123", x, carModel, plateNum, carColor, (float) 0.0, CurrentArea.MAADI);
+            
+            /*--------------DriverCarUpdate-------------*/
+            String carColorX = "white";
+            String carModelX = "hyundai";
+            String plateNumX = "123DEF";
+            String mail = "ahmed1346";
+            car.updateCar(mail, carModelX, plateNumX, carColorX);
 
             System.out.println(acc.viewAllAccounts());
 
