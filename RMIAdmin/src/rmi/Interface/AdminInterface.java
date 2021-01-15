@@ -4,5 +4,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface AdminInterface extends Remote {
-    public void selectRide(String email) throws RemoteException;
+    public void editAccount() throws RemoteException;
 }

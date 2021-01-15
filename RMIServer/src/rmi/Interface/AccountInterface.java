@@ -15,7 +15,7 @@ public interface AccountInterface extends Remote  {
                                     double balance, String CCnumber, int ccv, Date expDate) throws RemoteException;
     public void createDriverAccount(String username, String password, String email, String mobile
             , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException;
-    public String viewOwnAccount(String email) throws RemoteException;
+    public String viewOwnAccount() throws RemoteException;
     public String viewAllAccounts() throws RemoteException;
     public boolean login(String email, String password) throws RemoteException;
     public void banAccount(String email) throws RemoteException;

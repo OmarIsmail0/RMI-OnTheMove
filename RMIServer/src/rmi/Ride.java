@@ -9,19 +9,15 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Serializable {
-
     private int rideID;
     private String pickUpLoc;
     private String destination;
     private double rideFees;
     private Complaint comment;
-
     private Client client;
     private Driver driver;
 
@@ -103,43 +99,22 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     @Override
-    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
         try {
 
-            Map<Integer, CurrentArea> rides
-                    = new HashMap<Integer, CurrentArea>();
-
-            /*for (int i = 0; i < CurrentArea.size(); i++) {
-                if (rr.get(i).getPickUpLocation() == driver.getArea()) {
-                    rides.put(i, rr.get(i));
-                }
-            }*/
-
-            ArrayList<RequestRide> result = new ArrayList();
             RequestRide rq = new RequestRide();
             DB db = new DB();
             Account acc = new Account();
 
-            result = db.retrieveAllRides();
+            acc = db.retrieveOneAccount("omar1346");
 
-            int index = 0;
-            for (int i = 0; i < result.size(); i++) {
-                index = result.get(i).getRide_id();
-            }
-            index++;
-
-            acc = db.retrieveOneAccount(email);
-
-            rq.setRide_id(index);
             rq.setAcc(acc);
             rq.setDestination(DST);
             rq.setPickUpLocation(PUL);
-            //rq.setRideFees();
             rq.setStatus(Status.PENDING);
-
-            System.out.println("Requested Ride:"+display(rq));
+            System.out.println("acc");
+            System.out.println(rq.getAcc().getEmail());
             db.insertRide(rq);
-
         } catch (Exception ex) {
             Logger.getLogger(Ride.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -153,7 +128,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     @Override
-    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
 
@@ -169,7 +144,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     @Override
-    public String viewOwnAccount(String email) throws RemoteException {
+    public String viewOwnAccount() throws RemoteException {
         return null;
     }
 
@@ -183,22 +158,4 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
 
     }
 
-    @Override
-    public String toString() {
-        return "Ride{" +
-                "rideID=" + getRideID() +
-                ", pickUpLoc='" + pickUpLoc + '\'' +
-                ", destination='" + destination + '\'' +
-                ", rideFees=" + rideFees +
-                '}';
-    }
-
-    public String display(RequestRide ride) {
-        return "Ride ID: " + ride.getRide_id() +
-                ", pickUpLoc: '" + ride.getPickUpLocation() + '\'' +
-                ", destination: '" + ride.getDestination() + '\'' +
-                ", Status: '" + ride.getStatus() + '\'' +
-//                ", rideFees=" + rideFees +
-                '}';
-    }
 }

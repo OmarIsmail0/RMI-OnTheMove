@@ -61,7 +61,7 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
 
     /*Account*/
     @Override
-    public String viewOwnAccount(String email) throws RemoteException {
+    public String viewOwnAccount() throws RemoteException {
         return null;
     }
     @Override
@@ -85,7 +85,7 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
 
     /*Complaint*/
     @Override
-    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
 }
