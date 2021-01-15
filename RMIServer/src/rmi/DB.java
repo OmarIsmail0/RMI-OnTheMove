@@ -69,27 +69,18 @@ public class DB {
         return result;
     }
 
-    public Account retrieveAccount(AccType type, String mail) {
+    public Account retrieveAccount(String mail) {
         collection = database.getCollection("Account");
-        if (AccType.DRIVER == type) {
-            Document doc = collection.find(Filters.eq("email", mail)).first();
-            Account result = gson.fromJson(doc.toJson(), Account.class);
-            return result;
-        } else if (AccType.CLIENT == type) {
-            System.out.println("1");
-            Document doc = collection.find(Filters.eq("email", mail)).first();
-            Account result = gson.fromJson(doc.toJson(), Account.class);
-            return result;
-        }
-        return null;
+        Document doc = collection.find(Filters.eq("email", mail)).first();
+        Account result = gson.fromJson(doc.toJson(), Account.class);
+        return result;
     }
 
 
-    public Account retrieveOneAccount(String email){
+    public Account retrieveOneAccount(String email) {
         collection = database.getCollection("Account");
         Document doc = collection.find(Filters.eq("email", email)).first();
         Account result = gson.fromJson(doc.toJson(), Account.class);
-        System.out.println(result);
         return result;
     }
 
@@ -232,11 +223,11 @@ public class DB {
         return result;
     }
 
-    public void insertRide(RequestRide ride){
+    public void insertRide(RequestRide ride) {
         collection = database.getCollection("RequestRide");
         collection.insertOne(Document.parse(gson.toJson(ride)));
-        System.out.println("inserted");
     }
+
     public ArrayList<RequestRide> retrieveAllRequestedRides() {
         collection = database.getCollection("RequestRide");
         ArrayList<RequestRide> result = new ArrayList();
@@ -246,10 +237,31 @@ public class DB {
         }
         return result;
     }
+
     /*RequestRide*/
-    public void updateRequestRide(RequestRide ride, String email) {
+    public void updateRequestRide(RequestRide ride, int id) {
         collection = database.getCollection("RequestRide");
         Document doc = Document.parse(gson.toJson(ride));
-        collection.replaceOne(Filters.eq("acc.email", email), doc);
+        collection.replaceOne(Filters.eq("ride_id", id), doc);
+        //collection.updateOne(Filters.eq("Title","Dr"),Updates.set("Title", "Prof."));
+
+        /*collection = database.getCollection("BankAccount");
+        Document doc = Document.parse(gson.toJson(acc));
+        collection.replaceOne(Filters.eq("mail", Account.Client_Login_Mail), doc);
+        Employees.updateOne(Filters.eq("Title","Dr"),Updates.set("Title", "Prof."));*/
+    }
+
+    public ArrayList<RequestRide> retrieveAllRides() {
+        collection = database.getCollection("RequestRide");
+        ArrayList<RequestRide> result = new ArrayList();
+        ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
+        if (docs.isEmpty()) {
+            return result;
+        } else {
+            for (int i = 0; i < docs.size(); i++) {
+                result.add(gson.fromJson(docs.get(i).toJson(), RequestRide.class));
+            }
+        }
+        return result;
     }
 }
