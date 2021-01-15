@@ -1,6 +1,5 @@
 package rmi.ReadOnly;
 
-import rmi.Account;
 import rmi.Ride;
 
 import java.rmi.Remote;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 
 public interface DriverReadOnly extends Remote {
     /*Account*/
-    public String viewOwnAccount(String email) throws RemoteException;
+    public String viewOwnAccount() throws RemoteException;
     public boolean login(String email, String password) throws RemoteException;
 
     /*Ride*/
@@ -18,7 +17,7 @@ public interface DriverReadOnly extends Remote {
     public ArrayList<Ride> viewRideHistory() throws RemoteException;
 
     /*Complaint*/
-    public void giveComplaint(String msg, int rideID, String email) throws RemoteException;
+    public void giveComplaint(String msg, int rideID) throws RemoteException;
 
     /*Car*/
     public void updateCar(String mail ,String CM, String PN, String CC) throws RemoteException;

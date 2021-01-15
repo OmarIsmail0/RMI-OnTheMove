@@ -2,10 +2,11 @@ package rmi;
 
 import rmi.ReadOnly.DriverReadOnly;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Driver extends User {
+public class Driver extends User  implements Serializable {
     private String driverLicense;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;
@@ -69,8 +70,8 @@ public class Driver extends User {
 
     /*Account*/
 
-    public String viewOwnAccount() throws RemoteException {
-        return DRO.viewOwnAccount();
+    public String viewOwnAccount(String email) throws RemoteException {
+        return DRO.viewOwnAccount(email);
     }
 
     public boolean login(String email, String password) throws RemoteException {
@@ -93,8 +94,8 @@ public class Driver extends User {
 
     /*Complaint*/
 
-    public void giveComplaint(String msg, int rideID) throws RemoteException {
-        DRO.giveComplaint(msg, rideID);
+    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+        DRO.giveComplaint(msg, rideID, email);
     }
 
     /*Car*/

@@ -4,10 +4,11 @@ import rmi.AccType;
 import rmi.AvailableTimes;
 import rmi.CurrentArea;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface AdminReadOnly {
+public interface AdminReadOnly extends Remote {
     /*Account*/
     public void createDriverAccount(String username, String password, String email, String mobile
             , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException;

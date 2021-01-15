@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializable{
+public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializable, CarInterface{
     String carModel;
     String plateNum;
     String carColor;
@@ -61,7 +61,7 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
 
     /*Account*/
     @Override
-    public String viewOwnAccount() throws RemoteException {
+    public String viewOwnAccount(String email) throws RemoteException {
         return null;
     }
     @Override
@@ -85,7 +85,7 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
 
     /*Complaint*/
     @Override
-    public void giveComplaint(String msg, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
 
     }
 }

@@ -1,5 +1,8 @@
 package rmi;
 
+import rmi.Interface.*;
+import rmi.ReadOnly.*;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
@@ -11,14 +14,14 @@ public class RMIAdmin {
     public static void main(String[] args){
         try{
             Registry registry = LocateRegistry.getRegistry(1099);
-            AccountInterface acc = (AccountInterface) registry.lookup("Account");
+ /*         AccountInterface acc = (AccountInterface) registry.lookup("Account");
             CarInterface car = (CarInterface) registry.lookup("Car");
 
 
             String sDate1="12/1998";
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
             
-            /*--------------DriverAccountCreation-------------*/
+            *//*--------------DriverAccountCreation-------------*//*
             AvailableTimes v1 = new AvailableTimes("Thursday");
             AvailableTimes v2 = new AvailableTimes("Friday");
             ArrayList<AvailableTimes> x = new ArrayList<>();
@@ -31,18 +34,33 @@ public class RMIAdmin {
             acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
                     "ABC123", x, carModel, plateNum, carColor, (float) 0.0, CurrentArea.MAADI);
             
-            /*--------------DriverCarUpdate-------------*/
+            *//*--------------DriverCarUpdate-------------*//*
             String carColorX = "white";
             String carModelX = "hyundai";
             String plateNumX = "123DEF";
             String mail = "ahmed1346";
             car.updateCar(mail, carModelX, plateNumX, carColorX);
 
-            System.out.println(acc.viewAllAccounts());
+            System.out.println(acc.viewAllAccounts());*/
 
+            AdminReadOnly admin_acc = (AdminReadOnly) registry.lookup("Admin Account");
+            AdminInterface admin = (AdminInterface) registry.lookup("Admin");
+
+             //*--------------DriverAccountCreation-------------*//*
+            AvailableTimes v1 = new AvailableTimes("Thursday");
+            AvailableTimes v2 = new AvailableTimes("Friday");
+            ArrayList<AvailableTimes> x = new ArrayList<>();
+            x.add(v1);
+            x.add(v2);
+            String carColor = "blue";
+            String carModel = "Toyota";
+            String plateNum = "123ABC";
+
+            admin_acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
+                    "ABC123", x, carModel, plateNum, carColor, (float) 0.0, CurrentArea.MAADI);
 
         }catch (Exception ex){
-            //ex.printStackTrace();
+            ex.printStackTrace();
             System.out.println(ex);
         }
     }

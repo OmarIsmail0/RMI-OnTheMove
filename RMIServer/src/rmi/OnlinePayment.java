@@ -2,6 +2,7 @@ package rmi;
 
 import rmi.Interface.PayMethod;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OnlinePayment implements PayMethod {
+public class OnlinePayment implements PayMethod , Serializable {
 
     BankAccount bankAcc;
 

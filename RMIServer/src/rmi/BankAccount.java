@@ -1,13 +1,14 @@
 
 package rmi;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.Date;
 
-public class BankAccount {
+public class BankAccount implements Serializable {
     private String mail;
     private double balance;
 
