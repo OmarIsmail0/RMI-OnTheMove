@@ -1,7 +1,6 @@
 <component name="libraryTable">
-  <library name="bson-3.11.1">
+  <library name="gson-2.8.2">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/JavaLib/bson-3.11.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/JavaLib/gson-2.8.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/JavaLib/mongodb-driver-3.11.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/JavaLib/mongodb-driver-core-3.11.1.jar!/" />

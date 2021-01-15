@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="bson-3.11.1">
+  <library name="bson-3.11.11">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/JavaLib/bson-3.11.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/JavaLib/gson-2.8.2.jar!/" />
