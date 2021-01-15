@@ -106,14 +106,25 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
         try {
 
-            Map<Integer, CurrentArea> rides
+            Map<Integer, CurrentArea> fees
                     = new HashMap<Integer, CurrentArea>();
 
-            /*for (int i = 0; i < CurrentArea.size(); i++) {
-                if (rr.get(i).getPickUpLocation() == driver.getArea()) {
-                    rides.put(i, rr.get(i));
-                }
-            }*/
+            fees.put(1, CurrentArea.NEWCAIRO);
+            fees.put(2, CurrentArea.MADINTYSHEROUK);
+            fees.put(3, CurrentArea.NASRCITY);
+            fees.put(4, CurrentArea.ZAMALEK);
+            fees.put(5, CurrentArea.MAADI);
+
+            double pickupFee = 0;
+            double dstFee = 0;
+            for (Map.Entry<Integer, CurrentArea> fee : fees.entrySet()) {
+                if(fee.getValue() == PUL)
+                    pickupFee = fee.getKey();
+                if(fee.getValue() == DST)
+                    dstFee = fee.getKey();
+            }
+
+            double ride_Fees = pickupFee * dstFee * 2.6;
 
             ArrayList<RequestRide> result = new ArrayList();
             RequestRide rq = new RequestRide();
@@ -134,7 +145,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
             rq.setAcc(acc);
             rq.setDestination(DST);
             rq.setPickUpLocation(PUL);
-            //rq.setRideFees();
+            rq.setRideFees(ride_Fees);
             rq.setStatus(Status.PENDING);
 
             System.out.println("Requested Ride:"+display(rq));
@@ -198,7 +209,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
                 ", pickUpLoc: '" + ride.getPickUpLocation() + '\'' +
                 ", destination: '" + ride.getDestination() + '\'' +
                 ", Status: '" + ride.getStatus() + '\'' +
-//                ", rideFees=" + rideFees +
+                ", rideFees=" + ride.getRideFees() +
                 '}';
     }
 }

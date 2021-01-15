@@ -85,6 +85,7 @@ public class RequestRide implements RequestRideInterface, Serializable {
                 rides.put(i, rr.get(i));
             }
         }
+
         for (Map.Entry<Integer, RequestRide> ride : rides.entrySet()) {
             if(ride.getValue().getStatus() == Status.PENDING)
             System.out.println(ride.getValue().getRide_id() + ". " + ride.getValue().getAcc().getUsername() + "/" + ride.getValue().getPickUpLocation()
