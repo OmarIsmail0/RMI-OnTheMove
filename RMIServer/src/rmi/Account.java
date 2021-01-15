@@ -8,10 +8,10 @@ import rmi.ReadOnly.DriverReadOnly;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
 import java.util.*;
 
-
-public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly,Serializable {
+public class Account extends UnicastRemoteObject implements ClientReadOnly, DriverReadOnly, AdminReadOnly, AccountInterface, Serializable {
     int accID;
     String username, password, email, mobile;
     AccType type;
@@ -24,10 +24,12 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     public static int verificationCode;
 
     /*Login Info*/
-    static String Login_Mail;
-    static AccType acc_type;
+    static String Client_Login_Mail;
+    static AccType Client_acc_type;
+    static String Driver_Login_Mail;
+    static AccType Driver_acc_type;
 
-    public Account() throws RemoteException{
+    public Account() throws RemoteException {
 
     }
 
@@ -116,8 +118,8 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     /*Account*/
     @Override
-    public void createClientAccount(String username,String password,String email,String mobile,AccType type,
-                                    double balance, String CCnumber, int ccv,Date expDate) throws RemoteException {
+    public void createClientAccount(String username, String password, String email, String mobile, AccType type,
+                                    double balance, String CCnumber, int ccv, Date expDate) throws RemoteException {
 
         Account new_Account = new Account();
         BankAccount new_BankAcc = new BankAccount();
@@ -182,19 +184,20 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                         System.out.println("please try again!");
                     }
                 }
-            } else  {
+            } else {
                 System.err.println("this email is already registered");
             }
 
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
+
     @Override
     public void createDriverAccount(String username, String password, String email, String mobile
-            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, 
-            String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException{
+            , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel,
+                                    String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException {
 
         Account new_Account = new Account();
         Driver new_Driver = new Driver();
@@ -244,39 +247,43 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                 db.insertDriver(new_Driver);
 
 
-            } else  {
+            } else {
                 System.err.println("this email is already registered");
             }
 
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
+
     @Override
-    public String viewOwnAccount() throws RemoteException{
+    public String viewOwnAccount() throws RemoteException {
         Account account = new Account();
         DB db = new DB();
-        account = db.retrieveAccount(Login_Mail);
+        //Error
+        account = db.retrieveAccount(Client_acc_type,Client_Login_Mail);
         String text = account.toString();
         return text;
     }
+
     @Override
-    public String viewAllAccounts() throws RemoteException{
+    public String viewAllAccounts() throws RemoteException {
         DB db = new DB();
         acc = db.retrieveAllAccounts();
         String text = " ";
         if (acc.isEmpty()) {
-            text ="not found";
+            text = "not found";
         } else {
-            for (int i = 0; i < acc.size(); i++){
+            for (int i = 0; i < acc.size(); i++) {
                 text = acc.get(i).toString();
             }
         }
         return text;
     }
+
     @Override
-    public boolean login(String EMAIL, String PW) throws RemoteException{
+    public boolean login(String EMAIL, String PW) throws RemoteException {
         DB db = new DB();
         acc = db.retrieveAllAccounts();
         int index = -1;
@@ -290,8 +297,14 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
             System.out.println("Incorrect Email");
         } else {
             if (acc.get(index).getPassword().equals(PW)) {
-                Login_Mail = acc.get(index).getEmail();
-                acc_type = acc.get(index).getType();
+                if (acc.get(index).getType() == AccType.CLIENT) {
+                    Client_Login_Mail = acc.get(index).getEmail();
+                    Client_acc_type = acc.get(index).getType();
+                    System.out.println(acc.get(index).getType());
+                } else if (acc.get(index).getType() == AccType.DRIVER) {
+                    Driver_Login_Mail = acc.get(index).getEmail();
+                    Driver_acc_type = acc.get(index).getType();
+                }
                 return true;
             } else {
                 System.out.println("Incorrect Password");
@@ -300,8 +313,9 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
         }
         return false;
     }
+
     @Override
-    public void banAccount(String email) throws RemoteException{
+    public void banAccount(String email) throws RemoteException {
         DB db = new DB();
         acc = db.retrieveAllAccounts();
         bankAcc = db.retrieveAllBankAccounts();
@@ -322,26 +336,29 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
             db.deleteClient(client.get(index).getAcc().getEmail());
         }
     }
-    public void sendVerification() throws RemoteException{
+
+    public void sendVerification() throws RemoteException {
         Random rand = new Random();
         String id = String.format("%04d", rand.nextInt(10000));
         verificationCode = Integer.parseInt(id);
         System.out.println("your verification code is: " + verificationCode);
     }
-    public boolean enterVerificationCode(int code) throws RemoteException{
+
+    public boolean enterVerificationCode(int code) throws RemoteException {
         if (verificationCode == code) {
             return true;
         } else {
             return false;
         }
     }
+
     @Override
     public String toString() {
         DB db = new DB();
         bankAcc = db.retrieveAllBankAccounts();
         int x = -1;
-        for (int i = 0; i < bankAcc.size(); i++){
-            if(bankAcc.get(i).getMail().equals(getEmail()))
+        for (int i = 0; i < bankAcc.size(); i++) {
+            if (bankAcc.get(i).getMail().equals(getEmail()))
                 x = i;
         }
         String result =
@@ -369,22 +386,27 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     public void acceptRide(int x) throws RemoteException {
 
     }
+
     @Override
     public void declineRide(int x) throws RemoteException {
 
     }
+
     @Override
-    public void requestRide(String x, String y) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
 
     }
+
     @Override
     public void cancelRide(int x) throws RemoteException {
 
     }
+
     @Override
     public void viewRideDetails(int x) throws RemoteException {
 
     }
+
     @Override
     public ArrayList<Ride> viewRideHistory() throws RemoteException {
         return null;
@@ -392,7 +414,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     /*Compliant*/
     @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
 
     }
 
@@ -401,8 +423,6 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
 
     }
-
-
 
 
 }

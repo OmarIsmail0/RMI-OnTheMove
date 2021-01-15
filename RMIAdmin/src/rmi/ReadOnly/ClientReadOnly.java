@@ -19,13 +19,13 @@ public interface ClientReadOnly extends Remote {
     public boolean login(String email, String password) throws RemoteException;
 
     /*Ride*/
-    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException ;
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException;;
     public void cancelRide(int x) throws RemoteException;
     public void viewRideDetails(int x) throws RemoteException;
     public ArrayList<Ride> viewRideHistory() throws RemoteException;
 
     /*Compliant*/
-    public void giveComplaint(String msg, int rideID) throws RemoteException;
+    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException;
 
     /*Client*/
     public void editAccount() throws RemoteException;

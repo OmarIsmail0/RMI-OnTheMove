@@ -2,16 +2,23 @@ package rmi;
 
 import rmi.ReadOnly.DriverReadOnly;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Driver extends User implements DriverReadOnly {
+public class Driver extends User  implements Serializable {
     private String driverLicense;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;
     private Notification notification;
     private CurrentArea area;
 
+
+    private DriverReadOnly DRO;
+
+    public Driver(DriverReadOnly DRO) throws RemoteException{
+        this.DRO = DRO;
+    }
     //Constructor
     public Driver() throws RemoteException  {
 
@@ -62,38 +69,37 @@ public class Driver extends User implements DriverReadOnly {
     //Methods
 
     /*Account*/
-    @Override
+
     public String viewOwnAccount() throws RemoteException {
-        return null;
+        return DRO.viewOwnAccount();
     }
-    @Override
+
     public boolean login(String email, String password) throws RemoteException {
-        return false;
+        return DRO.login(email, password);
     }
 
     /*Ride*/
-    @Override
+
     public void acceptRide(int x) throws RemoteException {
-
+        DRO.acceptRide(x);
     }
-    @Override
+
     public void declineRide(int x) throws RemoteException {
-
+        DRO.declineRide(x);
     }
-    @Override
+
     public ArrayList<Ride> viewRideHistory() throws RemoteException {
-        return null;
+        return DRO.viewRideHistory();
     }
 
     /*Complaint*/
-    @Override
-    public void giveComplaint(Account acc, String str, int rideID) throws RemoteException {
 
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
+        DRO.giveComplaint(msg, rideID);
     }
 
     /*Car*/
-    @Override
     public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+        DRO.updateCar(mail, CM, PN, CC);
     }
-
 }
