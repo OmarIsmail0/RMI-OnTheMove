@@ -9,3 +9,5 @@ RMIAdmin/RMIAdmin.iml
 RMIClient/RMIClient.iml
 RMIDriver/RMIDriver.iml
 RMIServer/RMIServer.iml
+/RMIAdmin/build/
+/RMIClient/build/

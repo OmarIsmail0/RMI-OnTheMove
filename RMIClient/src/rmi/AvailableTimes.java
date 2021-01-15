@@ -2,7 +2,7 @@ package rmi;
 
 import java.io.Serializable;
 
-public class AvailableTimes implements Serializable{
+public class AvailableTimes implements Serializable {
     String day;
 
     public AvailableTimes(){

@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package rmi;
+import rmi.AccType;
+import rmi.Account;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -15,8 +18,8 @@ import java.util.ArrayList;
 
 public interface FacadeInterface extends Remote{
     
-   public void SetAccountData(int id, String username, String password, 
-           String email, String mobile, AccType type, ArrayList<Account> acc)throws RemoteException;
+   public void SetAccountData(int id, String username, String password,
+                              String email, String mobile, AccType type, ArrayList<Account> acc)throws RemoteException;
    public String getAccountData()throws RemoteException;
    public Account getAccount() throws RemoteException;
    

@@ -1,12 +1,14 @@
 
 package rmi;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.Date;
 
-public class BankAccount {
+public class BankAccount implements Serializable {
     private String mail;
     private double balance;
 
@@ -83,20 +85,46 @@ public class BankAccount {
     public void setExpDate(Date expDate) {
         this.expDate = expDate;
     }
-    
-    public void updateBalance(double x,int y){
-        
+
+    public void updateBalance(double amount) throws RemoteException{
+        DB db = new DB();
+        Client client = new Client();
+        BankAccount bAcc = new BankAccount();
+
+        client = db.retrieveClientByMail();
+        bAcc = client.getBankAcc();
+        if (checkAccountBalance(client, amount)) {
+            double new_Balance = client.getBankAcc().getBalance() - amount;
+            client.getBankAcc().setBalance(new_Balance);
+            bAcc.setBalance(new_Balance);
+            db.updateBalance(bAcc, client);
+            System.out.println("Transaction Complete!");
+        } else {
+            System.out.println("Transaction Incomplete! Not Enough Money!");
+        }
     }
-    public void checkAccountBalance(double x,int y){
-        
+
+    public boolean checkAccountBalance(Client c, double amount) throws RemoteException {
+        if(c.getBankAcc().getBalance() >= amount)   return true;
+        else return false;
     }
-    public void checkCCinfo(int x, double y, Date date){
-        
+
+    public boolean checkCCinfo(String ccNum, int ccv, Date date) throws RemoteException {
+        DB db = new DB();
+        Client client = new Client();
+        BankAccount bAcc = new BankAccount();
+
+        client = db.retrieveClientByMail();
+        bAcc = client.getBankAcc();
+
+        if(bAcc.getCCnumber().equals(ccNum) && bAcc.getCcv()==ccv && bAcc.getExpDate().compareTo(date) == 0)
+            return true;
+        else return false;
     }
+
 
     @Override
     public String toString(){
-
         String result =
                 "\nBalance:" + getBalance()
                 + "\nCredit Card Number: " + getCCnumber()

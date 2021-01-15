@@ -1,5 +1,7 @@
 
-package rmi;
+package rmi.Interface;
+import rmi.Account;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 /**
@@ -7,5 +9,5 @@ import java.rmi.RemoteException;
  * @author Mai146607
  */
 public interface ComplaintInterface extends Remote {
-        public void giveComplaint(Account acc ,String str) throws RemoteException;
+        public void giveComplaint(Account acc , String str) throws RemoteException;
 }

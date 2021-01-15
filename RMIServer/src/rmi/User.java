@@ -1,25 +1,26 @@
 package rmi;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class User {
+public class User extends UnicastRemoteObject implements Serializable {
+
     private Account acc;
     private Notification notif;
-    private CurrentArea area;
     private ArrayList<Ride> rides;
-    private BankAccount creditCard;
     private float rating;
+
 
     //Constructors
 
-    public User() {
+    public User() throws RemoteException {
     }
 
-    public User(Account acc, CurrentArea area, ArrayList<Ride> rides, BankAccount creditCard, float rating) {
+    public User(Account acc, ArrayList<Ride> rides, float rating) throws RemoteException{
         this.acc = acc;
-        this.area = area;
         this.rides = rides;
-        this.creditCard = creditCard;
         this.rating = rating;
     }
 
@@ -36,23 +37,19 @@ public class User {
     public void setNotif(Notification notif) {
         this.notif = notif;
     }
-    public CurrentArea getArea() {
+
+   /*public CurrentArea getArea() {
         return area;
     }
     public void setArea(CurrentArea area) {
         this.area = area;
-    }
+    }*/
+
     public ArrayList<Ride> getRides() {
         return rides;
     }
     public void setRides(ArrayList<Ride> rides) {
         this.rides = rides;
-    }
-    public BankAccount getCreditCard() {
-        return creditCard;
-    }
-    public void setCreditCard(BankAccount creditCards) {
-        this.creditCard = creditCards;
     }
     public float getRating() {
         return rating;
