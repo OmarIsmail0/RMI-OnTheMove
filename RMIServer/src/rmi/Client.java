@@ -106,8 +106,8 @@ public class Client extends User  implements Serializable, ClientInterface {
         CRO.createClientAccount(username,password,email,mobile,type,balance,CCnumber,ccv,expDate);
     }
 
-    public String viewOwnAccount() throws RemoteException {
-        return CRO.viewOwnAccount();
+    public String viewOwnAccount(String email) throws RemoteException {
+        return CRO.viewOwnAccount(email);
     }
 
     public boolean login(String email, String password) throws RemoteException {
@@ -115,8 +115,8 @@ public class Client extends User  implements Serializable, ClientInterface {
     }
 
     /*Ride*/
-    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
-        CRO.requestRide(PUL,DST);
+    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
+        CRO.requestRide(PUL,DST,email);
     }
 
     public void cancelRide(int x) throws RemoteException {
@@ -131,7 +131,7 @@ public class Client extends User  implements Serializable, ClientInterface {
         return CRO.viewRideHistory();
     }
 
-    public void giveComplaint(String msg, int rideID) throws RemoteException {
-        CRO.giveComplaint(msg,rideID);
+    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+        CRO.giveComplaint(msg,rideID,email);
     }
 }

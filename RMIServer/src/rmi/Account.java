@@ -258,11 +258,11 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     }
 
     @Override
-    public String viewOwnAccount() throws RemoteException {
+    public String viewOwnAccount(String email) throws RemoteException {
         Account account = new Account();
         DB db = new DB();
         //Error
-        account = db.retrieveAccount(Client_acc_type,Client_Login_Mail);
+        account = db.retrieveAccount(email);
         String text = account.toString();
         return text;
     }
@@ -300,7 +300,6 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                 if (acc.get(index).getType() == AccType.CLIENT) {
                     Client_Login_Mail = acc.get(index).getEmail();
                     Client_acc_type = acc.get(index).getType();
-                    System.out.println(acc.get(index).getType());
                 } else if (acc.get(index).getType() == AccType.DRIVER) {
                     Driver_Login_Mail = acc.get(index).getEmail();
                     Driver_acc_type = acc.get(index).getType();
@@ -393,7 +392,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     }
 
     @Override
-    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
 
     }
 
@@ -414,7 +413,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     /*Compliant*/
     @Override
-    public void giveComplaint(String msg, int rideID) throws RemoteException {
+    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
 
     }
 

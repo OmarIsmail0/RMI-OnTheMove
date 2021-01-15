@@ -27,7 +27,7 @@ public class RMIDriver {
             RequestRide driver_select = (RequestRide) registry.lookup("Select");
             DriverReadOnly driver_acc = (DriverReadOnly) registry.lookup("Driver Account");
             driver_acc.login("ahmed1346","1346");
-            driver_select.select();
+            driver_select.selectRide("ahmed1346");
 
 //           driver_ride.acceptRide();
 

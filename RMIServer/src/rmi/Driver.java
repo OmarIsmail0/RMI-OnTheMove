@@ -70,8 +70,8 @@ public class Driver extends User  implements Serializable {
 
     /*Account*/
 
-    public String viewOwnAccount() throws RemoteException {
-        return DRO.viewOwnAccount();
+    public String viewOwnAccount(String email) throws RemoteException {
+        return DRO.viewOwnAccount(email);
     }
 
     public boolean login(String email, String password) throws RemoteException {
@@ -94,8 +94,8 @@ public class Driver extends User  implements Serializable {
 
     /*Complaint*/
 
-    public void giveComplaint(String msg, int rideID) throws RemoteException {
-        DRO.giveComplaint(msg, rideID);
+    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+        DRO.giveComplaint(msg, rideID, email);
     }
 
     /*Car*/
