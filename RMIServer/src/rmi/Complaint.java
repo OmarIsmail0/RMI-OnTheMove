@@ -51,12 +51,12 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
     }
 
     @Override
-    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
+    public void giveComplaint(String msg, int rideID) throws RemoteException {
         DB db = new DB();
         Complaint c = new Complaint();
         Account acc = new Account();
         //Error
-        acc = db.retrieveAccount(email);
+        acc = db.retrieveAccount(Account.Client_acc_type, Account.Client_Login_Mail);
         Ride ride = db.retrieveRide(rideID);
 
 
@@ -76,7 +76,7 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
 
     }
     @Override
-    public String viewOwnAccount(String email) throws RemoteException {
+    public String viewOwnAccount() throws RemoteException {
         return null;
     }
     @Override
@@ -98,7 +98,7 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
 
     }
     @Override
-    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
 
     }
     @Override
