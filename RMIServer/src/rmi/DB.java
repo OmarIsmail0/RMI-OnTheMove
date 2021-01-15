@@ -14,6 +14,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+
 import com.mongodb.client.model.Updates;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class DB {
         String connectionString = "mongodb+srv://AOOPSE:123@cluster0.g6utq.mongodb.net/<dbname>?retryWrites=true&w=majority";
         db = new MongoClient(new MongoClientURI(connectionString));
         database = db.getDatabase("OnTheMove"); // Database name
-
     }
 
     /*-----------------Account-----------------*/
@@ -50,11 +50,11 @@ public class DB {
         for (int i = 0; i < result.size(); i++) {
             index = result.get(i).getAccID();
         }
+
         acc.setAccID(index + 1);
         collection.insertOne(Document.parse(gson.toJson(acc)));
         System.out.println("Account inserted.");
     }
-
     public ArrayList<Account> retrieveAllAccounts() {
         collection = database.getCollection("Account");
         ArrayList<Account> result = new ArrayList();
@@ -93,7 +93,6 @@ public class DB {
     public void insertBankAccount(BankAccount bankAcc) {
         collection = database.getCollection("BankAccount");
         collection.insertOne(Document.parse(gson.toJson(bankAcc)));
-
     }
 
     public ArrayList<BankAccount> retrieveAllBankAccounts() {
@@ -138,7 +137,6 @@ public class DB {
         return result;
     }
 
-
     public Client retrieveClientByMail() {
         collection = database.getCollection("Client");
         Document doc = collection.find(Filters.eq("acc.email", Account.Client_Login_Mail)).first();
@@ -150,6 +148,7 @@ public class DB {
         collection = database.getCollection("Client");
         collection.deleteOne(Filters.eq("acc.email", email));
     }
+
 
     public void updateClient(Account client) {
         collection = database.getCollection("Client");

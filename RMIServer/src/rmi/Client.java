@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+
 public class Client extends User  implements Serializable, ClientInterface {
     int numOfRides;
     Ride ride;
@@ -28,10 +29,10 @@ public class Client extends User  implements Serializable, ClientInterface {
 
     }
 
+
     public Client(Account acc, ArrayList<Ride> rides, float rating) throws RemoteException{
         super(acc, rides, rating);
         this.numOfRides=0;
-    }
     
     //Setter And Getters
     public int getNumOfRides() {

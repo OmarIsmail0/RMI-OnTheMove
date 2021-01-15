@@ -20,6 +20,7 @@ public class Driver extends User  implements Serializable {
         this.DRO = DRO;
     }
     //Constructor
+
     public Driver() throws RemoteException  {
 
     }

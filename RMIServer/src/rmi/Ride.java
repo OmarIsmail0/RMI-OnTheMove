@@ -22,8 +22,10 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     private double rideFees;
     private Complaint comment;
 
+
     private Client client;
     private Driver driver;
+
 
     /*Setters/Getters*/
     public int getRideID() {
@@ -34,19 +36,19 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
         this.rideID = rideID;
     }
 
-    public String getPickUpLoc() {
+    public CurrentArea getPickUpLoc() {
         return pickUpLoc;
     }
 
-    public void setPickUpLoc(String pickUpLoc) {
+    public void setPickUpLoc(CurrentArea pickUpLoc) {
         this.pickUpLoc = pickUpLoc;
     }
 
-    public String getDestination() {
+    public CurrentArea getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(CurrentArea destination) {
         this.destination = destination;
     }
 
