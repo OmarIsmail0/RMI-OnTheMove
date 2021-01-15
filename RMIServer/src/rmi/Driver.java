@@ -2,10 +2,11 @@ package rmi;
 
 import rmi.ReadOnly.DriverReadOnly;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class Driver extends User {
+public class Driver extends User  implements Serializable {
     private String driverLicense;
     private ArrayList<AvailableTimes> workingTimes;
     private Car car;

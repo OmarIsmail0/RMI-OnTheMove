@@ -1,10 +1,11 @@
 package rmi;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class User extends UnicastRemoteObject {
+public class User extends UnicastRemoteObject implements Serializable {
 
     private Account acc;
     private Notification notif;

@@ -3,6 +3,7 @@ package rmi;
 import rmi.ReadOnly.ClientReadOnly;
 import rmi.ReadOnly.DriverReadOnly;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 
-public class Complaint implements ClientReadOnly, DriverReadOnly {
+public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
 
     private int cmpID;
     private Account acc;
@@ -54,7 +55,8 @@ public class Complaint implements ClientReadOnly, DriverReadOnly {
         DB db = new DB();
         Complaint c = new Complaint();
         Account acc = new Account();
-        acc = db.retrieveAccount();
+        //Error
+        acc = db.retrieveAccount(Account.Client_acc_type, Account.Client_Login_Mail);
         Ride ride = db.retrieveRide(rideID);
 
 
@@ -96,7 +98,7 @@ public class Complaint implements ClientReadOnly, DriverReadOnly {
 
     }
     @Override
-    public void requestRide(String x, String y) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
 
     }
     @Override

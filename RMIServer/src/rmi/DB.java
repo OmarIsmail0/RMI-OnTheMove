@@ -15,9 +15,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.bson.Document;
 
 public class DB {
@@ -67,10 +69,27 @@ public class DB {
         return result;
     }
 
-    public Account retrieveAccount() {
+    public Account retrieveAccount(AccType type, String mail) {
         collection = database.getCollection("Account");
-        Document doc = collection.find(Filters.eq("email", Account.Login_Mail)).first();
+        if (AccType.DRIVER == type) {
+            Document doc = collection.find(Filters.eq("email", mail)).first();
+            Account result = gson.fromJson(doc.toJson(), Account.class);
+            return result;
+        } else if (AccType.CLIENT == type) {
+            System.out.println("1");
+            Document doc = collection.find(Filters.eq("email", mail)).first();
+            Account result = gson.fromJson(doc.toJson(), Account.class);
+            return result;
+        }
+        return null;
+    }
+
+
+    public Account retrieveOneAccount(String email){
+        collection = database.getCollection("Account");
+        Document doc = collection.find(Filters.eq("email", email)).first();
         Account result = gson.fromJson(doc.toJson(), Account.class);
+        System.out.println(result);
         return result;
     }
 
@@ -104,11 +123,11 @@ public class DB {
     public void updateBalance(BankAccount acc, Client c) {
         collection = database.getCollection("BankAccount");
         Document doc = Document.parse(gson.toJson(acc));
-        collection.replaceOne(Filters.eq("mail", Account.Login_Mail), doc);
+        collection.replaceOne(Filters.eq("mail", Account.Client_Login_Mail), doc);
 
         collection = database.getCollection("Client");
         doc = Document.parse(gson.toJson(c));
-        collection.replaceOne(Filters.eq("bankAcc.mail", Account.Login_Mail), doc);
+        collection.replaceOne(Filters.eq("bankAcc.mail", Account.Client_Login_Mail), doc);
     }
 
     /*-----------------Client-----------------*/
@@ -131,7 +150,7 @@ public class DB {
 
     public Client retrieveClientByMail() {
         collection = database.getCollection("Client");
-        Document doc = collection.find(Filters.eq("acc.email", Account.Login_Mail)).first();
+        Document doc = collection.find(Filters.eq("acc.email", Account.Client_Login_Mail)).first();
         Client result = gson.fromJson(doc.toJson(), Client.class);
         return result;
     }
@@ -140,6 +159,7 @@ public class DB {
         collection = database.getCollection("Client");
         collection.deleteOne(Filters.eq("acc.email", email));
     }
+
     public void updateClient(Account client) {
         collection = database.getCollection("Client");
         Document doc = Document.parse(gson.toJson(client));
@@ -185,13 +205,13 @@ public class DB {
 
     public void deleteDriver() {
         collection = database.getCollection("Driver");
-        collection.deleteOne(Filters.eq("acc.email", Account.Login_Mail));
+        collection.deleteOne(Filters.eq("acc.email", Account.Driver_Login_Mail));
     }
 
     public void updateDriver(Driver driver) {
         collection = database.getCollection("Driver");
         Document doc = Document.parse(gson.toJson(driver));
-        collection.replaceOne(Filters.eq("acc.email", Account.Login_Mail), doc);
+        collection.replaceOne(Filters.eq("acc.email", Account.Driver_Login_Mail), doc);
     }
 
     /*-----------------Ride-----------------*/
@@ -212,4 +232,24 @@ public class DB {
         return result;
     }
 
+    public void insertRide(RequestRide ride){
+        collection = database.getCollection("RequestRide");
+        collection.insertOne(Document.parse(gson.toJson(ride)));
+        System.out.println("inserted");
+    }
+    public ArrayList<RequestRide> retrieveAllRequestedRides() {
+        collection = database.getCollection("RequestRide");
+        ArrayList<RequestRide> result = new ArrayList();
+        ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
+        for (int i = 0; i < docs.size(); i++) {
+            result.add(gson.fromJson(docs.get(i).toJson(), RequestRide.class));
+        }
+        return result;
+    }
+    /*RequestRide*/
+    public void updateRequestRide(RequestRide ride, String email) {
+        collection = database.getCollection("RequestRide");
+        Document doc = Document.parse(gson.toJson(ride));
+        collection.replaceOne(Filters.eq("acc.email", email), doc);
+    }
 }

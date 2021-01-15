@@ -3,13 +3,14 @@ package rmi;
 import rmi.Interface.AdminInterface;
 import rmi.ReadOnly.AdminReadOnly;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Admin extends UnicastRemoteObject implements AdminInterface {
+public class Admin extends UnicastRemoteObject implements AdminInterface, Serializable {
 
     static Admin adminInstance;
     Account acc;
@@ -46,7 +47,7 @@ public class Admin extends UnicastRemoteObject implements AdminInterface {
         int index = -1;
         String newRecord = "";
         for (int i = 0; i < acc.size(); i++) {
-            if (acc.get(i).getEmail().equals(Account.Login_Mail)) {
+            if (acc.get(i).getEmail().equals(Account.Driver_Login_Mail)) {
                 index = i;
             }
         }

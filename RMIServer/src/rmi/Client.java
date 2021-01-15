@@ -70,7 +70,7 @@ public class Client extends User  implements Serializable, ClientInterface {
         int index = -1;
         String newRecord = "";
         for (int i = 0; i < acc.size(); i++) {
-            if (acc.get(i).getEmail().equals(Account.Login_Mail)) {
+            if (acc.get(i).getEmail().equals(Account.Client_Login_Mail)) {
                 index = i;
             }
         }
@@ -115,8 +115,8 @@ public class Client extends User  implements Serializable, ClientInterface {
     }
 
     /*Ride*/
-    public void requestRide(String x, String y) throws RemoteException {
-        CRO.requestRide(x,y);
+    public void requestRide(CurrentArea PUL, CurrentArea DST) throws RemoteException {
+        CRO.requestRide(PUL,DST);
     }
 
     public void cancelRide(int x) throws RemoteException {

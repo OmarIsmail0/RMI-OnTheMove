@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializable{
+public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializable, CarInterface{
     String carModel;
     String plateNum;
     String carColor;
