@@ -4,5 +4,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface RequestRideInterface extends Remote {
-    public void select() throws RemoteException;
+    public void selectRide(String email) throws RemoteException;
 }
