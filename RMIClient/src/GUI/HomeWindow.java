@@ -1,24 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmi.ClientReadOnly;
+
 import rmi.HomeWindowGUI;
-import rmi.ClientInterface;
+
 import rmi.AccType;
+import rmi.ReadOnly.ClientReadOnly;
+
 public class HomeWindow {
     HomeWindowGUI gui;
     Registry r;
@@ -29,13 +24,12 @@ public class HomeWindow {
             this.r = r;
             gui.getjButton1().addActionListener(new CreateAccountBtnAction());          
         }
-    
     class CreateAccountBtnAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");         
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
                 String username = gui.getjTextField1().getText();
                 String email = gui.getjTextField2().getText();
                 String pass = gui.getjTextField5().getText();
@@ -49,7 +43,8 @@ public class HomeWindow {
                 Date date = new SimpleDateFormat("MM/yyyy").parse(expDate);
                 c.createClientAccount(username, pass, email, mobile, accType, balance, cardNum, ccv, date);
 
-                gui.getjLabel10().setText("creatingAccount");
+                gui.getjLabel10().setText("Creating Account");
+                //in create account function body make it go to the client home GUI 
                
             } catch (Exception ex) {
                 Logger.getLogger(HomeWindow.class.getName()).log(Level.SEVERE, null, ex);

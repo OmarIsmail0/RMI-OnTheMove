@@ -19,13 +19,12 @@ public class AccountFacade extends UnicastRemoteObject implements FacadeInterfac
         a= new Account(0,"","","","",AccType.CLIENT,acc);
     }
     @Override
-    public void SetAccountData(int id, String username, String password, String email, String mobile, AccType type, ArrayList<Account> acc) throws RemoteException{
+    public void SetAccountData(int id, String username, String password, String email, String mobile, AccType type) throws RemoteException{
         a.setAccID(id);
         a.setUsername(username);
         a.setPassword(password);
         a.setEmail(email);
         a.setMobile(mobile);
-        a.setAcc(acc);
         a.setType(type);
     }
     
