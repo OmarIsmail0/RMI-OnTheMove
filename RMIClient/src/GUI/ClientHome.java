@@ -12,9 +12,10 @@ import java.rmi.registry.Registry;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmi.ClientReadOnly;
+
 import rmi.ClientHomeGUI;
 import rmi.CurrentArea;
+import rmi.ReadOnly.ClientReadOnly;
 
 
 public class ClientHome {
@@ -36,7 +37,7 @@ public class ClientHome {
             try {
                 CurrentArea l = null; 
                 CurrentArea d = null;
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");  
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
                 String loc = (String)gui.getCombo().getSelectedItem();
                 if (null != loc)switch (loc) {
                     case "Maadi":
@@ -79,6 +80,7 @@ public class ClientHome {
                         break;
                 }
                 String email = gui.getjTextField3().getText();
+
                 String payment = (String)gui.getCombo3().getSelectedItem();
                 boolean p = false; 
                 if ("Yes".equals(payment))
@@ -87,6 +89,7 @@ public class ClientHome {
                     p = false;
                 c.requestRide(l, d, email,p);
                 //in login functino go to the next gui for home client if login is correct..
+                //add login action what happens 
                                
             } catch (Exception ex) {
                 Logger.getLogger(HomeWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +103,7 @@ public class ClientHome {
             try {
                 ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");  
                 String acc = gui.getjTextField4().getText(); 
-                c.viewRideHistory(); //add parameters 3nd 3omar 
+                //c.viewRideHistory(); //add parameters 3nd 3omar 
                 //not fiinished
             } catch (Exception ex) {
                 Logger.getLogger(HomeWindow.class.getName()).log(Level.SEVERE, null, ex);
