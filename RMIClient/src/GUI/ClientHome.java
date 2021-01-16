@@ -14,10 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import rmi.ClientReadOnly;
 import rmi.ClientHomeGUI;
+import rmi.ClientInterface;
 import rmi.CurrentArea;
-import rmi.ReadOnly.ClientReadOnly;
 
 
 public class ClientHome {
@@ -37,7 +37,7 @@ public class ClientHome {
             try {
                 CurrentArea l = null; 
                 CurrentArea d = null;
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");  
                 String loc = (String)gui.getCombo().getSelectedItem();
                 if ("Maadi".equals(loc)){
                     l = CurrentArea.MAADI; 
@@ -64,7 +64,7 @@ public class ClientHome {
                 };
                 String email = gui.getjTextField3().getText();
 
-                c.requestRide(l, d, email,true);
+                c.requestRide(l, d, email);
                 //add login action what happens 
                                
             } catch (Exception ex) {
