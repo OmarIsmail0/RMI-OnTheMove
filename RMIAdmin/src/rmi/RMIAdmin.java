@@ -8,45 +8,22 @@ import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class RMIAdmin {
 
-    public static void main(String[] args){
-        try{
-            Registry registry = LocateRegistry.getRegistry(1099);
- /*         AccountInterface acc = (AccountInterface) registry.lookup("Account");
-            CarInterface car = (CarInterface) registry.lookup("Car");
+    public static void main(String[] args) {
+        try {
+            Scanner input = new Scanner(System.in);
 
-
-            String sDate1="12/1998";
-            Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
-            
-            *//*--------------DriverAccountCreation-------------*//*
-            AvailableTimes v1 = new AvailableTimes("Thursday");
-            AvailableTimes v2 = new AvailableTimes("Friday");
-            ArrayList<AvailableTimes> x = new ArrayList<>();
-            x.add(v1);
-            x.add(v2);
-            String carColor = "blue";
-            String carModel = "Toyota";
-            String plateNum = "123ABC";
-
-            acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
-                    "ABC123", x, carModel, plateNum, carColor, (float) 0.0, CurrentArea.MAADI);
-            
-            *//*--------------DriverCarUpdate-------------*//*
-            String carColorX = "white";
-            String carModelX = "hyundai";
-            String plateNumX = "123DEF";
-            String mail = "ahmed1346";
-            car.updateCar(mail, carModelX, plateNumX, carColorX);
-
-            System.out.println(acc.viewAllAccounts());*/
+            Registry registry = LocateRegistry.getRegistry(1199);
 
             AdminReadOnly admin_acc = (AdminReadOnly) registry.lookup("Admin Account");
+            AdminReadOnly admin_car = (AdminReadOnly) registry.lookup("Admin Car");
             AdminInterface admin = (AdminInterface) registry.lookup("Admin");
 
-             //*--------------DriverAccountCreation-------------*//*
+
+            /*-----------------------------Creating Driver Account----------------------------------*/
             AvailableTimes v1 = new AvailableTimes("Thursday");
             AvailableTimes v2 = new AvailableTimes("Friday");
             ArrayList<AvailableTimes> x = new ArrayList<>();
@@ -55,14 +32,33 @@ public class RMIAdmin {
             String carColor = "blue";
             String carModel = "Toyota";
             String plateNum = "123ABC";
-
-            admin_acc.createDriverAccount("ahmed", "1346", "ahmed1346", "124679", AccType.DRIVER,
+            admin_acc.createDriverAccount("islam", "1346", "islam1134646", "124679", AccType.DRIVER,
                     "ABC123", x, carModel, plateNum, carColor, (float) 0.0, CurrentArea.MAADI);
+            System.out.println("Account Registered");
+            //Check correctness in mongo db
 
-        }catch (Exception ex){
+
+            /*-----------------------------Update Driver Car----------------------------------*/
+            /*String carColorX = "white";
+            String carModelX = "hyundai";
+            String plateNumX = "123DEF";
+            String mail = "islam1134646";
+            admin_car.updateCar(mail, carModelX, plateNumX, carColorX);*/
+            //Check correctness in mongo db
+
+
+            /*-----------------------------Ban Account----------------------------------*/
+            /*System.out.println(admin_acc.viewAllAccounts());
+            System.out.println("Enter Email");
+            String email = input.nextLine();
+            admin_acc.banAccount(email);*/
+            //Check correctness in mongo db
+
+
+        } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
         }
     }
-    
+
 }
