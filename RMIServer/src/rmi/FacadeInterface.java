@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public interface FacadeInterface extends Remote{
     
    public void SetAccountData(int id, String username, String password,
-                              String email, String mobile, AccType type, ArrayList<Account> acc)throws RemoteException;
+                              String email, String mobile, AccType type)throws RemoteException;
    public String getAccountData()throws RemoteException;
    public Account getAccount() throws RemoteException;
    
