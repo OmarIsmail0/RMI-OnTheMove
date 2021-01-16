@@ -5,38 +5,50 @@ import java.awt.event.ActionListener;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import rmi.*;
+
+import javax.swing.*;
+
 import rmi.LoginWindowGUI;
-import javax.swing.JButton;
-import rmi.AccType;
-import rmi.LoginWindowGUI;
-import rmi.HomeWindowGUI;
 import rmi.ReadOnly.ClientReadOnly;
 
 public class LoginWindow {
-        LoginWindowGUI gui;
+    static String loginMail;
+    LoginWindowGUI gui;
+    ClientHomeGUI clientGUI = new ClientHomeGUI();
     Registry r;
-    
-    public LoginWindow(LoginWindowGUI gui, Registry r)
-        {
-            this.gui = gui;
-            this.r = r;
-            gui.getjButton1().addActionListener(new LoginWindow.LoginBtnAction());
-        }
+
+    public LoginWindow(LoginWindowGUI gui, Registry r) {
+        this.gui = gui;
+        this.r = r;
+        gui.getjButton1().addActionListener(new LoginWindow.LoginBtnAction());
+    }
+
     class LoginBtnAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
+                boolean check = false;
+                ClientReadOnly c = (ClientReadOnly) r.lookup("Client Account");
                 String email = gui.getjTextField1().getText();
                 String pass = gui.getjTextField().getText();
-                c.login(email, pass); // in login function mainbody make the login action switch to the client home GUI
-                               
+                check = c.login(email, pass); // in login function mainbody make the login action switch to the client home GUI
+                if (check) {
+                    loginMail = email;
+                    gui.setVisible(false);
+                    ClientHome home = new ClientHome(clientGUI, r);
+                    clientGUI.setVisible(true);
+                }else {
+                    JOptionPane.showMessageDialog(gui,"try again!");
+                }
+
             } catch (Exception ex) {
                 Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
-        
+
     }
 
 }

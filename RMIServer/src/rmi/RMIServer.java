@@ -11,7 +11,7 @@ public class RMIServer {
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.createRegistry(1199);
+            Registry registry = LocateRegistry.createRegistry(1500);
 
             DB db = new DB();
 

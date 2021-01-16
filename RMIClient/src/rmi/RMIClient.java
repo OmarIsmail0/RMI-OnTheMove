@@ -1,5 +1,7 @@
 package rmi;
 
+import GUI.ClientHome;
+import GUI.LoginWindow;
 import rmi.ReadOnly.*;
 import rmi.Interface.ClientInterface;
 
@@ -15,23 +17,23 @@ public class RMIClient {
         Scanner input = new Scanner(System.in);
         try {
             /*-----------------------------RMI----------------------------------*/
-            Registry registry = LocateRegistry.getRegistry(1199);
+            Registry registry = LocateRegistry.getRegistry(1500);
             ClientReadOnly client_acc = (ClientReadOnly) registry.lookup("Client Account");
             ClientInterface client = (ClientInterface) registry.lookup("Client");
             ClientReadOnly client_ride = (ClientReadOnly) registry.lookup("Client Ride");
             ClientReadOnly client_comp = (ClientReadOnly) registry.lookup("Client Complaint");
             ClientReadOnly client_notify = (ClientReadOnly) registry.lookup("Client Notify");
             /*-----------------------------Creating client account----------------------------------*/
-            String sDate1="12/2025";
+            /*String sDate1="12/2025";
             Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
             client_acc.createClientAccount("Ahmed", "1346", "ahmed1134646", "124679", AccType.CLIENT,
                     2500,"1234 2225 6987 1025",882,date1);
             client_acc.createClientAccount("Omar", "1346", "omar1134646", "124679", AccType.CLIENT,
-                    2500,"1234 2225 6987 1025",882,date1);
+                    2500,"1234 2225 6987 1025",882,date1);*/
 
             /*-----------------------------Login & Request Ride & Show Ride History----------------------------------*/
-            /*client_acc.login("ahmed1134646", "1346");
-            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"ahmed1134646",true);
+            client_acc.login("ahmed1134646", "1346");
+            /*client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"ahmed1134646",true);
             System.out.println("-----------------------------------------------------------------------------------");
             client_ride.requestRide(CurrentArea.NEWCAIRO, CurrentArea.MAADI,"omar1134646",false);
             System.out.println("-----------------------------------------------------------------------------------");
@@ -57,14 +59,23 @@ public class RMIClient {
             client_notify.clearNotification("ahmed1134646");
             System.out.println(client_notify.viewNotifications("ahmed1134646"));*/
 
+            /*-----------------------------GUI----------------------------------*/
+            LoginWindowGUI gui = new LoginWindowGUI();
+            gui.setLocationRelativeTo(null); // This makes the window appears centered
+            gui.setVisible(true); // This shows the gui
+
+            LoginWindow gui_controller = new LoginWindow(gui, registry);
+
+//            ClientHomeGUI Homegui = new ClientHomeGUI();
+           /* Homegui.setLocationRelativeTo(null); // This makes the window appears centered
+            Homegui.setVisible(true); // This shows the gui*/
+//            ClientHome home = new ClientHome(Homegui, registry);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
         }
-        /*acc.createClientAccount("Omar", "1346", "omar1346", "124679", AccType.CLIENT,
-                    2500,"1234 2225 6987 1025",882,date1);
-           acc.createClientAccount("Ahmed", "1346", "ahmed1346", "124679", AccType.CLIENT,
-                    2500,"1234 5555 5555 1025",882,date2);*/
+
     }
 
 }

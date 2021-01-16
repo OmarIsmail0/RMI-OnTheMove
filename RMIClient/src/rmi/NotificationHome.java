@@ -1,9 +1,16 @@
 package rmi;
 
+import rmi.ReadOnly.ClientReadOnly;
+
 import javax.swing.JTextField;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class NotificationHome extends javax.swing.JFrame {
-    LoginWindowGUI loginmenu; 
+    LoginWindowGUI loginmenu = new LoginWindowGUI();
 
     public NotificationHome() {
         initComponents();
@@ -86,11 +93,21 @@ public class NotificationHome extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        loginmenu.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try{
+            Registry registry = LocateRegistry.getRegistry(1500);
+            ClientReadOnly client_notify = (ClientReadOnly) registry.lookup("Client Notify");;
+            client_notify.clearNotification("ahmed1134646");
+        } catch (AccessException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
         jTextField1.setText("Cleared");
         
     }//GEN-LAST:event_jButton1ActionPerformed

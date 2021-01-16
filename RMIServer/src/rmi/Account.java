@@ -5,6 +5,7 @@ import rmi.ReadOnly.ClientReadOnly;
 import rmi.ReadOnly.AdminReadOnly;
 import rmi.ReadOnly.DriverReadOnly;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -178,14 +179,23 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                         db.insertBankAccount(new_BankAcc);
                         client.add(new_Client);
                         db.insertClient(new_Client);
+
+                        System.out.println("Account Registered");
+                        JFrame frame = new JFrame();
+                        frame.setVisible(true);
+                        JOptionPane.showMessageDialog(frame,"Account Registered");
                         break;
                     } else {
                         numOfAttempts--;
                         System.out.println("please try again!");
                     }
+
                 }
             } else {
                 System.err.println("this email is already registered");
+                JFrame frame = new JFrame();
+                frame.setVisible(true);
+                JOptionPane.showMessageDialog(frame,"this email is already registered");
             }
 
 
@@ -198,6 +208,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     public void createDriverAccount(String username, String password, String email, String mobile
             , AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel,
                                     String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException {
+
 
         Account new_Account = new Account();
         Driver new_Driver = new Driver();
@@ -247,9 +258,14 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                 db.insertDriver(new_Driver);
 
                 System.out.println("Account Registered");
-
+                JFrame frame = new JFrame();
+                frame.setVisible(true);
+                JOptionPane.showMessageDialog(frame,"Account Registered");
             } else {
                 System.err.println("this email is already registered");
+                JFrame frame = new JFrame();
+                frame.setVisible(true);
+                JOptionPane.showMessageDialog(frame,"this email is already registered");
             }
 
 
@@ -349,6 +365,9 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
             db.deleteBankAccount(bankAcc.get(idx3).getMail());
             db.deleteClient(client.get(idx).getAcc().getEmail());
             System.out.println("account deleted");
+            JFrame frame = new JFrame();
+            frame.setVisible(true);
+            JOptionPane.showMessageDialog(frame,"account deleted");
         } else if (acc.get(index).getType() == AccType.DRIVER) {
             int idx = -1;
             for (int i = 0; i < driver.size(); i++) {
@@ -360,6 +379,9 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
             db.deleteAccount(acc.get(index).getEmail());
             db.deleteDriverMail(driver.get(idx).getAcc().getEmail());
             System.out.println("account deleted");
+            JFrame frame = new JFrame();
+            frame.setVisible(true);
+            JOptionPane.showMessageDialog(frame,"account deleted");
         }
     }
 
