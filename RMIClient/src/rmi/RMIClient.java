@@ -26,9 +26,9 @@ public class RMIClient {
                     2500,"1234 2225 6987 1025",882,date1);
 */
 
-            client_acc.login("omar1346","1346");
-            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"omar1346");
-            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.NEWCAIRO,"omar1346");
+            client_acc.login("ahmed134646","1346");
+            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"ahmed134646",true);
+            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.NEWCAIRO,"ahmed134646",false);
             //System.out.println(acc.viewAllAccounts());
             //client.editAccount();
             //System.out.println(client_acc.viewOwnAccount());

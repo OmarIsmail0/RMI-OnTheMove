@@ -11,13 +11,23 @@ import java.util.Scanner;
 
 public class RequestRide implements RequestRideInterface, Serializable {
 
-    int ride_id;
-    ArrayList<RequestRide> rr;
-    CurrentArea pickUpLocation;
-    CurrentArea destination;
-    double rideFees;
+    private int ride_id;
+    private ArrayList<RequestRide> rr;
+    private CurrentArea pickUpLocation;
+    private CurrentArea destination;
+    private double rideFees;
+    private boolean payOnline;
+
     Account acc;
     Status status;
+
+    public boolean isPayOnline() {
+        return payOnline;
+    }
+
+    public void setPayOnline(boolean payOnline) {
+        this.payOnline = payOnline;
+    }
 
     public RequestRide() {
 
@@ -97,18 +107,16 @@ public class RequestRide implements RequestRideInterface, Serializable {
             System.out.println("Select Ride");
             Scanner input = new Scanner(System.in);
             choice = input.nextInt();
-            System.out.println("1. to Accept.");
-            System.out.println("2. to Decline.");
+            System.out.println("1. Accept.");
+            System.out.println("2. Decline.");
             num = input.nextInt();
             for (Map.Entry<Integer, RequestRide> ride : rides.entrySet()) {
                 if (ride.getValue().getRide_id() == choice && num == 1) {
                     acceptRide(ride.getValue());
-                   // db.updateRequestRide(ride.getValue(),ride.getValue().getAcc().getEmail());
                     test = true;
                     break;
                 } else if (ride.getValue().getRide_id() == choice && num == 2) {
                     declineRide(ride.getValue());
-                   // db.updateRequestRide(ride.getValue(),ride.getValue().getAcc().getEmail());
                     test = true;
                     break;
                 }
@@ -121,7 +129,18 @@ public class RequestRide implements RequestRideInterface, Serializable {
 
     public void acceptRide(RequestRide ride) throws RemoteException {
         ride.setStatus(Status.ACCEPTED);
+        Payment payCash = new Payment(new Cash());
+        Payment payOnline = new Payment(new OnlinePayment());
         DB db = new DB();
+        Client c = new Client();
+        c = db.retrieveClientByMail2(ride.getAcc().getEmail());
+        if(!ride.isPayOnline()){
+            payCash.executeStrategy(ride.getRideFees(),c.getBankAcc());
+        }
+        else{
+            payOnline.executeStrategy(ride.getRideFees(),c.getBankAcc());
+        }
+
         db.updateRequestRide(ride,ride.getRide_id());
     }
 

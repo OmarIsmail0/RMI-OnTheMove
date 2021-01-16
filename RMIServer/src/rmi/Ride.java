@@ -7,10 +7,8 @@ import rmi.ReadOnly.DriverReadOnly;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,7 +101,7 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     @Override
-    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST, String email, boolean payOnline) throws RemoteException {
         try {
 
             Map<Integer, CurrentArea> fees
@@ -118,9 +116,9 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
             double pickupFee = 0;
             double dstFee = 0;
             for (Map.Entry<Integer, CurrentArea> fee : fees.entrySet()) {
-                if(fee.getValue() == PUL)
+                if (fee.getValue() == PUL)
                     pickupFee = fee.getKey();
-                if(fee.getValue() == DST)
+                if (fee.getValue() == DST)
                     dstFee = fee.getKey();
             }
 
@@ -146,14 +144,33 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
             rq.setDestination(DST);
             rq.setPickUpLocation(PUL);
             rq.setRideFees(ride_Fees);
+            rq.setPayOnline(payOnline);
+
             rq.setStatus(Status.PENDING);
+            if (payOnline) {
+                Scanner sc = new Scanner(System.in);
 
-            System.out.println("Requested Ride:"+display(rq));
-            db.insertRide(rq);
+                BankAccount bankAcc = new BankAccount();
 
-        } catch (Exception ex) {
+                System.out.println("Enter ccNum: ");
+                String ccNum = sc.nextLine();
+                System.out.println("Enter ccv: ");
+                int ccv = sc.nextInt();
+
+                bankAcc.checkCCinfo(ccNum, ccv, email);
+                System.out.println("Requested Ride:" + display(rq));
+                db.insertRide(rq);
+
+            } else {
+                System.out.println("Requested Ride:" + display(rq));
+                db.insertRide(rq);
+            }
+
+        } catch (
+                Exception ex) {
             Logger.getLogger(Ride.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 

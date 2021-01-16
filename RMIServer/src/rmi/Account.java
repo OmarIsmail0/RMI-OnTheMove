@@ -392,7 +392,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     }
 
     @Override
-    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
+    public void requestRide(CurrentArea PUL, CurrentArea DST, String email, boolean payOnline) throws RemoteException {
 
     }
 

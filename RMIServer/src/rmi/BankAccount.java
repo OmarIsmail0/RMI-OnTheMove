@@ -86,19 +86,19 @@ public class BankAccount implements Serializable {
         this.expDate = expDate;
     }
 
-    public void updateBalance(double amount) throws RemoteException{
+    public void updateBalance(double amount, String email) throws RemoteException{
         DB db = new DB();
         Client client = new Client();
         BankAccount bAcc = new BankAccount();
 
-        client = db.retrieveClientByMail();
+        client = db.retrieveClientByMail2(email);
         bAcc = client.getBankAcc();
         if (checkAccountBalance(client, amount)) {
             double new_Balance = client.getBankAcc().getBalance() - amount;
             client.getBankAcc().setBalance(new_Balance);
             bAcc.setBalance(new_Balance);
             db.updateBalance(bAcc, client);
-            System.out.println("Transaction Complete!");
+
         } else {
             System.out.println("Transaction Incomplete! Not Enough Money!");
         }
@@ -109,15 +109,15 @@ public class BankAccount implements Serializable {
         else return false;
     }
 
-    public boolean checkCCinfo(String ccNum, int ccv, Date date) throws RemoteException {
+    public boolean checkCCinfo(String ccNum, int ccv, String mail) throws RemoteException {
         DB db = new DB();
         Client client = new Client();
         BankAccount bAcc = new BankAccount();
 
-        client = db.retrieveClientByMail();
-        bAcc = client.getBankAcc();
+        client = db.retrieveClientByMail2(mail);
 
-        if(bAcc.getCCnumber().equals(ccNum) && bAcc.getCcv()==ccv && bAcc.getExpDate().compareTo(date) == 0)
+        bAcc = client.getBankAcc();
+        if(bAcc.getCCnumber().equals(ccNum) && bAcc.getCcv()==ccv)
             return true;
         else return false;
     }

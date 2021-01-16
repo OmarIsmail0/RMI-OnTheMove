@@ -54,14 +54,17 @@ public class MainTest{
 
     @Test
     public void TestRequestRide() throws RemoteException {
-        ClientReadOnly client = (ClientReadOnly) new Client();
+        ClientReadOnly client_ride = new Ride();
         DB db = new DB();
         String email = "omar1234";
-        client.requestRide(CurrentArea.MAADI,CurrentArea.NASRCITY,email);
+        client_ride.requestRide(CurrentArea.MAADI,CurrentArea.NASRCITY,email,true);
 
         ArrayList<RequestRide> rq = new ArrayList<RequestRide>();
         rq = db.retrieveAllRequestedRides();
 
-        assertEquals("",rq.get(rq.size()-1).getRide_id());
+        assertEquals(CurrentArea.MAADI,rq.get(rq.size()-1).getPickUpLocation());
+        assertEquals(CurrentArea.NASRCITY,rq.get(rq.size()-1).getDestination());
     }
+
 }
+

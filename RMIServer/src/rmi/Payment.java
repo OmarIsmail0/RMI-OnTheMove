@@ -10,6 +10,10 @@ public class Payment {
     private int amount;
     private PayMethod method;
 
+    public Payment(){
+
+    }
+
     public Payment(PayMethod method){
         this.method = method;
     }
@@ -38,9 +42,8 @@ public class Payment {
         this.amount = amount;
     }
 
-    public void executeStrategy(double amount){
-        method.Pay(amount);
+    public void executeStrategy(double amount, BankAccount bankAcc){
+        method.Pay(amount,bankAcc);
     }
-
 
 }
