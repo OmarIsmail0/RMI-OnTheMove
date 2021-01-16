@@ -246,6 +246,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
                 driver.add(new_Driver);
                 db.insertDriver(new_Driver);
 
+                System.out.println("Account Registered");
 
             } else {
                 System.err.println("this email is already registered");
@@ -276,7 +277,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
             text = "not found";
         } else {
             for (int i = 0; i < acc.size(); i++) {
-                text = acc.get(i).toString();
+                text += acc.get(i).toString() + "\n";
             }
         }
         return text;
@@ -319,6 +320,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
         acc = db.retrieveAllAccounts();
         bankAcc = db.retrieveAllBankAccounts();
         client = db.retrieveAllClients();
+        driver = db.retrieveAllDrivers();
 
         int index = -1;
         for (int i = 0; i < acc.size(); i++) {
@@ -328,11 +330,36 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
         }
         if (index == -1) {
             System.out.println("account not found");
-        } else {
+        } else if (acc.get(index).getType() == AccType.CLIENT) {
+            int idx = -1;
+            for (int i = 0; i < client.size(); i++) {
+                if (client.get(i).getAcc().getEmail().equals(email)) {
+                    idx = i;
+                    break;
+                }
+            }
+            int idx3 = -1;
+            for (int i = 0; i < bankAcc.size(); i++) {
+                if (bankAcc.get(i).getMail().equals(email)) {
+                    idx3 = i;
+                    break;
+                }
+            }
             db.deleteAccount(acc.get(index).getEmail());
-            db.deleteBankAccount(bankAcc.get(index).getMail());
-            System.out.println(client.get(index).getAcc().getAccID());
-            db.deleteClient(client.get(index).getAcc().getEmail());
+            db.deleteBankAccount(bankAcc.get(idx3).getMail());
+            db.deleteClient(client.get(idx).getAcc().getEmail());
+            System.out.println("account deleted");
+        } else if (acc.get(index).getType() == AccType.DRIVER) {
+            int idx = -1;
+            for (int i = 0; i < driver.size(); i++) {
+                if (driver.get(i).getAcc().getEmail().equals(email)) {
+                    idx = i;
+                    break;
+                }
+            }
+            db.deleteAccount(acc.get(index).getEmail());
+            db.deleteDriverMail(driver.get(idx).getAcc().getEmail());
+            System.out.println("account deleted");
         }
     }
 
@@ -380,34 +407,25 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     }
 
+    @Override
+    public String viewNotifications(String email) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void clearNotification(String email) throws RemoteException {
+
+    }
+
     /*Ride*/
-    @Override
-    public void acceptRide(int x) throws RemoteException {
-
-    }
-
-    @Override
-    public void declineRide(int x) throws RemoteException {
-
-    }
-
     @Override
     public void requestRide(CurrentArea PUL, CurrentArea DST, String email, boolean payOnline) throws RemoteException {
 
     }
 
-    @Override
-    public void cancelRide(int x) throws RemoteException {
-
-    }
 
     @Override
-    public void viewRideDetails(int x) throws RemoteException {
-
-    }
-
-    @Override
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException {
         return null;
     }
 

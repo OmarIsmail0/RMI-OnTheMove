@@ -80,16 +80,9 @@ public class Driver extends User  implements Serializable {
 
     /*Ride*/
 
-    public void acceptRide(int x) throws RemoteException {
-        DRO.acceptRide(x);
-    }
 
-    public void declineRide(int x) throws RemoteException {
-        DRO.declineRide(x);
-    }
-
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
-        return DRO.viewRideHistory();
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException {
+        return DRO.viewRideHistory(email);
     }
 
     /*Complaint*/
@@ -98,8 +91,5 @@ public class Driver extends User  implements Serializable {
         DRO.giveComplaint(msg, rideID, email);
     }
 
-    /*Car*/
-    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
-        DRO.updateCar(mail, CM, PN, CC);
-    }
+
 }

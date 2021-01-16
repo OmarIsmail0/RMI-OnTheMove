@@ -57,7 +57,7 @@ public class MainTest{
         ClientReadOnly client_ride = new Ride();
         DB db = new DB();
         String email = "omar1234";
-        client_ride.requestRide(CurrentArea.MAADI,CurrentArea.NASRCITY,email,true);
+        client_ride.requestRide(CurrentArea.MAADI,CurrentArea.NASRCITY,email,false);
 
         ArrayList<RequestRide> rq = new ArrayList<RequestRide>();
         rq = db.retrieveAllRequestedRides();
@@ -66,5 +66,39 @@ public class MainTest{
         assertEquals(CurrentArea.NASRCITY,rq.get(rq.size()-1).getDestination());
     }
 
+    @Test
+    public void TestUpdateCar() throws RemoteException {
+
+        AdminReadOnly driver_car = new Car();
+        DB db = new DB();
+        String email = "ahmed1346";
+        String carColor = "red";
+        String carModel = "toyota";
+        String plateNum = "NUM135";
+        driver_car.updateCar(email, carModel, plateNum, carColor);
+        Car expected_car = new Car("toyota", "NUM135", "red");
+        Driver new_driver = new Driver();
+
+        new_driver = db.retrieveDriverByMail(email);
+
+        assertEquals(expected_car.getCarColor(), new_driver.getCar().getCarColor());
+        assertEquals(expected_car.getCarModel(), new_driver.getCar().getCarModel());
+        assertEquals(expected_car.getPlateNum(), new_driver.getCar().getPlateNum());
+    }
+
+    @Test
+    public void TestUpdateBalance() throws RemoteException{
+
+        Client client = new Client();
+        DB db = new DB();
+        client = db.retrieveClientByMail2("ahmed1134646");
+        double amount = 30;
+        double old_balance = client.getBankAcc().getBalance();
+        client.getBankAcc().updateBalance(amount,client.getAcc().getEmail());
+
+        client = db.retrieveClientByMail2("ahmed1134646");
+
+        assertEquals(old_balance-amount,client.getBankAcc().getBalance(),0.00);
+    }
 }
 

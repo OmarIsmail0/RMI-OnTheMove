@@ -81,24 +81,6 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     /*Ride*/
-    @Override
-    public void viewRideDetails(int x) {
-
-    }
-
-    @Override
-    public void cancelRide(int x) {
-    }
-
-    @Override
-    public void acceptRide(int x) throws RemoteException {
-
-    }
-
-    @Override
-    public void declineRide(int x) throws RemoteException {
-
-    }
 
     @Override
     public void requestRide(CurrentArea PUL, CurrentArea DST, String email, boolean payOnline) throws RemoteException {
@@ -175,18 +157,30 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
 
 
     @Override
-    public ArrayList<Ride> viewRideHistory() {
-        ArrayList<Ride> r = new ArrayList<Ride>();
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException{
+
+        ArrayList<RequestRide> r = new ArrayList<RequestRide>();
+        DB db = new DB();
+
+        r = db.retrieveAllRequestedRidesByMail( email);
+        for (int i = 0; i < r.size(); i++) {
+            System.out.println(display(r.get(i)));
+        }
+
         return r;
+    }
+
+    public String display(RequestRide ride) {
+        return "Ride ID: " + ride.getRide_id()
+                + ", pickUpLoc: '" + ride.getPickUpLocation() + '\''
+                + ", destination: '" + ride.getDestination() + '\''
+                + ", Status: '" + ride.getStatus() + '\''
+                + ", rideFees=" + ride.getRideFees()
+                + '}';
     }
 
     @Override
     public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
-
-    }
-
-    @Override
-    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
 
     }
 
@@ -212,6 +206,16 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
     }
 
     @Override
+    public String viewNotifications(String email) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void clearNotification(String email) throws RemoteException {
+
+    }
+
+    @Override
     public String toString() {
         return "Ride{" +
                 "rideID=" + getRideID() +
@@ -221,12 +225,4 @@ public class Ride implements ClientReadOnly, DriverReadOnly, RideInterface, Seri
                 '}';
     }
 
-    public String display(RequestRide ride) {
-        return "Ride ID: " + ride.getRide_id() +
-                ", pickUpLoc: '" + ride.getPickUpLocation() + '\'' +
-                ", destination: '" + ride.getDestination() + '\'' +
-                ", Status: '" + ride.getStatus() + '\'' +
-                ", rideFees=" + ride.getRideFees() +
-                '}';
-    }
 }

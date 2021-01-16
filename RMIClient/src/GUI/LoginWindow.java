@@ -6,6 +6,10 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rmi.LoginWindowGUI;
+import javax.swing.JButton;
+import rmi.AccType;
+import rmi.LoginWindowGUI;
+import rmi.HomeWindowGUI;
 import rmi.ReadOnly.ClientReadOnly;
 
 public class LoginWindow {

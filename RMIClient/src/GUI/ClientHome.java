@@ -3,12 +3,14 @@ package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import rmi.ReadOnly.*;
+import rmi.ClientReadOnly;
 import rmi.ClientHomeGUI;
+import rmi.ClientInterface;
 import rmi.CurrentArea;
 import rmi.ReadOnly.ClientReadOnly;
 import rmi.NotificationHome;
@@ -35,48 +37,31 @@ public class ClientHome {
             try {
                 CurrentArea l = null; 
                 CurrentArea d = null;
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");  
                 String loc = (String)gui.getCombo().getSelectedItem();
-                if (null != loc)switch (loc) {
-                    case "Maadi":
-                        l = CurrentArea.MAADI;
-                        break;
-                    case "MadintySherouk":
-                        l = CurrentArea.MADINTYSHEROUK;
-                        break;
-                    case "Nasrcity":
-                        l = CurrentArea.NASRCITY;
-                        break;
-                    case "Zamalek":
-                        l = CurrentArea.ZAMALEK;
-                        break;
-                    case "New cairo":
-                        l = CurrentArea.NEWCAIRO;
-                        break;
-                    default:
-                        break;
-                }
-;
+                if ("Maadi".equals(loc)){
+                    l = CurrentArea.MAADI; 
+                }else if ("MadintySherouk".equals(loc)){
+                   l = CurrentArea.MADINTYSHEROUK;
+                }else if("Nasrcity".equals(loc)){
+                    l = CurrentArea.NASRCITY;
+                }else if ("Zamalek".equals(loc)){
+                    l = CurrentArea.ZAMALEK;
+                }else if ("New cairo".equals(loc)){
+                    l = CurrentArea.NEWCAIRO;
+                };
                 String dest = (String)gui.getCombo2().getSelectedItem();
-                if (null != dest)switch (dest) {
-                    case "Maadi":
-                        d = CurrentArea.MAADI;
-                        break;
-                    case "MadintySherouk":
-                        d= CurrentArea.MADINTYSHEROUK;
-                        break;
-                    case "Nasrcity":
-                        d = CurrentArea.NASRCITY;
-                        break;
-                    case "Zamalek":
-                        d = CurrentArea.ZAMALEK;
-                        break;
-                    case "New cairo":
-                        d = CurrentArea.NEWCAIRO;
-                        break;
-                    default:
-                        break;
-                }
+                if ("Maadi".equals(dest)){
+                    d = CurrentArea.MAADI; 
+                }else if ("MadintySherouk".equals(dest)){
+                    d= CurrentArea.MADINTYSHEROUK;
+                }else if("Nasrcity".equals(dest)){
+                    d = CurrentArea.NASRCITY;
+                }else if ("Zamalek".equals(dest)){
+                    d = CurrentArea.ZAMALEK;
+                }else if ("New cairo".equals(dest)){
+                    d = CurrentArea.NEWCAIRO;
+                };
                 String email = gui.getjTextField3().getText();
 
                 String payment = (String)gui.getCombo3().getSelectedItem();

@@ -97,9 +97,9 @@ public class RequestRide implements RequestRideInterface, Serializable {
         }
 
         for (Map.Entry<Integer, RequestRide> ride : rides.entrySet()) {
-            if(ride.getValue().getStatus() == Status.PENDING)
-            System.out.println(ride.getValue().getRide_id() + ". " + ride.getValue().getAcc().getUsername() + "/" + ride.getValue().getPickUpLocation()
-                    + "/" + ride.getValue().getDestination() + "/" + ride.getValue().getStatus());
+            if (ride.getValue().getStatus() == Status.PENDING)
+                System.out.println(ride.getValue().getRide_id() + ". " + ride.getValue().getAcc().getUsername() + "/" + ride.getValue().getPickUpLocation()
+                        + "/" + ride.getValue().getDestination() + "/" + ride.getValue().getStatus());
         }
         int choice = -1;
         int num = -1;
@@ -121,33 +121,48 @@ public class RequestRide implements RequestRideInterface, Serializable {
                     break;
                 }
             }
-            if (test){
+            if (test) {
                 break;
             }
         }
     }
 
     public void acceptRide(RequestRide ride) throws RemoteException {
+        ArrayList<Notification> notif = new ArrayList<Notification>();
+        Notification new_notif = new Notification();
+
         ride.setStatus(Status.ACCEPTED);
         Payment payCash = new Payment(new Cash());
         Payment payOnline = new Payment(new OnlinePayment());
         DB db = new DB();
         Client c = new Client();
         c = db.retrieveClientByMail2(ride.getAcc().getEmail());
-        if(!ride.isPayOnline()){
-            payCash.executeStrategy(ride.getRideFees(),c.getBankAcc());
+        if (!ride.isPayOnline()) {
+            payCash.executeStrategy(ride.getRideFees(), c.getBankAcc());
+        } else {
+            payOnline.executeStrategy(ride.getRideFees(), c.getBankAcc());
         }
-        else{
-            payOnline.executeStrategy(ride.getRideFees(),c.getBankAcc());
+        notif = db.retrieveAllNotifications();
+        int index = 0;
+        for (int i = 0; i < notif.size(); i++) {
+            index = notif.get(i).getId();
         }
+        index++;
 
-        db.updateRequestRide(ride,ride.getRide_id());
+        new_notif.setId(index);
+        new_notif.setMessage("Ride From: " + ride.getPickUpLocation() + " To " + ride.getDestination() + " Has Been Accepted!");
+        new_notif.setClient_email(c.getAcc().getEmail());
+        db.insertNotification(new_notif);
+
+        c.setNumOfRides(c.getNumOfRides()+1);
+        db.updateClient(c.getAcc());
+        db.updateRequestRide(ride, ride.getRide_id());
     }
 
 
     public void declineRide(RequestRide ride) throws RemoteException {
         ride.setStatus(Status.DECLINED);
         DB db = new DB();
-        db.updateRequestRide(ride,ride.getRide_id());
+        db.updateRequestRide(ride, ride.getRide_id());
     }
 }

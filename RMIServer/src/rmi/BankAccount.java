@@ -12,9 +12,6 @@ public class BankAccount implements Serializable {
     private String mail;
     private double balance;
 
-    private int id;
-    private int userID;
-
     private String CCnumber;
     private int ccv;
     private Date expDate;
@@ -46,22 +43,6 @@ public class BankAccount implements Serializable {
         this.balance = balance;
     }
 
-   /* public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-*/
     public String getCCnumber() {
         return CCnumber;
     }

@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package rmi;
 
 import java.util.ArrayList;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-/**
- *
- * @author USCS
- */
+
 public class AccountFacade extends UnicastRemoteObject implements FacadeInterface {
     Account a;
     ArrayList<Account> acc; 

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class OnlinePayment implements PayMethod , Serializable {
 
-    BankAccount bankAcc;
+    BankAccount bankAcc = new BankAccount();
 
     @Override
     public void Pay(double amount, BankAccount bankAcc){
