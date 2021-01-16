@@ -38,7 +38,7 @@ public class RMIClient {
             //client_acc.login("omar1346","1346");
             //client.editAccount();
             //client_acc.viewOwnAccount();
-
+//try
         }catch (Exception ex){
             ex.printStackTrace();
             System.out.println(ex);
