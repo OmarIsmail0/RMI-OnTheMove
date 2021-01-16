@@ -13,22 +13,23 @@ public class RMIClient {
     public static void main(String[] args) {
 
         try{
-            Registry registry = LocateRegistry.getRegistry(1099);
+            Registry registry = LocateRegistry.getRegistry(1199);
             ClientReadOnly client_acc = (ClientReadOnly) registry.lookup("Client Account");
             ClientInterface client = (ClientInterface) registry.lookup("Client");
             ClientReadOnly client_ride = (ClientReadOnly) registry.lookup("Client Ride");
-/*
+            ClientReadOnly client_comp = (ClientReadOnly) registry.lookup("Client Complaint");
+            ClientReadOnly client_notify = (ClientReadOnly) registry.lookup("Client Notify");
 
-            String sDate1="12/2025";
+             /*String sDate1="12/2025";
              Date date1 = new SimpleDateFormat("MM/yyyy").parse(sDate1);
 
             client_acc.createClientAccount("Omar", "1346", "ahmed134646", "124679", AccType.CLIENT,
                     2500,"1234 2225 6987 1025",882,date1);
 */
-
-            //client_acc.login("ahmed134646","1346");
-            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"ahmed134646",true);
-            client_ride.requestRide(CurrentArea.MAADI, CurrentArea.NEWCAIRO,"ahmed134646",false);
+            client_acc.login("ahmed1134646","1346");
+            //client_comp.giveComplaint("asd",3,"ahmed1134646");
+            //client_ride.requestRide(CurrentArea.MAADI, CurrentArea.MADINTYSHEROUK,"ahmed1134646",true);
+            //client_ride.requestRide(CurrentArea.MAADI, CurrentArea.NEWCAIRO,"ahmed1134646",false);
             //System.out.println(acc.viewAllAccounts());
             //client.editAccount();
             //System.out.println(client_acc.viewOwnAccount());
@@ -38,7 +39,11 @@ public class RMIClient {
             //client_acc.login("omar1346","1346");
             //client.editAccount();
             //client_acc.viewOwnAccount();
-//try
+
+            //client_ride.viewRideHistory("ahmed1134646");
+            System.out.println(client_notify.viewNotifications("ahmed1134646"));
+            client_notify.clearNotification("ahmed1134646");
+            System.out.println(client_notify.viewNotifications("ahmed1134646"));
         }catch (Exception ex){
             ex.printStackTrace();
             System.out.println(ex);

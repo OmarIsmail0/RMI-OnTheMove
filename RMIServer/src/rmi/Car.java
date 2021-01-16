@@ -1,6 +1,7 @@
 package rmi;
 
 import rmi.Interface.CarInterface;
+import rmi.ReadOnly.AdminReadOnly;
 import rmi.ReadOnly.DriverReadOnly;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializable, CarInterface{
+public class Car extends UnicastRemoteObject implements AdminReadOnly, Serializable, CarInterface{
     String carModel;
     String plateNum;
     String carColor;
@@ -59,33 +60,30 @@ public class Car extends UnicastRemoteObject implements DriverReadOnly, Serializ
         db.updateDriver(driver);
     }
 
-    /*Account*/
     @Override
-    public String viewOwnAccount(String email) throws RemoteException {
+    public void createDriverAccount(String username, String password, String email, String mobile, AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException {
+
+    }
+
+    @Override
+    public String viewAllAccounts() throws RemoteException {
         return null;
     }
+
+    /*Account*/
     @Override
     public boolean login(String email, String password) throws RemoteException {
         return false;
     }
 
-    /*Ride*/
     @Override
-    public void acceptRide(int x) throws RemoteException {
+    public void banAccount(String email) throws RemoteException {
 
     }
+
     @Override
-    public void declineRide(int x) throws RemoteException {
+    public void editAccount() throws RemoteException {
 
     }
-    @Override
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
-        return null;
-    }
 
-    /*Complaint*/
-    @Override
-    public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
-
-    }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Admin extends UnicastRemoteObject implements AdminInterface, Serializable {
+public class Admin extends UnicastRemoteObject implements AdminInterface,Serializable {
 
     static Admin adminInstance;
     Account acc;
@@ -77,6 +77,10 @@ public class Admin extends UnicastRemoteObject implements AdminInterface, Serial
             db.updateClient(acc.get(index));
         }
 
+    }
+
+    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
+        ARO.updateCar(mail,CM,PN,CC);
     }
 
     public void createDriverAccount(String username, String password, String email, String mobile, AccType type, String driverLicense, ArrayList<AvailableTimes> workingTimes, String carModel, String plateNum, String carColor, float rating, CurrentArea currentArea) throws RemoteException {

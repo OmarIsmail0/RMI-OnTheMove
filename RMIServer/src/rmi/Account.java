@@ -380,6 +380,16 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
 
     }
 
+    @Override
+    public String viewNotifications(String email) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void clearNotification(String email) throws RemoteException {
+
+    }
+
     /*Ride*/
     @Override
     public void acceptRide(int x) throws RemoteException {
@@ -407,7 +417,7 @@ public class Account extends UnicastRemoteObject implements ClientReadOnly, Driv
     }
 
     @Override
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException {
         return null;
     }
 

@@ -14,9 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import rmi.AccType;
-import rmi.ClientReadOnly;
 import rmi.LoginWindowGUI;
 import rmi.HomeWindowGUI;
+import rmi.ReadOnly.ClientReadOnly;
 
 /**
  *
@@ -37,7 +37,7 @@ public class LoginWindow {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");         
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
                 String email = gui.getjTextField1().getText();
                 String pass = gui.getjTextField().getText();
                 c.login(email, pass);

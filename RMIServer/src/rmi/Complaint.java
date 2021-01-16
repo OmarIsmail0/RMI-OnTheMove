@@ -16,7 +16,7 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
     private int cmpID;
     private Account acc;
     private String msg;
-    private Ride ride;
+    private RequestRide ride;
 
     public int getCmpID() {
         return cmpID;
@@ -42,11 +42,11 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
         this.msg = msg;
     }
 
-    public Ride getRide() {
+    public RequestRide getRide() {
         return ride;
     }
 
-    public void setRide(Ride ride) {
+    public void setRide(RequestRide ride) {
         this.ride = ride;
     }
 
@@ -55,12 +55,13 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
         DB db = new DB();
         Complaint c = new Complaint();
         Account acc = new Account();
-        //Error
+
         acc = db.retrieveAccount(email);
-        Ride ride = db.retrieveRide(rideID);
+        RequestRide ride = db.retrieveRide(rideID);
 
-
-        if (ride.getClient().getAcc().getAccID() == acc.getAccID()) {
+        System.out.println(ride.getRide_id()+"/ " +ride.getAcc().getAccID());
+        System.out.println("acc: "+acc.getAccID());
+        if (ride.getAcc().getAccID() == acc.getAccID()) {
             c.setMsg(msg);
             c.setAcc(acc);
             c.setRide(ride);
@@ -110,13 +111,8 @@ public class Complaint implements ClientReadOnly, DriverReadOnly, Serializable {
 
     }
     @Override
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException {
         return null;
     }
 
-    /*Car*/
-    @Override
-    public void updateCar(String mail, String CM, String PN, String CC) throws RemoteException {
-
-    }
 }

@@ -15,10 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmi.ClientReadOnly;
+
 import rmi.HomeWindowGUI;
-import rmi.ClientInterface;
+
 import rmi.AccType;
+import rmi.ReadOnly.ClientReadOnly;
+
 public class HomeWindow {
     HomeWindowGUI gui;
     Registry r;
@@ -35,7 +37,7 @@ public class HomeWindow {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");         
+                ClientReadOnly c = (ClientReadOnly) r.lookup("client_acc");
                 String username = gui.getjTextField1().getText();
                 String email = gui.getjTextField2().getText();
                 String pass = gui.getjTextField5().getText();

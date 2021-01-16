@@ -2,7 +2,6 @@ package rmi;
 
 import rmi.Interface.ClientInterface;
 import rmi.ReadOnly.ClientReadOnly;
-import rmi.ReadOnly.DriverReadOnly;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -119,19 +118,21 @@ public class Client extends User  implements Serializable, ClientInterface {
         CRO.requestRide(PUL,DST,email,payOnline);
     }
 
-    public void cancelRide(int x) throws RemoteException {
-        CRO.cancelRide(x);
-    }
-
-    public void viewRideDetails(int x) throws RemoteException {
-        CRO.viewRideDetails(x);
-    }
-
-    public ArrayList<Ride> viewRideHistory() throws RemoteException {
-        return CRO.viewRideHistory();
+    public ArrayList<RequestRide> viewRideHistory(String email) throws RemoteException {
+        return CRO.viewRideHistory(email);
     }
 
     public void giveComplaint(String msg, int rideID, String email) throws RemoteException {
         CRO.giveComplaint(msg,rideID,email);
+    }
+
+
+    public String viewNotifications(String email) throws RemoteException {
+        return CRO.viewNotifications(email);
+    }
+
+
+    public void clearNotification(String email) throws RemoteException {
+        CRO.clearNotification(email);
     }
 }

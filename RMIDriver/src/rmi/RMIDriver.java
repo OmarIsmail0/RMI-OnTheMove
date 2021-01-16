@@ -12,7 +12,7 @@ public class RMIDriver {
 
     public static void main(String[] args) {
         try{
-            Registry registry = LocateRegistry.getRegistry(1099);
+            Registry registry = LocateRegistry.getRegistry(1199);
 
             DriverReadOnly driver_ride = (DriverReadOnly) registry.lookup("Driver Ride");
             RequestRideInterface driver_select = (RequestRideInterface) registry.lookup("Select");

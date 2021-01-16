@@ -209,24 +209,19 @@ public class DB {
     public void updateDriver(Driver driver) {
         collection = database.getCollection("Driver");
         Document doc = Document.parse(gson.toJson(driver));
-        collection.replaceOne(Filters.eq("acc.email", Account.Driver_Login_Mail), doc);
+        collection.replaceOne(Filters.eq("acc.email", driver.getAcc().getEmail()), doc);
     }
 
     /*-----------------Ride-----------------*/
-    public void createRide(Ride ride) {
-        collection = database.getCollection("Ride");
-        collection.insertOne(Document.parse(gson.toJson(ride)));
-    }
-
     public void insertComplaint(Complaint comp) {
         collection = database.getCollection("Complaint");
         collection.insertOne(Document.parse(gson.toJson(comp)));
     }
 
-    public Ride retrieveRide(int id) {
-        collection = database.getCollection("Ride");
-        Document doc = collection.find(Filters.eq("id", id)).first();
-        Ride result = gson.fromJson(doc.toJson(), Ride.class);
+    public RequestRide retrieveRide(int id) {
+        collection = database.getCollection("RequestRide");
+        Document doc = collection.find(Filters.eq("ride_id", id)).first();
+        RequestRide result = gson.fromJson(doc.toJson(), RequestRide.class);
         return result;
     }
 
@@ -250,14 +245,16 @@ public class DB {
         collection = database.getCollection("RequestRide");
         Document doc = Document.parse(gson.toJson(ride));
         collection.replaceOne(Filters.eq("ride_id", id), doc);
-        //collection.updateOne(Filters.eq("Title","Dr"),Updates.set("Title", "Prof."));
-
-        /*collection = database.getCollection("BankAccount");
-        Document doc = Document.parse(gson.toJson(acc));
-        collection.replaceOne(Filters.eq("mail", Account.Client_Login_Mail), doc);
-        Employees.updateOne(Filters.eq("Title","Dr"),Updates.set("Title", "Prof."));*/
     }
-
+    public ArrayList<RequestRide> retrieveAllRequestedRidesByMail(String mail) {
+        collection = database.getCollection("RequestRide");
+        ArrayList<RequestRide> result = new ArrayList();
+        ArrayList<Document> docs = collection.find(Filters.eq("acc.email", mail)).into(new ArrayList<Document>());
+        for (int i = 0; i < docs.size(); i++) {
+            result.add(gson.fromJson(docs.get(i).toJson(), RequestRide.class));
+        }
+        return result;
+    }
     public ArrayList<RequestRide> retrieveAllRides() {
         collection = database.getCollection("RequestRide");
         ArrayList<RequestRide> result = new ArrayList();
@@ -271,4 +268,41 @@ public class DB {
         }
         return result;
     }
+
+    /*-----------------Notification-----------------*/
+
+    public void insertNotification(Notification notif) {
+        collection = database.getCollection("Notification");
+        collection.insertOne(Document.parse(gson.toJson(notif)));
+    }
+
+    public ArrayList<Notification> retrieveAllNotifications() {
+        collection = database.getCollection("Notification");
+        ArrayList<Notification> result = new ArrayList();
+        ArrayList<Document> docs = collection.find().into(new ArrayList<Document>());
+        if (docs.isEmpty()) {
+            return result;
+        } else {
+            for (int i = 0; i < docs.size(); i++) {
+                result.add(gson.fromJson(docs.get(i).toJson(), Notification.class));
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Notification> retrieveAllNotificationByMail(String mail) {
+        collection = database.getCollection("Notification");
+        ArrayList<Notification> result = new ArrayList();
+        ArrayList<Document> docs = collection.find(Filters.eq("client_email", mail)).into(new ArrayList<Document>());
+        for (int i = 0; i < docs.size(); i++) {
+            result.add(gson.fromJson(docs.get(i).toJson(), Notification.class));
+        }
+        return result;
+    }
+
+    public void deleteNotification(int id) {
+        collection = database.getCollection("Notification");
+        collection.deleteOne(Filters.eq("id", id));
+    }
+
 }
