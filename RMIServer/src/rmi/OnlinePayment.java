@@ -16,28 +16,11 @@ public class OnlinePayment implements PayMethod , Serializable {
     BankAccount bankAcc;
 
     @Override
-    public void Pay(double amount){
+    public void Pay(double amount, BankAccount bankAcc){
         try {
-            Scanner sc = new Scanner(System.in);
-
-            System.out.println("Enter ccNum: ");
-            String ccNum = sc.nextLine();
-            sc.nextLine();
-            System.out.println("Enter ccv: ");
-            int ccv = sc.nextInt();
-            System.out.println("Enter ExpDate: ");
-            String expDate = sc.nextLine();
-            Date date1 = new SimpleDateFormat("MM/yyyy").parse(expDate);
-
-            if(bankAcc.checkCCinfo(ccNum, ccv, date1)){
-                bankAcc.updateBalance(amount);
-            }
-            System.out.println("Payment Over");
-
-
+            bankAcc.updateBalance(amount,bankAcc.getMail());
+            System.out.println("Transaction Complete");
         } catch (RemoteException ex) {
-            Logger.getLogger(OnlinePayment.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
             Logger.getLogger(OnlinePayment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

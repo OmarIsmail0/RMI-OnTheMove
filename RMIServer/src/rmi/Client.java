@@ -115,8 +115,8 @@ public class Client extends User  implements Serializable, ClientInterface {
     }
 
     /*Ride*/
-    public void requestRide(CurrentArea PUL, CurrentArea DST, String email) throws RemoteException {
-        CRO.requestRide(PUL,DST,email);
+    public void requestRide(CurrentArea PUL, CurrentArea DST, String email, boolean payOnline) throws RemoteException {
+        CRO.requestRide(PUL,DST,email,payOnline);
     }
 
     public void cancelRide(int x) throws RemoteException {

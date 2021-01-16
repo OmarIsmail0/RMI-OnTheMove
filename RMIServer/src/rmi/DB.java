@@ -114,11 +114,11 @@ public class DB {
     public void updateBalance(BankAccount acc, Client c) {
         collection = database.getCollection("BankAccount");
         Document doc = Document.parse(gson.toJson(acc));
-        collection.replaceOne(Filters.eq("mail", Account.Client_Login_Mail), doc);
+        collection.replaceOne(Filters.eq("mail",acc.getMail()), doc);
 
         collection = database.getCollection("Client");
         doc = Document.parse(gson.toJson(c));
-        collection.replaceOne(Filters.eq("bankAcc.mail", Account.Client_Login_Mail), doc);
+        collection.replaceOne(Filters.eq("bankAcc.mail", c.getAcc().getEmail()), doc);
     }
 
     /*-----------------Client-----------------*/
@@ -142,6 +142,13 @@ public class DB {
     public Client retrieveClientByMail() {
         collection = database.getCollection("Client");
         Document doc = collection.find(Filters.eq("acc.email", Account.Client_Login_Mail)).first();
+        Client result = gson.fromJson(doc.toJson(), Client.class);
+        return result;
+    }
+
+    public Client retrieveClientByMail2(String mail) {
+        collection = database.getCollection("Client");
+        Document doc = collection.find(Filters.eq("acc.email", mail)).first();
         Client result = gson.fromJson(doc.toJson(), Client.class);
         return result;
     }
